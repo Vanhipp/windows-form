@@ -451,7 +451,7 @@
             this.addBulletsToolStripMenuItem.Name = "addBulletsToolStripMenuItem";
             this.addBulletsToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
             this.addBulletsToolStripMenuItem.Text = "Add Bullets";
-            this.addBulletsToolStripMenuItem.Click += new System.EventHandler(this.addBulletsToolStripMenuItem_Click);
+            this.addBulletsToolStripMenuItem.Click += new System.EventHandler(this.AddBulletsToolStripMenuItem_Click);
             // 
             // removeToolStripMenuItem
             // 

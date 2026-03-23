@@ -330,7 +330,6 @@
             this.underlineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
             this.underlineToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.underlineToolStripMenuItem.Text = "Underline";
-            this.underlineToolStripMenuItem.Click += new System.EventHandler(this.underlineToolStripMenuItem_Click);
             // 
             // italicToolStripMenuItem
             // 
@@ -338,7 +337,6 @@
             this.italicToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
             this.italicToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.italicToolStripMenuItem.Text = "Italic";
-            this.italicToolStripMenuItem.Click += new System.EventHandler(this.italicToolStripMenuItem_Click);
             // 
             // normalToolStripMenuItem
             // 
@@ -351,7 +349,7 @@
             this.pageColorToolStripMenuItem.Name = "pageColorToolStripMenuItem";
             this.pageColorToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.pageColorToolStripMenuItem.Text = "Page Color";
-            this.pageColorToolStripMenuItem.Click += new System.EventHandler(this.addBulletsToolStripMenuItem_Click);
+            this.pageColorToolStripMenuItem.Click += new System.EventHandler(this.pageColorToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
@@ -451,7 +449,6 @@
             this.addBulletsToolStripMenuItem.Name = "addBulletsToolStripMenuItem";
             this.addBulletsToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
             this.addBulletsToolStripMenuItem.Text = "Add Bullets";
-            this.addBulletsToolStripMenuItem.Click += new System.EventHandler(this.addBulletsToolStripMenuItem_Click);
             // 
             // removeToolStripMenuItem
             // 

@@ -71,42 +71,6 @@ namespace MyWordPad
                 case Keys.Control | Keys.R:
                     richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
                     return true;
-
-                case Keys.Control | Keys.S:
-                    XuLySave(this, EventArgs.Empty);
-                    return true;
-
-                case Keys.Control | Keys.O:
-                    XuLyOpen(this, EventArgs.Empty);
-                    return true;
-
-                case Keys.Control | Keys.B:
-                    boldToolStripMenuItem_Click(this, EventArgs.Empty);
-                    return true;
-
-                case Keys.Control | Keys.I:
-                    italicToolStripMenuItem_Click(this, EventArgs.Empty);
-                    return true;
-
-                case Keys.Control | Keys.J:
-                    underlineToolStripMenuItem_Click(this, EventArgs.Empty);
-                    return true;
-
-                case Keys.Control | Keys.K:
-                    insertImageToolStripMenuItem_Click(this, EventArgs.Empty);
-                    return true;
-
-                case Keys.Control | Keys.M:
-                    AddBulletsToolStripMenuItem_Click(this, EventArgs.Empty);
-                    return true;
-
-                case Keys.Tab:
-                    if (richTextBox1.SelectionBullet)
-                    {
-                        richTextBox1.SelectionIndent += 20;
-                        return true;
-                    }
-                    break;
             }
 
             // Nếu không khớp phím nào ở trên, trả về xử lý mặc định của hệ thống
@@ -190,6 +154,15 @@ namespace MyWordPad
             }
         }
 
+        private void addBulletsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                richTextBox1.BackColor = colorDialog.Color;
+            }
+        }
+
         private void boldToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //lấy style của font hiện tại
@@ -242,39 +215,8 @@ namespace MyWordPad
                 Clipboard.Clear();//tùy chọn
             }
         }
-        private void addBulletsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                richTextBox1.BackColor = colorDialog.Color;
-            }
-        }
         private void AddBulletsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Expand selection to full lines (paragraphs) so bullets apply per-paragraph
-            int selStart = richTextBox1.SelectionStart;
-            int selLength = richTextBox1.SelectionLength;
-
-            int startLine = richTextBox1.GetLineFromCharIndex(selStart);
-            int endLine = richTextBox1.GetLineFromCharIndex(selStart + Math.Max(0, selLength - 1));
-
-            int startChar = richTextBox1.GetFirstCharIndexFromLine(startLine);
-            int endChar;
-            if (endLine < richTextBox1.Lines.Length - 1)
-            {
-                endChar = richTextBox1.GetFirstCharIndexFromLine(endLine + 1);
-            }
-            else
-            {
-                endChar = richTextBox1.TextLength;
-            }
-
-            // apply expanded selection
-            richTextBox1.SelectionStart = startChar;
-            richTextBox1.SelectionLength = Math.Max(0, endChar - startChar);
-
-            // toggle bullets for the selected paragraphs
             if (!richTextBox1.SelectionBullet)
             {
                 richTextBox1.SelectionBullet = true;
@@ -287,11 +229,6 @@ namespace MyWordPad
                 richTextBox1.SelectionIndent = 0;
                 richTextBox1.SelectionHangingIndent = 0;
             }
-
-            // move caret to start of affected area and clear selection
-            richTextBox1.SelectionStart = startChar;
-            richTextBox1.SelectionLength = 0;
-            richTextBox1.Focus();
         }
     }
 }

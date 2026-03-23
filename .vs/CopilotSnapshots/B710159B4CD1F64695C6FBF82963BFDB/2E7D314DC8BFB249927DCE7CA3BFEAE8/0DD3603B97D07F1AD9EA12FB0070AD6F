@@ -351,7 +351,7 @@
             this.pageColorToolStripMenuItem.Name = "pageColorToolStripMenuItem";
             this.pageColorToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.pageColorToolStripMenuItem.Text = "Page Color";
-            this.pageColorToolStripMenuItem.Click += new System.EventHandler(this.addBulletsToolStripMenuItem_Click);
+            this.pageColorToolStripMenuItem.Click += new System.EventHandler(this.pageColorToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
