@@ -384,30 +384,35 @@
             this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
             this.noneToolStripMenuItem.Size = new System.Drawing.Size(132, 26);
             this.noneToolStripMenuItem.Text = "None";
+            this.noneToolStripMenuItem.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
             // 
             // ptsToolStripMenuItem
             // 
             this.ptsToolStripMenuItem.Name = "ptsToolStripMenuItem";
             this.ptsToolStripMenuItem.Size = new System.Drawing.Size(132, 26);
             this.ptsToolStripMenuItem.Text = "5 pts";
+            this.ptsToolStripMenuItem.Click += new System.EventHandler(this.pts5ToolStripMenuItem_Click);
             // 
             // ptsToolStripMenuItem1
             // 
             this.ptsToolStripMenuItem1.Name = "ptsToolStripMenuItem1";
             this.ptsToolStripMenuItem1.Size = new System.Drawing.Size(132, 26);
             this.ptsToolStripMenuItem1.Text = "10 pts";
+            this.ptsToolStripMenuItem1.Click += new System.EventHandler(this.pts10ToolStripMenuItem_Click);
             // 
             // ptsToolStripMenuItem2
             // 
             this.ptsToolStripMenuItem2.Name = "ptsToolStripMenuItem2";
             this.ptsToolStripMenuItem2.Size = new System.Drawing.Size(132, 26);
             this.ptsToolStripMenuItem2.Text = "15 pts";
+            this.ptsToolStripMenuItem2.Click += new System.EventHandler(this.pts15ToolStripMenuItem_Click);
             // 
             // ptsToolStripMenuItem3
             // 
             this.ptsToolStripMenuItem3.Name = "ptsToolStripMenuItem3";
             this.ptsToolStripMenuItem3.Size = new System.Drawing.Size(132, 26);
             this.ptsToolStripMenuItem3.Text = "20 pts";
+            this.ptsToolStripMenuItem3.Click += new System.EventHandler(this.pts20ToolStripMenuItem_Click);
             // 
             // alignToolStripMenuItem
             // 
@@ -424,18 +429,21 @@
             this.letfToolStripMenuItem.Name = "letfToolStripMenuItem";
             this.letfToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.letfToolStripMenuItem.Text = "Left";
+            this.letfToolStripMenuItem.Click += new System.EventHandler(this.leftToolStripMenuItem_Click);
             // 
             // centerToolStripMenuItem
             // 
             this.centerToolStripMenuItem.Name = "centerToolStripMenuItem";
             this.centerToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.centerToolStripMenuItem.Text = "Center";
+            this.centerToolStripMenuItem.Click += new System.EventHandler(this.centerToolStripMenuItem_Click);
             // 
             // rightToolStripMenuItem
             // 
             this.rightToolStripMenuItem.Name = "rightToolStripMenuItem";
             this.rightToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.rightToolStripMenuItem.Text = "Right";
+            this.rightToolStripMenuItem.Click += new System.EventHandler(this.rightToolStripMenuItem_Click);
             // 
             // bulletsToolStripMenuItem
             // 

@@ -252,7 +252,7 @@ namespace MyWordPad
         }
         private void AddBulletsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Expand selection to full lines (paragraphs) so bullets apply per-paragraph
+            // Mở rộng lựa chọn thành các dòng đầy đủ (paragraphs) để áp dụng dấu đầu dòng cho mỗi đoạn
             int selStart = richTextBox1.SelectionStart;
             int selLength = richTextBox1.SelectionLength;
 
@@ -270,11 +270,11 @@ namespace MyWordPad
                 endChar = richTextBox1.TextLength;
             }
 
-            // apply expanded selection
+            // áp dụng lựa chọn mở rộng
             richTextBox1.SelectionStart = startChar;
             richTextBox1.SelectionLength = Math.Max(0, endChar - startChar);
 
-            // toggle bullets for the selected paragraphs
+            // chuyển đổi dấu đầu dòng cho các đoạn văn đã chọn
             if (!richTextBox1.SelectionBullet)
             {
                 richTextBox1.SelectionBullet = true;
@@ -288,10 +288,63 @@ namespace MyWordPad
                 richTextBox1.SelectionHangingIndent = 0;
             }
 
-            // move caret to start of affected area and clear selection
+            // di chuyển dấu mũ đến đầu vùng bị ảnh hưởng và xóa vùng chọn
             richTextBox1.SelectionStart = startChar;
             richTextBox1.SelectionLength = 0;
             richTextBox1.Focus();
+        }
+
+        // Đặt lại thụt lề thành 0
+        private void noneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectionIndent = 0;
+            richTextBox1.SelectionHangingIndent = 0;
+        }
+
+        // Đặt thụt lề thành 5px
+        private void pts5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectionIndent = 5;
+            richTextBox1.SelectionHangingIndent = 0;
+        }
+
+        // Đặt thụt lề thành 10px
+        private void pts10ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectionIndent = 10;
+            richTextBox1.SelectionHangingIndent = 0;
+        }
+
+        // Đặt thụt lề thành 15px
+        private void pts15ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectionIndent = 15;
+            richTextBox1.SelectionHangingIndent = 0;
+        }
+
+        // Đặt thụt lề thành 20px
+        private void pts20ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectionIndent = 20;
+            richTextBox1.SelectionHangingIndent = 0;
+        }
+
+        // Căn chỉnh văn bản sang trái
+        private void leftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
+        }
+
+        // Căn chỉnh văn bản vào giữa
+        private void centerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectionAlignment = HorizontalAlignment.Center;
+        }
+
+        // Căn chỉnh văn bản sang phải
+        private void rightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
         }
     }
 }
