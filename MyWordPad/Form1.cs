@@ -15,7 +15,17 @@ namespace MyWordPad
 {
     public partial class Form1 : Form
     {
-        private int m_nFirstCharOnPage;
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT { public int Left; public int Top; public int Right; public int Bottom; }
+        [StructLayout(LayoutKind.Sequential)]
+        private struct CHARRANGE { public int cpMin; public int cpMax; }
+        [StructLayout(LayoutKind.Sequential)]
+        private struct FORMATRANGE { public IntPtr hdc; public IntPtr hdcTarget; public RECT rc; public RECT rcPage; public CHARRANGE chrg; }
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+        private const int WM_USER = 0x0400;
+        private const int EM_FORMATRANGE = WM_USER + 57;
+        private int m_nFirstCharOnPage = 0; // Biến này để đếm ký tự trang in
         public Form1()
         {
             InitializeComponent();
@@ -416,12 +426,98 @@ namespace MyWordPad
         {
             PrintDocument printDocument = new PrintDocument();
             PrintDialog printDialog = new PrintDialog();
-            printDocument.PrintPage += (s, ev) =>
-            {
-                ev.Graphics.DrawString(richTextBox1.Text, richTextBox1.Font, Brushes.Black, ev.MarginBounds);
-            };
+
+            // Reset lại trang in về đầu tiên trước khi bắt đầu
+            m_nFirstCharOnPage = 0;
+
+            // Gán sự kiện in
+            printDocument.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+
+            printDialog.Document = printDocument;
+
             if (printDialog.ShowDialog() == DialogResult.OK)
+            {
                 printDocument.Print();
+            }
+        }
+        Stack<string> undoStack = new Stack<string>();
+        Stack<string> redoStack = new Stack<string>();
+        bool isOperating = false;
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (undoStack.Count > 1)
+            {
+                isOperating = true;
+                redoStack.Push(undoStack.Pop());
+                richTextBox1.Rtf = undoStack.Peek();
+                isOperating = false;
+            }
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (redoStack.Count > 0)
+            {
+                isOperating = true;
+                string content = redoStack.Pop();
+                undoStack.Push(content);
+                richTextBox1.Rtf = content;
+                isOperating = false;
+            }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (!isOperating)
+            {
+                undoStack.Push(richTextBox1.Rtf);
+                redoStack.Clear();
+            }
+        }
+
+        private void pd_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            // 1. Tính toán vùng in (Twips: 1 inch = 1440 units)
+            RECT rectLayoutArea;
+            rectLayoutArea.Top = (int)(e.MarginBounds.Top * 14.4);
+            rectLayoutArea.Bottom = (int)(e.MarginBounds.Bottom * 14.4);
+            rectLayoutArea.Left = (int)(e.MarginBounds.Left * 14.4);
+            rectLayoutArea.Right = (int)(e.MarginBounds.Right * 14.4);
+
+            RECT rectPage;
+            rectPage.Top = (int)(e.PageBounds.Top * 14.4);
+            rectPage.Bottom = (int)(e.PageBounds.Bottom * 14.4);
+            rectPage.Left = (int)(e.PageBounds.Left * 14.4);
+            rectPage.Right = (int)(e.PageBounds.Right * 14.4);
+
+            IntPtr hdc = e.Graphics.GetHdc();
+
+            FORMATRANGE fmtRange;
+            fmtRange.chrg.cpMax = -1; // In hết văn bản
+            fmtRange.chrg.cpMin = m_nFirstCharOnPage; // Bắt đầu từ trang trước để lại
+            fmtRange.hdc = hdc;
+            fmtRange.hdcTarget = hdc;
+            fmtRange.rc = rectLayoutArea;
+            fmtRange.rcPage = rectPage;
+
+            // 2. Ra lệnh cho RichTextBox tự vẽ chính nó lên trang in
+            IntPtr structPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(fmtRange));
+            Marshal.StructureToPtr(fmtRange, structPtr, false);
+            IntPtr nextCharIndex = SendMessage(richTextBox1.Handle, EM_FORMATRANGE, (IntPtr)1, structPtr);
+            Marshal.FreeCoTaskMem(structPtr);
+
+            e.Graphics.ReleaseHdc(hdc);
+
+            // 3. Kiểm tra xem có cần in thêm trang tiếp theo không
+            m_nFirstCharOnPage = (int)nextCharIndex;
+
+            if (m_nFirstCharOnPage < richTextBox1.TextLength && m_nFirstCharOnPage != -1)
+                e.HasMorePages = true;
+            else
+            {
+                e.HasMorePages = false;
+                m_nFirstCharOnPage = 0; // Xong việc thì reset
+            }
         }
     }
 }
