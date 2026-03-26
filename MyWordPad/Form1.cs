@@ -606,6 +606,38 @@ namespace MyWordPad
             isChange = false;
         }
 
+
+        private void XuLyClose(object sender, EventArgs e)
+        {
+            // 1. Nếu có thay đổi thì hỏi lưu
+            if (isChange)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Bạn có muốn lưu thay đổi không?",
+                    "Thông báo",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    XuLySave(sender, e); // gọi Save
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    return; // hủy đóng
+                }
+            }
+
+            // 2. Xóa nội dung
+            richTextBox1.Clear();
+
+            // 3. Reset trạng thái
+            fileName = string.Empty;
+            isChange = false;
+            this.Text = "Untitled"; // hoặc tên app của bạn
+        }
+
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FindReplaceForm f = new FindReplaceForm(richTextBox1, false);
