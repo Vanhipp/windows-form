@@ -165,15 +165,38 @@ namespace MyWordPad
             {
                 File.WriteAllText(fileName, richTextBox1.Text);
             }
+            isChange = false;
+            UpdateWindowTitle();
         }
 
         private void XuLyOpen(object sender, EventArgs e)
         {
+            // Nếu đang ở trạng thái edit hoặc new* (file mới chưa lưu), hỏi người dùng có muốn lưu không
+            if (isChange || string.IsNullOrEmpty(fileName))
+            {
+                DialogResult result = MessageBox.Show(
+                    "Bạn có muốn lưu thay đổi trước khi mở file mới không?",
+                    "Thông báo",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    XuLySave(sender, e);
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    return; // Hủy thao tác mở file
+                }
+            }
+
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Text files (*.txt)|*.txt|Rich Text Format|*.rtf|All files (*.*)|*.*";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 var extension = Path.GetExtension(ofd.FileName).ToLower();
+                fileName = ofd.FileName; // Đảm bảo cập nhật fileName khi mở file mới
                 if (extension == ".rtf")
                 {
                     richTextBox1.LoadFile(ofd.FileName);
@@ -182,6 +205,8 @@ namespace MyWordPad
                 {
                     richTextBox1.Text = File.ReadAllText(ofd.FileName);
                 }
+                isChange = false;
+                UpdateWindowTitle();
             }
         }
 
@@ -493,6 +518,20 @@ namespace MyWordPad
                 redoStack.Clear();
             }
             isChange = true;
+            UpdateWindowTitle();
+        }
+
+        private void UpdateWindowTitle()
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                this.Text = "new*";
+            }
+            else
+            {
+                string status = isChange ? "edit" : "saved";
+                this.Text = $"{Path.GetFileName(fileName)} - {status}";
+            }
         }
 
         private void pd_PrintPage(object sender, PrintPageEventArgs e)
@@ -569,7 +608,7 @@ namespace MyWordPad
             }
 
             isChange = false;
-            this.Text = Path.GetFileName(fileName);
+            UpdateWindowTitle();
         }
 
 
@@ -614,6 +653,7 @@ namespace MyWordPad
             richTextBox1.Clear();
             fileName = "";
             isChange = false;
+            UpdateWindowTitle();
         }
 
 
@@ -645,13 +685,14 @@ namespace MyWordPad
             // 3. Reset trạng thái
             fileName = string.Empty;
             isChange = false;
-            this.Text = "Untitled"; // hoặc tên app của bạn
+            UpdateWindowTitle();
         }
 
 
         private void XuLyExit(object sender, EventArgs e)
         {
-            if (isChange)
+            // Nếu đang ở trạng thái edit hoặc new* (file mới chưa lưu), hỏi người dùng có muốn lưu không
+            if (isChange || string.IsNullOrEmpty(fileName))
             {
                 DialogResult result = MessageBox.Show(
                     "Bạn có muốn lưu thay đổi không?",
