@@ -367,9 +367,12 @@ namespace MyWordPad
 
         private void normalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FontStyle style = richTextBox1.SelectionFont.Style;
-            style |= FontStyle.Regular; //thêm regular
-            richTextBox1.SelectionFont = new Font(richTextBox1.SelectionFont, style);
+            // Đặt lại font style về Regular cho vùng chọn, giữ nguyên font family và size
+            if (richTextBox1.SelectionFont != null)
+            {
+                var currentFont = richTextBox1.SelectionFont;
+                richTextBox1.SelectionFont = new Font(currentFont.FontFamily, currentFont.Size, FontStyle.Regular);
+            }
         }
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
