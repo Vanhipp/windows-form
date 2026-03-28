@@ -19,12 +19,12 @@ Dự án MyWordPad là ứng dụng soạn thảo văn bản Windows Forms với
 ---
 
 ### Dev 2: Edit Operations (Giàu)
-- [ ] **Undo**: Sử dụng RichTextBox.Undo()
-- [ ] **Redo**: Sử dụng RichTextBox.Redo()
-- [ ] **Copy**: Sử dụng RichTextBox.Copy()
-- [ ] **Cut**: Sử dụng RichTextBox.Cut()
-- [ ] **Paste**: Sử dụng RichTextBox.Paste()
-- [ ] **Select All**: Sử dụng RichTextBox.SelectAll()
+- [x] **Undo**: Sử dụng RichTextBox.Undo()
+- [x] **Redo**: Sử dụng RichTextBox.Redo()
+- [x] **Copy**: Sử dụng RichTextBox.Copy()
+- [x] **Cut**: Sử dụng RichTextBox.Cut()
+- [x] **Paste**: Sử dụng RichTextBox.Paste()
+- [x] **Select All**: Sử dụng RichTextBox.SelectAll()
 
 **File cần sửa**: `MyWordPad/Form1.cs`, `MyWordPad/Form1.Designer.cs`
 
