@@ -40,19 +40,21 @@ namespace Nhom_03_Paint
         private void colorBorder_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
-            colorDialog.ShowDialog();
-            colorBorder = colorDialog.Color;
-
-            colorBorderSelect.BackColor = colorBorder;
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                colorBorder = colorDialog.Color;
+                colorBorderSelect.BackColor = colorBorder;
+            }
         }
 
         private void colorFillSelect_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
-            colorDialog.ShowDialog();
-            colorFill = colorDialog.Color;
-
-            colorFillSelect.BackColor = colorFill;
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                colorFill = colorDialog.Color;
+                colorFillSelect.BackColor = colorFill;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
