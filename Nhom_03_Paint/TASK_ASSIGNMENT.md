@@ -46,15 +46,15 @@
 
 ---
 
-### 3. Dev 3 (Hoàng) - [ ]
+### 3. Dev 3 (Hoàng) - [X]
 - **Giao diện chính (Main UI):** Thiết kế `Form1.cs` chuyên nghiệp, bố trí MenuStrip/ToolStrip hợp lý.
 - **Cài đặt Control:** Kết nối các sự kiện từ Button chọn màu, NumericUpDown (độ dày viền), ComboBox (chọn hình) vào logic của Lead.
 - **Form giới thiệu:** Hoàn thiện `FormAbout.cs` hiển thị thông tin nhóm và hình ảnh minh họa.
 
 **Files cần tạo/sửa:**
-- [ ] `Nhom_03_Paint/Form1.cs` (sửa - thêm controls)
-- [ ] `Nhom_03_Paint/Form1.Designer.cs` (sửa - thiết kế UI)
-- [ ] `Nhom_03_Paint/FormAbout.cs` (tạo mới)
+- [X] `Nhom_03_Paint/Form1.cs` (sửa - thêm controls)
+- [X] `Nhom_03_Paint/Form1.Designer.cs` (sửa - thiết kế UI)
+- [X] `Nhom_03_Paint/FormAbout.cs` (tạo mới)
 
 ---
 
