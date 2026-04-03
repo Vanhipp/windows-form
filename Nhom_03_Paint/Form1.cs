@@ -25,6 +25,11 @@ namespace Nhom_03_Paint
         private Point moveOffset = Point.Empty;
         private Point originalDelta = Point.Empty;
 
+        private Shape SelectedShape
+        {
+            get { return drawingManager.GetShapes().FirstOrDefault(s => s.IsSelected); }
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -36,6 +41,8 @@ namespace Nhom_03_Paint
             base.OnLoad(e);
             this.DoubleBuffered = true; // Kích hoạt Double Buffering cho Form
             panel1.DoubleClick += panel1_DoubleClick;
+            gradientDirectionSelect.SelectedIndexChanged += gradientDirectionSelect_SelectedIndexChanged;
+            sizeBorder.ValueChanged += sizeBorder_ValueChanged;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -51,6 +58,12 @@ namespace Nhom_03_Paint
             {
                 colorBorder = colorDialog.Color;
                 colorBorderSelect.BackColor = colorBorder;
+                // Update selected shape if any
+                if (SelectedShape != null && !(SelectedShape is TextShape))
+                {
+                    SelectedShape.BorderColor = colorBorder;
+                    panel1.Invalidate();
+                }
             }
         }
 
@@ -61,6 +74,13 @@ namespace Nhom_03_Paint
             {
                 colorFill = colorDialog.Color;
                 colorFillSelect.BackColor = colorFill;
+                // Update selected shape if any
+                if (SelectedShape != null && !(SelectedShape is TextShape))
+                {
+                    SelectedShape.FillColor = colorFill;
+                    SetShapeBrush(SelectedShape);
+                    panel1.Invalidate();
+                }
             }
         }
 
@@ -86,6 +106,32 @@ namespace Nhom_03_Paint
             {
                 labelGrad.Visible = true;
                 gradientDirectionSelect.Visible = true;
+            }
+            // Update selected shape if any
+            if (SelectedShape != null && !(SelectedShape is TextShape))
+            {
+                SetShapeBrush(SelectedShape);
+                panel1.Invalidate();
+            }
+        }
+
+        private void gradientDirectionSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Update selected shape if any and fill style is gradient
+            if (SelectedShape != null && !(SelectedShape is TextShape) && fillStyleSelect.SelectedItem?.ToString() == "LinearGradientMode")
+            {
+                SetShapeBrush(SelectedShape);
+                panel1.Invalidate();
+            }
+        }
+
+        private void sizeBorder_ValueChanged(object sender, EventArgs e)
+        {
+            // Update selected shape if any
+            if (SelectedShape != null && !(SelectedShape is TextShape))
+            {
+                SelectedShape.BorderWidth = (int)sizeBorder.Value;
+                panel1.Invalidate();
             }
         }
 
@@ -126,6 +172,16 @@ namespace Nhom_03_Paint
                 foreach (var s in shapes)
                 {
                     s.IsSelected = (s == selectedShape);
+                }
+                // Update controls if shape selected and not text
+                if (selectedShape != null && !(selectedShape is TextShape))
+                {
+                    colorBorder = selectedShape.BorderColor;
+                    colorBorderSelect.BackColor = colorBorder;
+                    colorFill = selectedShape.FillColor;
+                    colorFillSelect.BackColor = colorFill;
+                    sizeBorder.Value = selectedShape.BorderWidth;
+                    // Note: Fill style not updated for simplicity
                 }
                 panel1.Invalidate(); // Refresh to show selection
 
