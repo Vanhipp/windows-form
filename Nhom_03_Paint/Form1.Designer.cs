@@ -38,28 +38,26 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.gradientDirectionSelect = new System.Windows.Forms.ComboBox();
-            this.labelGrad = new System.Windows.Forms.Label();
-            this.fillStyleSelect = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.colorFillSelect = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label5 = new System.Windows.Forms.Label();
+            this.fillStyleSelect = new System.Windows.Forms.ComboBox();
+            this.labelGrad = new System.Windows.Forms.Label();
+            this.gradientDirectionSelect = new System.Windows.Forms.ComboBox();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.insertImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.Boxtext = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sizeBorder)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -87,17 +85,16 @@
             "Rectangle",
             "Ellipse",
             "Triangle",
-            "Parallelogram",
-            "Text"});
-            this.shapeSelect.Location = new System.Drawing.Point(58, 100);
+            "Parallelogram"});
+            this.shapeSelect.Location = new System.Drawing.Point(12, 100);
             this.shapeSelect.Name = "shapeSelect";
-            this.shapeSelect.Size = new System.Drawing.Size(153, 24);
+            this.shapeSelect.Size = new System.Drawing.Size(199, 24);
             this.shapeSelect.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 108);
+            this.label1.Location = new System.Drawing.Point(12, 81);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 16);
             this.label1.TabIndex = 2;
@@ -176,54 +173,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Fill";
             // 
-            // gradientDirectionSelect
-            // 
-            this.gradientDirectionSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.gradientDirectionSelect.FormattingEnabled = true;
-            this.gradientDirectionSelect.Items.AddRange(new object[] {
-            "BackwardDiagonal",
-            "ForwardDiagonal",
-            "Horizontal",
-            "Vertical"});
-            this.gradientDirectionSelect.Location = new System.Drawing.Point(9, 136);
-            this.gradientDirectionSelect.Name = "gradientDirectionSelect";
-            this.gradientDirectionSelect.Size = new System.Drawing.Size(173, 24);
-            this.gradientDirectionSelect.TabIndex = 10;
-            // 
-            // labelGrad
-            // 
-            this.labelGrad.AutoSize = true;
-            this.labelGrad.Location = new System.Drawing.Point(6, 117);
-            this.labelGrad.Name = "labelGrad";
-            this.labelGrad.Size = new System.Drawing.Size(150, 16);
-            this.labelGrad.TabIndex = 9;
-            this.labelGrad.Text = "Linear gradient direction";
-            // 
-            // fillStyleSelect
-            // 
-            this.fillStyleSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.fillStyleSelect.FormattingEnabled = true;
-            this.fillStyleSelect.Items.AddRange(new object[] {
-            "Solid",
-            "LinearGradientMode",
-            "PathGradientBrush",
-            "TextureBrush",
-            "HatchBrush"});
-            this.fillStyleSelect.Location = new System.Drawing.Point(9, 81);
-            this.fillStyleSelect.Name = "fillStyleSelect";
-            this.fillStyleSelect.Size = new System.Drawing.Size(173, 24);
-            this.fillStyleSelect.TabIndex = 8;
-            this.fillStyleSelect.SelectedIndexChanged += new System.EventHandler(this.fillStyleSelect_SelectedIndexChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 62);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 16);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Fill style";
-            // 
             // colorFillSelect
             // 
             this.colorFillSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -252,7 +201,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(888, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(888, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -264,60 +213,108 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 26);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.newToolStripMenuItem.Text = "New";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.saveToolStripMenuItem.Text = "Save";
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.saveAsToolStripMenuItem.Text = "Save As...";
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.insertImageToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 26);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
             this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // insertImageToolStripMenuItem
-            // 
-            this.insertImageToolStripMenuItem.Name = "insertImageToolStripMenuItem";
-            this.insertImageToolStripMenuItem.Size = new System.Drawing.Size(174, 26);
-            this.insertImageToolStripMenuItem.Text = "Insert Image";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 26);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 62);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(55, 16);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Fill style";
+            // 
+            // fillStyleSelect
+            // 
+            this.fillStyleSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fillStyleSelect.FormattingEnabled = true;
+            this.fillStyleSelect.Items.AddRange(new object[] {
+            "Solid",
+            "LinearGradientMode",
+            "PathGradientBrush",
+            "TextureBrush",
+            "HatchBrush"});
+            this.fillStyleSelect.Location = new System.Drawing.Point(9, 81);
+            this.fillStyleSelect.Name = "fillStyleSelect";
+            this.fillStyleSelect.Size = new System.Drawing.Size(173, 24);
+            this.fillStyleSelect.TabIndex = 8;
+            this.fillStyleSelect.SelectedIndexChanged += new System.EventHandler(this.fillStyleSelect_SelectedIndexChanged);
+            // 
+            // labelGrad
+            // 
+            this.labelGrad.AutoSize = true;
+            this.labelGrad.Location = new System.Drawing.Point(6, 117);
+            this.labelGrad.Name = "labelGrad";
+            this.labelGrad.Size = new System.Drawing.Size(150, 16);
+            this.labelGrad.TabIndex = 9;
+            this.labelGrad.Text = "Linear gradient direction";
+            // 
+            // gradientDirectionSelect
+            // 
+            this.gradientDirectionSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.gradientDirectionSelect.FormattingEnabled = true;
+            this.gradientDirectionSelect.Items.AddRange(new object[] {
+            "BackwardDiagonal",
+            "ForwardDiagonal",
+            "Horizontal",
+            "Vertical"});
+            this.gradientDirectionSelect.Location = new System.Drawing.Point(9, 136);
+            this.gradientDirectionSelect.Name = "gradientDirectionSelect";
+            this.gradientDirectionSelect.Size = new System.Drawing.Size(173, 24);
+            this.gradientDirectionSelect.TabIndex = 10;
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newToolStripMenuItem.Text = "New";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Text = "Save";
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAsToolStripMenuItem.Text = "Save As...";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // insertImageToolStripMenuItem
+            // 
+            this.insertImageToolStripMenuItem.Name = "insertImageToolStripMenuItem";
+            this.insertImageToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.insertImageToolStripMenuItem.Text = "Insert Image";
             // 
             // toolStrip1
             // 
@@ -326,9 +323,9 @@
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripButton3});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 30);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(888, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(888, 27);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -338,7 +335,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(29, 28);
+            this.toolStripButton1.Size = new System.Drawing.Size(29, 24);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
             // toolStripButton2
@@ -347,7 +344,7 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(29, 28);
+            this.toolStripButton2.Size = new System.Drawing.Size(29, 24);
             this.toolStripButton2.Text = "toolStripButton2";
             // 
             // toolStripButton3
@@ -356,33 +353,14 @@
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(29, 28);
+            this.toolStripButton3.Size = new System.Drawing.Size(29, 24);
             this.toolStripButton3.Text = "toolStripButton3";
-            // 
-            // Boxtext
-            // 
-            this.Boxtext.Location = new System.Drawing.Point(58, 69);
-            this.Boxtext.Name = "Boxtext";
-            this.Boxtext.Size = new System.Drawing.Size(153, 22);
-            this.Boxtext.TabIndex = 5;
-            this.Boxtext.TextChanged += new System.EventHandler(this.Boxtext_TextChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 75);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 16);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Text";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(888, 463);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.Boxtext);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -439,8 +417,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.TextBox Boxtext;
-        private System.Windows.Forms.Label label6;
     }
 }
 
