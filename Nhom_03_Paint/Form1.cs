@@ -24,6 +24,7 @@ namespace Nhom_03_Paint
         private Shape movingShape = null;
         private Point moveOffset = Point.Empty;
         private Point originalDelta = Point.Empty;
+        private Point lastEndPoint = Point.Empty;
 
         private Shape SelectedShape
         {
@@ -216,6 +217,12 @@ namespace Nhom_03_Paint
                             SetShapeBrush(textShape); // Though not used
 
                             drawingManager.AddShape(textShape);
+                            // Auto-select the newly drawn text
+                            var allShapes = drawingManager.GetShapes();
+                            foreach (var s in allShapes)
+                            {
+                                s.IsSelected = (s == textShape);
+                            }
                             panel1.Invalidate();
                         }
                     }
@@ -239,7 +246,9 @@ namespace Nhom_03_Paint
             }
             else if (isDrawing)
             {
-                Shape previewShape = CreateShape(startPoint, e.Location);
+                Point endPoint = e.Location;
+                lastEndPoint = endPoint;
+                Shape previewShape = CreateShape(startPoint, endPoint);
                 if (previewShape != null)
                 {
                     drawingManager.SetPreviewShape(previewShape);
@@ -260,10 +269,16 @@ namespace Nhom_03_Paint
                 else if (isDrawing)
                 {
                     isDrawing = false;
-                    Shape finalShape = CreateShape(startPoint, e.Location);
+                    Shape finalShape = CreateShape(startPoint, lastEndPoint);
                     if (finalShape != null)
                     {
                         drawingManager.AddShape(finalShape);
+                        // Auto-select the newly drawn shape
+                        var allShapes = drawingManager.GetShapes();
+                        foreach (var s in allShapes)
+                        {
+                            s.IsSelected = (s == finalShape);
+                        }
                     }
                     drawingManager.ClearPreviewShape();
                     panel1.Invalidate();
@@ -273,8 +288,8 @@ namespace Nhom_03_Paint
 
         private void panel1_DoubleClick(object sender, EventArgs e)
         {
-            var shapes = drawingManager.GetShapes();
-            foreach (var shape in shapes)
+            var allShapes = drawingManager.GetShapes();
+            foreach (var shape in allShapes)
             {
                 if (shape.IsSelected && shape is TextShape textShape)
                 {

@@ -29,8 +29,13 @@ namespace Nhom_03_Paint
             if (previewShape != null)
             {
                 try { previewShape.Brush?.Dispose(); } catch { }
+                previewShape.IsSelected = false;
             }
             previewShape = s;
+            if (previewShape != null)
+            {
+                previewShape.IsSelected = true;
+            }
         }
 
         // [Khoa] Xóa hình preview khi kết thúc thao tác vẽ
@@ -40,6 +45,7 @@ namespace Nhom_03_Paint
             if (previewShape != null)
             {
                 try { previewShape.Brush?.Dispose(); } catch { }
+                previewShape.IsSelected = false;
                 previewShape = null;
             }
         }
