@@ -6,9 +6,9 @@ namespace Nhom_03_Paint
 {
     public partial class TextInputDialog : Form
     {
-        public string InputText { get; private set; }
-        public Font SelectedFont { get; private set; }
-        public Color SelectedColor { get; private set; }
+        public string InputText { get; set; }
+        public Font SelectedFont { get; set; }
+        public Color SelectedColor { get; set; }
 
         private TextBox textBox;
         private Button fontButton;

@@ -20,6 +20,10 @@ namespace Nhom_03_Paint
         private DrawingManager drawingManager;
         private bool isDrawing = false;
         private Point startPoint = Point.Empty;
+        private bool isMoving = false;
+        private Shape movingShape = null;
+        private Point moveOffset = Point.Empty;
+        private Point originalDelta = Point.Empty;
 
         public Form1()
         {
@@ -31,6 +35,7 @@ namespace Nhom_03_Paint
         {
             base.OnLoad(e);
             this.DoubleBuffered = true; // Kích hoạt Double Buffering cho Form
+            panel1.DoubleClick += panel1_DoubleClick;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -106,40 +111,77 @@ namespace Nhom_03_Paint
         {
             if (e.Button == MouseButtons.Left)
             {
-                string shapeType = shapeSelect.SelectedItem?.ToString();
-                if (shapeType == "Text")
+                // First, check for shape selection
+                var shapes = drawingManager.GetShapes();
+                Shape selectedShape = null;
+                for (int i = shapes.Count - 1; i >= 0; i--)
                 {
-                    // Show text input dialog
-                    TextInputDialog dialog = new TextInputDialog();
-                    if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dialog.InputText))
+                    if (shapes[i].Contains(e.Location))
                     {
-                        TextShape textShape = new TextShape();
-                        textShape.StartPoint = e.Location;
-                        textShape.EndPoint = e.Location; // Same point for text
-                        textShape.Text = dialog.InputText;
-                        textShape.Font = dialog.SelectedFont;
-                        textShape.TextColor = dialog.SelectedColor;
-                        // Note: Border and fill not used for text, but set anyway for consistency
-                        textShape.BorderColor = colorBorder;
-                        textShape.BorderWidth = (int)sizeBorder.Value;
-                        textShape.FillColor = colorFill;
-                        SetShapeBrush(textShape); // Though not used
-
-                        drawingManager.AddShape(textShape);
-                        panel1.Invalidate();
+                        selectedShape = shapes[i];
+                        break;
                     }
+                }
+                // Set selection
+                foreach (var s in shapes)
+                {
+                    s.IsSelected = (s == selectedShape);
+                }
+                panel1.Invalidate(); // Refresh to show selection
+
+                if (selectedShape != null)
+                {
+                    // Start moving the selected shape
+                    isMoving = true;
+                    movingShape = selectedShape;
+                    moveOffset = new Point(e.X - selectedShape.StartPoint.X, e.Y - selectedShape.StartPoint.Y);
+                    originalDelta = new Point(selectedShape.EndPoint.X - selectedShape.StartPoint.X, selectedShape.EndPoint.Y - selectedShape.StartPoint.Y);
                 }
                 else
                 {
-                    isDrawing = true;
-                    startPoint = e.Location;
+                    // No shape selected, proceed to drawing
+                    string shapeType = shapeSelect.SelectedItem?.ToString();
+                    if (shapeType == "Text")
+                    {
+                        // Show text input dialog
+                        TextInputDialog dialog = new TextInputDialog();
+                        if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dialog.InputText))
+                        {
+                            TextShape textShape = new TextShape();
+                            textShape.StartPoint = e.Location;
+                            textShape.EndPoint = e.Location; // Same point for text
+                            textShape.Text = dialog.InputText;
+                            textShape.Font = dialog.SelectedFont;
+                            textShape.TextColor = dialog.SelectedColor;
+                            // Note: Border and fill not used for text, but set anyway for consistency
+                            textShape.BorderColor = colorBorder;
+                            textShape.BorderWidth = (int)sizeBorder.Value;
+                            textShape.FillColor = colorFill;
+                            SetShapeBrush(textShape); // Though not used
+
+                            drawingManager.AddShape(textShape);
+                            panel1.Invalidate();
+                        }
+                    }
+                    else
+                    {
+                        isDrawing = true;
+                        startPoint = e.Location;
+                    }
                 }
             }
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isDrawing)
+            if (isMoving && movingShape != null)
+            {
+                Point newStart = new Point(e.X - moveOffset.X, e.Y - moveOffset.Y);
+                movingShape.StartPoint = newStart;
+                movingShape.EndPoint = new Point(newStart.X + originalDelta.X, newStart.Y + originalDelta.Y);
+                panel1.Invalidate();
+            }
+            else if (isDrawing)
             {
                 Shape previewShape = CreateShape(startPoint, e.Location);
                 if (previewShape != null)
@@ -152,16 +194,48 @@ namespace Nhom_03_Paint
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && isDrawing)
+            if (e.Button == MouseButtons.Left)
             {
-                isDrawing = false;
-                Shape finalShape = CreateShape(startPoint, e.Location);
-                if (finalShape != null)
+                if (isMoving)
                 {
-                    drawingManager.AddShape(finalShape);
+                    isMoving = false;
+                    movingShape = null;
                 }
-                drawingManager.ClearPreviewShape();
-                panel1.Invalidate();
+                else if (isDrawing)
+                {
+                    isDrawing = false;
+                    Shape finalShape = CreateShape(startPoint, e.Location);
+                    if (finalShape != null)
+                    {
+                        drawingManager.AddShape(finalShape);
+                    }
+                    drawingManager.ClearPreviewShape();
+                    panel1.Invalidate();
+                }
+            }
+        }
+
+        private void panel1_DoubleClick(object sender, EventArgs e)
+        {
+            var shapes = drawingManager.GetShapes();
+            foreach (var shape in shapes)
+            {
+                if (shape.IsSelected && shape is TextShape textShape)
+                {
+                    // Open dialog with current values
+                    TextInputDialog dialog = new TextInputDialog();
+                    dialog.InputText = textShape.Text;
+                    dialog.SelectedFont = textShape.Font;
+                    dialog.SelectedColor = textShape.TextColor;
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textShape.Text = dialog.InputText;
+                        textShape.Font = dialog.SelectedFont;
+                        textShape.TextColor = dialog.SelectedColor;
+                        panel1.Invalidate();
+                    }
+                    break;
+                }
             }
         }
 

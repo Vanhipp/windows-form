@@ -135,6 +135,15 @@ namespace Nhom_03_Paint
                 }
             }
 
+            // Vẽ handles cho các hình được chọn (không xoay)
+            foreach (var shape in shapes)
+            {
+                if (shape != null && shape.IsSelected)
+                {
+                    shape.DrawHandles(backGraphics);
+                }
+            }
+
             // [Khoa] Vẽ hình preview (nếu có) sau khi đã vẽ tất cả hình thực tế.
             if (previewShape != null)
             {

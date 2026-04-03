@@ -84,6 +84,37 @@ namespace Nhom_03_Paint
             }
         }
 
+        // Vẽ handles cho resize
+        public virtual void DrawHandles(Graphics g)
+        {
+            if (!IsSelected) return;
+
+            var rect = GetBoundingRectangle();
+            int handleSize = 6;
+            using (var brush = new SolidBrush(Color.White))
+            using (var pen = new Pen(Color.Blue))
+            {
+                // 4 corners
+                g.FillRectangle(brush, rect.X - handleSize / 2, rect.Y - handleSize / 2, handleSize, handleSize);
+                g.DrawRectangle(pen, rect.X - handleSize / 2, rect.Y - handleSize / 2, handleSize, handleSize);
+                g.FillRectangle(brush, rect.Right - handleSize / 2, rect.Y - handleSize / 2, handleSize, handleSize);
+                g.DrawRectangle(pen, rect.Right - handleSize / 2, rect.Y - handleSize / 2, handleSize, handleSize);
+                g.FillRectangle(brush, rect.X - handleSize / 2, rect.Bottom - handleSize / 2, handleSize, handleSize);
+                g.DrawRectangle(pen, rect.X - handleSize / 2, rect.Bottom - handleSize / 2, handleSize, handleSize);
+                g.FillRectangle(brush, rect.Right - handleSize / 2, rect.Bottom - handleSize / 2, handleSize, handleSize);
+                g.DrawRectangle(pen, rect.Right - handleSize / 2, rect.Bottom - handleSize / 2, handleSize, handleSize);
+                // 4 midpoints
+                g.FillRectangle(brush, rect.X + rect.Width / 2 - handleSize / 2, rect.Y - handleSize / 2, handleSize, handleSize);
+                g.DrawRectangle(pen, rect.X + rect.Width / 2 - handleSize / 2, rect.Y - handleSize / 2, handleSize, handleSize);
+                g.FillRectangle(brush, rect.Right - handleSize / 2, rect.Y + rect.Height / 2 - handleSize / 2, handleSize, handleSize);
+                g.DrawRectangle(pen, rect.Right - handleSize / 2, rect.Y + rect.Height / 2 - handleSize / 2, handleSize, handleSize);
+                g.FillRectangle(brush, rect.X + rect.Width / 2 - handleSize / 2, rect.Bottom - handleSize / 2, handleSize, handleSize);
+                g.DrawRectangle(pen, rect.X + rect.Width / 2 - handleSize / 2, rect.Bottom - handleSize / 2, handleSize, handleSize);
+                g.FillRectangle(brush, rect.X - handleSize / 2, rect.Y + rect.Height / 2 - handleSize / 2, handleSize, handleSize);
+                g.DrawRectangle(pen, rect.X - handleSize / 2, rect.Y + rect.Height / 2 - handleSize / 2, handleSize, handleSize);
+            }
+        }
+
         // [Khoa] DrawSelection là nơi duy nhất xử lý việc vẽ khung đánh dấu khi hình
         // được chọn. Việc tách ra giúp mọi lớp hình chỉ cần gọi DrawSelection(g)
         // ở cuối phương thức Draw của mình để hỗ trợ tương tác chọn/xóa.
