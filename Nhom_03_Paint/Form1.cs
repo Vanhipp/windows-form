@@ -29,6 +29,50 @@ namespace Nhom_03_Paint
         // Biến theo dõi trạng thái file ảnh
         private string currentFilePath = null;
         private System.Drawing.Imaging.ImageFormat currentImageFormat = null;
+        private bool _hasUnsavedChanges = false;
+
+        // Cập nhật tiêu đề cửa sổ theo trạng thái hiện tại
+        private void UpdateWindowTitle()
+        {
+            if (string.IsNullOrEmpty(currentFilePath))
+            {
+                this.Text = _hasUnsavedChanges ? "MyPaint - new*" : "MyPaint - new";
+            }
+            else
+            {
+                string fileName = System.IO.Path.GetFileName(currentFilePath);
+                this.Text = _hasUnsavedChanges
+                    ? $"MyPaint - {fileName} - edited"
+                    : $"MyPaint - {fileName} - saved";
+            }
+        }
+
+        // Đánh dấu rằng có thay đổi chưa được lưu
+        private void MarkAsChanged()
+        {
+            _hasUnsavedChanges = true;
+            UpdateWindowTitle();
+        }
+
+        // Kiểm tra và hỏi người dùng lưu thay đổi chưa
+        private bool ConfirmSaveChanges()
+        {
+            if (!_hasUnsavedChanges) return true;
+
+            var result = MessageBox.Show(
+                "Bạn có thay đổi chưa được lưu. Bạn có muốn lưu trước không?",
+                "Lưu thay đổi?",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                saveToolStripMenuItem_Click(null, null);
+                return !_hasUnsavedChanges; // kiểm tra lại xem đã lưu thành công chưa
+            }
+
+            return result == DialogResult.No;
+        }
 
         private enum ResizeHandle { None, TopLeft, TopCenter, TopRight, MiddleLeft, MiddleRight, BottomLeft, BottomCenter, BottomRight, LineStart, LineEnd }
         private ResizeHandle currentResizeHandle = ResizeHandle.None;
@@ -197,6 +241,11 @@ namespace Nhom_03_Paint
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            if (!ConfirmSaveChanges())
+            {
+                e.Cancel = true;
+                return;
+            }
             drawingManager?.Dispose();
             base.OnFormClosing(e);
         }
@@ -225,6 +274,7 @@ namespace Nhom_03_Paint
         {
             if (drawingManager.Undo())
             {
+                MarkAsChanged();
                 ClearSelection();
                 panel1.Invalidate();
             }
@@ -234,6 +284,7 @@ namespace Nhom_03_Paint
         {
             if (drawingManager.Redo())
             {
+                MarkAsChanged();
                 ClearSelection();
                 panel1.Invalidate();
             }
@@ -243,6 +294,7 @@ namespace Nhom_03_Paint
         {
             if (drawingManager.DeleteSelectedShape())
             {
+                MarkAsChanged();
                 panel1.Invalidate();
             }
         }
@@ -269,6 +321,7 @@ namespace Nhom_03_Paint
                     {
                         SetShapeBrush(SelectedShape);
                     }
+                    MarkAsChanged();
                     panel1.Invalidate();
                 }
             }
@@ -285,6 +338,7 @@ namespace Nhom_03_Paint
                 {
                     SelectedShape.FillColor = colorFill;
                     SetShapeBrush(SelectedShape);
+                    MarkAsChanged();
                     panel1.Invalidate();
                 }
             }
@@ -299,6 +353,9 @@ namespace Nhom_03_Paint
             colorBorderSelect.BackColor = colorBorder;
             colorFill = Color.Black;
             colorFillSelect.BackColor = colorFill;
+            
+            // Khởi tạo tiêu đề cửa sổ ban đầu
+            UpdateWindowTitle();
         }
 
         private void fillStyleSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -316,6 +373,7 @@ namespace Nhom_03_Paint
             if (SelectedShape != null && !(SelectedShape is TextShape) && !(SelectedShape is LineShape))
             {
                 SetShapeBrush(SelectedShape);
+                MarkAsChanged();
                 panel1.Invalidate();
             }
         }
@@ -325,6 +383,7 @@ namespace Nhom_03_Paint
             if (SelectedShape != null && !(SelectedShape is TextShape) && !(SelectedShape is LineShape) && fillStyleSelect.SelectedItem?.ToString() == "LinearGradientMode")
             {
                 SetShapeBrush(SelectedShape);
+                MarkAsChanged();
                 panel1.Invalidate();
             }
         }
@@ -334,6 +393,7 @@ namespace Nhom_03_Paint
             if (SelectedShape != null && !(SelectedShape is TextShape))
             {
                 SelectedShape.BorderWidth = (int)sizeBorder.Value;
+                MarkAsChanged();
                 panel1.Invalidate();
             }
         }
@@ -353,6 +413,9 @@ namespace Nhom_03_Paint
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ConfirmSaveChanges())
+                return;
+            
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Tất cả file ảnh|*.png;*.jpg;*.jpeg;*.bmp;*.gif|PNG Images|*.png|JPEG Images|*.jpg;*.jpeg|Bitmap Images|*.bmp|GIF Images|*.gif";
@@ -402,6 +465,9 @@ namespace Nhom_03_Paint
                             this.Size = new Size(Math.Max(newFormWidth, this.MinimumSize.Width),
                                                 Math.Max(newFormHeight, this.MinimumSize.Height));
                             
+                            // File vừa được mở, không có thay đổi
+                            _hasUnsavedChanges = false;
+                            UpdateWindowTitle();
                             panel1.Invalidate();
                         }
                     }
@@ -490,6 +556,9 @@ namespace Nhom_03_Paint
                     bitmap.Save(filePath, format);
                 }
                 
+                // Sau khi lưu thành công, đánh dấu là không có thay đổi
+                _hasUnsavedChanges = false;
+                UpdateWindowTitle();
                 MessageBox.Show("Lưu ảnh thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -500,6 +569,9 @@ namespace Nhom_03_Paint
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ConfirmSaveChanges())
+                return;
+            
             // Reset trạng thái file
             currentFilePath = null;
             currentImageFormat = null;
@@ -507,6 +579,10 @@ namespace Nhom_03_Paint
             // Xóa toàn bộ nội dung
             drawingManager.ClearAll();
             ClearSelection();
+            
+            // Không có thay đổi vì mới khởi tạo
+            _hasUnsavedChanges = false;
+            UpdateWindowTitle();
             panel1.Invalidate();
         }
 
@@ -645,6 +721,7 @@ namespace Nhom_03_Paint
                                 {
                                     s.IsSelected = (s == textShape);
                                 }
+                                MarkAsChanged();
                                 panel1.Invalidate();
                             }
                         }
@@ -725,11 +802,13 @@ namespace Nhom_03_Paint
                     isResizing = false;
                     movingShape = null;
                     currentResizeHandle = ResizeHandle.None;
+                    MarkAsChanged();
                 }
                 else if (isMoving)
                 {
                     isMoving = false;
                     movingShape = null;
+                    MarkAsChanged();
                 }
                 else if (isDrawing)
                 {
@@ -743,6 +822,7 @@ namespace Nhom_03_Paint
                         {
                             s.IsSelected = (s == finalShape);
                         }
+                        MarkAsChanged();
                     }
                     drawingManager.ClearPreviewShape();
                     panel1.Invalidate();
@@ -766,6 +846,7 @@ namespace Nhom_03_Paint
                         textShape.Text = dialog.InputText;
                         textShape.Font = dialog.SelectedFont;
                         textShape.TextColor = dialog.SelectedColor;
+                        MarkAsChanged();
                         panel1.Invalidate();
                     }
                     break;
