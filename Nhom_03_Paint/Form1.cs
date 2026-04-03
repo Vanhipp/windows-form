@@ -390,6 +390,18 @@ namespace Nhom_03_Paint
                         {
                             drawingManager.ClearAll();
                             drawingManager.SetBackgroundImage(loadedImage);
+                            
+                            // Tự điều chỉnh kích thước cửa sổ theo kích thước ảnh
+                            int newFormWidth = loadedImage.Width + panel1.Left + 20;
+                            int newFormHeight = loadedImage.Height + panel1.Top + 40;
+                            
+                            // Đặt kích thước tối thiểu cho cửa sổ không bị quá nhỏ
+                            this.MinimumSize = new Size(1000, 750);
+                            
+                            // Thay đổi kích thước form tự động
+                            this.Size = new Size(Math.Max(newFormWidth, this.MinimumSize.Width),
+                                                Math.Max(newFormHeight, this.MinimumSize.Height));
+                            
                             panel1.Invalidate();
                         }
                     }
