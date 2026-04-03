@@ -26,11 +26,13 @@ namespace Nhom_03_Paint
         private Point originalDelta = Point.Empty;
         private Point lastEndPoint = Point.Empty;
 
-        private enum ResizeHandle { None, TopLeft, TopCenter, TopRight, MiddleLeft, MiddleRight, BottomLeft, BottomCenter, BottomRight }
+        private enum ResizeHandle { None, TopLeft, TopCenter, TopRight, MiddleLeft, MiddleRight, BottomLeft, BottomCenter, BottomRight, LineStart, LineEnd }
         private ResizeHandle currentResizeHandle = ResizeHandle.None;
         private bool isResizing = false;
         private Point resizeStartPoint = Point.Empty;
         private int origLeft = 0, origTop = 0, origRight = 0, origBottom = 0;
+        private Point origLineStart = Point.Empty;
+        private Point origLineEnd = Point.Empty;
 
         private Shape SelectedShape
         {
@@ -40,6 +42,15 @@ namespace Nhom_03_Paint
         private Point[] GetResizeHandles(Shape shape)
         {
             if (shape == null) return new Point[0];
+
+            if (shape is LineShape)
+            {
+                return new Point[]
+                {
+                    shape.StartPoint,
+                    shape.EndPoint
+                };
+            }
 
             Rectangle rect = shape.GetBoundingRectangle();
             return new Point[]
@@ -61,7 +72,9 @@ namespace Nhom_03_Paint
             {
                 case ResizeHandle.TopLeft:
                 case ResizeHandle.BottomRight:
-                    panel1.Cursor = Cursors.SizeNWSE;
+                case ResizeHandle.LineStart:
+                case ResizeHandle.LineEnd:
+                    panel1.Cursor = Cursors.SizeAll;
                     break;
                 case ResizeHandle.TopRight:
                 case ResizeHandle.BottomLeft:
@@ -80,10 +93,25 @@ namespace Nhom_03_Paint
                     break;
             }
         }
+        
 
         private void ResizeShape(Point currentPoint)
         {
             if (movingShape == null) return;
+
+            if (movingShape is LineShape)
+            {
+                switch (currentResizeHandle)
+                {
+                    case ResizeHandle.LineStart:
+                        movingShape.StartPoint = currentPoint;
+                        break;
+                    case ResizeHandle.LineEnd:
+                        movingShape.EndPoint = currentPoint;
+                        break;
+                }
+                return;
+            }
 
             int minSize = 10;
             int left = origLeft, top = origTop, right = origRight, bottom = origBottom;
@@ -233,6 +261,10 @@ namespace Nhom_03_Paint
                 if (SelectedShape != null && !(SelectedShape is TextShape))
                 {
                     SelectedShape.BorderColor = colorBorder;
+                    if (!(SelectedShape is LineShape))
+                    {
+                        SetShapeBrush(SelectedShape);
+                    }
                     panel1.Invalidate();
                 }
             }
@@ -245,7 +277,7 @@ namespace Nhom_03_Paint
             {
                 colorFill = colorDialog.Color;
                 colorFillSelect.BackColor = colorFill;
-                if (SelectedShape != null && !(SelectedShape is TextShape))
+                if (SelectedShape != null && !(SelectedShape is TextShape) && !(SelectedShape is LineShape))
                 {
                     SelectedShape.FillColor = colorFill;
                     SetShapeBrush(SelectedShape);
@@ -277,7 +309,7 @@ namespace Nhom_03_Paint
                 labelGrad.Visible = true;
                 gradientDirectionSelect.Visible = true;
             }
-            if (SelectedShape != null && !(SelectedShape is TextShape))
+            if (SelectedShape != null && !(SelectedShape is TextShape) && !(SelectedShape is LineShape))
             {
                 SetShapeBrush(SelectedShape);
                 panel1.Invalidate();
@@ -286,7 +318,7 @@ namespace Nhom_03_Paint
 
         private void gradientDirectionSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SelectedShape != null && !(SelectedShape is TextShape) && fillStyleSelect.SelectedItem?.ToString() == "LinearGradientMode")
+            if (SelectedShape != null && !(SelectedShape is TextShape) && !(SelectedShape is LineShape) && fillStyleSelect.SelectedItem?.ToString() == "LinearGradientMode")
             {
                 SetShapeBrush(SelectedShape);
                 panel1.Invalidate();
@@ -354,12 +386,18 @@ namespace Nhom_03_Paint
                 {
                     s.IsSelected = (s == selectedShape);
                 }
-                if (selectedShape != null && !(selectedShape is TextShape))
+                if (selectedShape != null && !(selectedShape is TextShape) && !(selectedShape is LineShape))
                 {
                     colorBorder = selectedShape.BorderColor;
                     colorBorderSelect.BackColor = colorBorder;
                     colorFill = selectedShape.FillColor;
                     colorFillSelect.BackColor = colorFill;
+                    sizeBorder.Value = selectedShape.BorderWidth;
+                }
+                else if (selectedShape != null && selectedShape is LineShape)
+                {
+                    colorBorder = selectedShape.BorderColor;
+                    colorBorderSelect.BackColor = colorBorder;
                     sizeBorder.Value = selectedShape.BorderWidth;
                 }
                 panel1.Invalidate();
@@ -374,15 +412,30 @@ namespace Nhom_03_Paint
                         if (handleRect.Contains(e.Location))
                         {
                             onHandle = true;
-                            currentResizeHandle = (ResizeHandle)(i + 1);
+                            if (selectedShape is LineShape)
+                            {
+                                currentResizeHandle = i == 0 ? ResizeHandle.LineStart : ResizeHandle.LineEnd;
+                            }
+                            else
+                            {
+                                currentResizeHandle = (ResizeHandle)(i + 1);
+                            }
                             isResizing = true;
                             movingShape = selectedShape;
                             resizeStartPoint = e.Location;
-                            Rectangle r = selectedShape.GetBoundingRectangle();
-                            origLeft = r.Left;
-                            origTop = r.Top;
-                            origRight = r.Right;
-                            origBottom = r.Bottom;
+                            if (selectedShape is LineShape)
+                            {
+                                origLineStart = selectedShape.StartPoint;
+                                origLineEnd = selectedShape.EndPoint;
+                            }
+                            else
+                            {
+                                Rectangle r = selectedShape.GetBoundingRectangle();
+                                origLeft = r.Left;
+                                origTop = r.Top;
+                                origRight = r.Right;
+                                origBottom = r.Bottom;
+                            }
                             SetCursorForHandle(currentResizeHandle);
                             break;
                         }
@@ -447,7 +500,10 @@ namespace Nhom_03_Paint
             if (isResizing && movingShape != null)
             {
                 ResizeShape(e.Location);
-                SetShapeBrush(movingShape);
+                if (!(movingShape is LineShape))
+                {
+                    SetShapeBrush(movingShape);
+                }
                 SetCursorForHandle(currentResizeHandle);
                 panel1.Invalidate();
             }
@@ -475,26 +531,19 @@ namespace Nhom_03_Paint
             if (!isResizing && !isMoving && !isDrawing)
             {
                 var selectedShape = SelectedShape;
-                if (selectedShape != null && !(selectedShape is TextShape))
+                if (selectedShape != null && !(selectedShape is TextShape) && !(selectedShape is LineShape))
                 {
-                    Point[] handles = GetResizeHandles(selectedShape);
-                    bool overHandle = false;
-                    for (int i = 0; i < handles.Length; i++)
-                    {
-                        Rectangle handleRect = new Rectangle(handles[i].X - 6, handles[i].Y - 6, 12, 12);
-                        if (handleRect.Contains(e.Location))
-                        {
-                            overHandle = true;
-                            currentResizeHandle = (ResizeHandle)(i + 1);
-                            SetCursorForHandle(currentResizeHandle);
-                            break;
-                        }
-                    }
-                    if (!overHandle)
-                    {
-                        currentResizeHandle = ResizeHandle.None;
-                        panel1.Cursor = Cursors.Default;
-                    }
+                    colorBorder = selectedShape.BorderColor;
+                    colorBorderSelect.BackColor = colorBorder;
+                    colorFill = selectedShape.FillColor;
+                    colorFillSelect.BackColor = colorFill;
+                    sizeBorder.Value = selectedShape.BorderWidth;
+                }
+                else if (selectedShape != null && selectedShape is LineShape)
+                {
+                    colorBorder = selectedShape.BorderColor;
+                    colorBorderSelect.BackColor = colorBorder;
+                    sizeBorder.Value = selectedShape.BorderWidth;
                 }
                 else
                 {
