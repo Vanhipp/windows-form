@@ -106,8 +106,34 @@ namespace Nhom_03_Paint
         {
             if (e.Button == MouseButtons.Left)
             {
-                isDrawing = true;
-                startPoint = e.Location;
+                string shapeType = shapeSelect.SelectedItem?.ToString();
+                if (shapeType == "Text")
+                {
+                    // Show text input dialog
+                    TextInputDialog dialog = new TextInputDialog();
+                    if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dialog.InputText))
+                    {
+                        TextShape textShape = new TextShape();
+                        textShape.StartPoint = e.Location;
+                        textShape.EndPoint = e.Location; // Same point for text
+                        textShape.Text = dialog.InputText;
+                        textShape.Font = dialog.SelectedFont;
+                        textShape.TextColor = dialog.SelectedColor;
+                        // Note: Border and fill not used for text, but set anyway for consistency
+                        textShape.BorderColor = colorBorder;
+                        textShape.BorderWidth = (int)sizeBorder.Value;
+                        textShape.FillColor = colorFill;
+                        SetShapeBrush(textShape); // Though not used
+
+                        drawingManager.AddShape(textShape);
+                        panel1.Invalidate();
+                    }
+                }
+                else
+                {
+                    isDrawing = true;
+                    startPoint = e.Location;
+                }
             }
         }
 
@@ -163,6 +189,9 @@ namespace Nhom_03_Paint
                     break;
                 case "Parallelogram":
                     shape = new ParallelogramShape();
+                    break;
+                case "Text":
+                    shape = new TextShape();
                     break;
             }
 

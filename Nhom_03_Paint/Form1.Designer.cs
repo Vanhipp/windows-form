@@ -85,7 +85,8 @@
             "Rectangle",
             "Ellipse",
             "Triangle",
-            "Parallelogram"});
+            "Parallelogram",
+            "Text"});
             this.shapeSelect.Location = new System.Drawing.Point(12, 100);
             this.shapeSelect.Name = "shapeSelect";
             this.shapeSelect.Size = new System.Drawing.Size(199, 24);

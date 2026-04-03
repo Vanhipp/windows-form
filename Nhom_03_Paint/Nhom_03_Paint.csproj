@@ -67,7 +67,8 @@
     <Compile Include="Shapes\RectangleShape.cs" />
     <Compile Include="Shapes\SquareShape.cs" />
     <Compile Include="Shapes\TriangleShape.cs" />
-    <Compile Include="TextShape.cs" />
+     <Compile Include="TextShape.cs" />
+     <Compile Include="TextInputDialog.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

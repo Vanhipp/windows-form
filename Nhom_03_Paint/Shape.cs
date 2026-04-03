@@ -61,7 +61,7 @@ namespace Nhom_03_Paint
         }
 
         // Lấy Rectangle từ 2 điểm (xử lý vẽ ngược)
-        public Rectangle GetBoundingRectangle()
+        public virtual Rectangle GetBoundingRectangle()
         {
             int x = Math.Min(StartPoint.X, EndPoint.X);
             int y = Math.Min(StartPoint.Y, EndPoint.Y);
