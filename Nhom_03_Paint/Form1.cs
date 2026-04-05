@@ -410,17 +410,42 @@ namespace Nhom_03_Paint
 
         private void colorFillSelect_Click(object sender, EventArgs e)
         {
-            ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
+            if (fillStyleSelect.SelectedItem?.ToString() == "TextureBrush")
             {
-                colorFill = colorDialog.Color;
-                colorFillSelect.BackColor = colorFill;
-                if (SelectedShape != null && !(SelectedShape is TextShape) && !(SelectedShape is LineShape))
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    SelectedShape.FillColor = colorFill;
-                    SetShapeBrush(SelectedShape);
-                    MarkAsChanged();
-                    panel1.Invalidate();
+                    openFileDialog.Filter = "Image Files|*.png;*.jpg;*.jpeg;*.bmp;*.gif";
+                    openFileDialog.Title = "Select Texture Image";
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            textureImage = Image.FromFile(openFileDialog.FileName);
+                            colorFillSelect.BackColor = Color.Transparent; // Reset background color
+                            colorFillSelect.Image = new Bitmap(textureImage, colorFillSelect.Size); // Show thumbnail on button
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to load image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ColorDialog colorDialog = new ColorDialog();
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    colorFill = colorDialog.Color;
+                    colorFillSelect.BackColor = colorFill;
+                    if (SelectedShape != null && !(SelectedShape is TextShape) && !(SelectedShape is LineShape))
+                    {
+                        SelectedShape.FillColor = colorFill;
+                        SetShapeBrush(SelectedShape);
+                        MarkAsChanged();
+                        panel1.Invalidate();
+                    }
                 }
             }
         }
@@ -441,16 +466,30 @@ namespace Nhom_03_Paint
 
         private void fillStyleSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (fillStyleSelect.SelectedIndex != 1)
+            if (fillStyleSelect.SelectedIndex != 1 && fillStyleSelect.SelectedItem?.ToString() != "TextureBrush")
             {
                 labelGrad.Visible = false;
                 gradientDirectionSelect.Visible = false;
+                colorFillSelect.BackColor = colorFill; // Reset background color
+                colorFillSelect.Image = null; // Clear any texture thumbnail
+                colorFillSelect.Text = "Fill Color"; // Reset button text
+            }
+            else if (fillStyleSelect.SelectedItem?.ToString() == "TextureBrush")
+            {
+                labelGrad.Visible = false;
+                gradientDirectionSelect.Visible = false;
+                colorFillSelect.BackColor = Color.Transparent;
+                colorFillSelect.Text = "Select Image"; // Change button text to "Select Image"
             }
             else
             {
                 labelGrad.Visible = true;
                 gradientDirectionSelect.Visible = true;
+                colorFillSelect.BackColor = colorFill; // Reset background color
+                colorFillSelect.Image = null; // Clear any texture thumbnail
+                colorFillSelect.Text = "Fill Color"; // Reset button text
             }
+
             if (SelectedShape != null && !(SelectedShape is TextShape) && !(SelectedShape is LineShape))
             {
                 SetShapeBrush(SelectedShape);
@@ -986,10 +1025,12 @@ namespace Nhom_03_Paint
             return shape;
         }
 
+        private Image textureImage = null; // Add this field to store the selected texture image
+
         private void SetShapeBrush(Shape shape)
         {
             string fillStyle = fillStyleSelect.SelectedItem?.ToString() ?? "Solid";
-            
+
             switch (fillStyle)
             {
                 case "Solid":
@@ -1029,6 +1070,16 @@ namespace Nhom_03_Paint
                     break;
                 case "HatchBrush":
                     shape.Brush = new HatchBrush(HatchStyle.Cross, colorBorder, colorFill);
+                    break;
+                case "TextureBrush":
+                    if (textureImage != null)
+                    {
+                        shape.Brush = new TextureBrush(textureImage);
+                    }
+                    else
+                    {
+                        shape.Brush = new SolidBrush(colorFill); // Fallback to solid fill if no image is selected
+                    }
                     break;
                 default:
                     shape.Brush = new SolidBrush(colorFill);
