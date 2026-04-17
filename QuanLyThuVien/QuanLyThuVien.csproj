@@ -134,8 +134,7 @@
     <Compile Include="Managers\FormManager.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookLiquidation.cs" />
-    <Compile Include="Models\BorrowSLip.cs" />
-    <Compile Include="Models\Fine.cs" />
+    <Compile Include="Models\BorrowSlip.cs" />
     <Compile Include="Models\Reader.cs" />
     <Compile Include="Models\ReturnSlip.cs" />
     <Compile Include="Models\Staff.cs" />

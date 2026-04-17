@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace QuanLyThuVien.Models
 {
-    internal class BorrowSLip
+    internal class BorrowSlip
     {
+        public string IDPhieuMuon { get; set; }
+
+        public string IDDocGia { get; set; } public virtual Reader TenDocGia { get; set; }
+
+        public string IDSach { get; set; } public virtual Book TenSach { get; set; }
+
+        public DateTime NgayMuon { get; set; }
+
+        public DateTime HanTra { get; set; }
+
+        public DateTime? NgayTra { get; set; }
+
+        public string TinhTrangTra { get; set; }
+
+        public decimal? TienPhat { get; set; }
     }
 }
