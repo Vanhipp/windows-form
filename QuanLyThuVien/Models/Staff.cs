@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using QuanLyThuVien.Enums;
 
 namespace QuanLyThuVien.Models
 {
@@ -20,9 +17,9 @@ namespace QuanLyThuVien.Models
 
         public string BangCap { get; set; }
 
-        public string BoPhan { get; set; }
+        public Department BoPhan { get; set; }
 
-        public string ChucVu { get; set; }
+        public Position ChucVu { get; set; }
 
         public string MatKhau { get; set; }
     }

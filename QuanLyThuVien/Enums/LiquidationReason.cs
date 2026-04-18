@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace QuanLyThuVien.Enums
 {
-    internal enum LiquidationReason
+    public enum LiquidationReason
     {
+        Mat,
+        HuHong,
+        NguoiDungLamMat
     }
 }

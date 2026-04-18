@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace QuanLyThuVien.Enums
 {
-    internal enum BookCategory
+    public enum BookCategory
     {
+        A,
+        B,
+        C
     }
 }

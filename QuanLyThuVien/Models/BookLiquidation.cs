@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuanLyThuVien.Enums;
 
 namespace QuanLyThuVien.Models
 {
@@ -14,6 +15,6 @@ namespace QuanLyThuVien.Models
 
         public DateTime NgayThanhLy { get; set; }
 
-        public string LyDoThanhLy { get; set; }
+        public LiquidationReason LyDoThanhLy { get; set; }
     }
 }

@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using QuanLyThuVien.Enums;
 
 namespace QuanLyThuVien.Models
 {
@@ -22,7 +19,7 @@ namespace QuanLyThuVien.Models
 
         public int TriGia { get; set; }
 
-        public string TinhTrang { get; set; }
+        public BookStatus TinhTrang { get; set; }
 
         public string IDDauSach { get; set; }
     }

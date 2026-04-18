@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace QuanLyThuVien.Enums
 {
-    internal enum BookStatus
+    public enum BookStatus
     {
+        OK,
+        Muon,
+        Hong,
+        Mat
     }
 }

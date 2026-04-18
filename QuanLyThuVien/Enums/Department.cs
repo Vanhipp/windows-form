@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace QuanLyThuVien.Enums
 {
-    internal enum Department
+    public enum Department
     {
+        ThuThu,
+        ThuKho,
+        ThuQuy,
+        BanGiamDoc
     }
 }

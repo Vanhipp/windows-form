@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuanLyThuVien.Enums
 {
-    internal enum ReaderType
+    public enum ReaderType
     {
+        X,
+        Y
     }
 }

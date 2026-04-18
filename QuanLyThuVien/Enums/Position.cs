@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace QuanLyThuVien.Enums
 {
-    internal enum Position
+    public enum Position
     {
+        GiamDoc,
+        PhoGiamDoc,
+        TruongPhong,
+        PhoPhong,
+        NhanVien
     }
 }

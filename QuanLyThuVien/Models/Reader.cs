@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuanLyThuVien.Enums;
 
 namespace QuanLyThuVien.Models
 {
@@ -20,7 +21,7 @@ namespace QuanLyThuVien.Models
 
         public DateTime NgayLap { get; set; }
 
-        public string LoaiDocGia { get; set; }
+        public ReaderType LoaiDocGia { get; set; }
 
         public int TienNo { get; set; }
     }
