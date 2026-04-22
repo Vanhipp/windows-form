@@ -40,6 +40,7 @@
             this.CaiDat = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.DangNhap = new System.Windows.Forms.ToolStripMenuItem();
+            this.DangXuat = new System.Windows.Forms.ToolStripMenuItem();
             this.TroGiup = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.menuStrip1.SuspendLayout();
@@ -170,6 +171,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DangNhap,
+            this.DangXuat,
             this.TroGiup});
             this.menuStrip1.Location = new System.Drawing.Point(236, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -183,6 +185,13 @@
             this.DangNhap.Size = new System.Drawing.Size(96, 24);
             this.DangNhap.Text = "Đăng nhập";
             this.DangNhap.Click += new System.EventHandler(this.DangNhapToolStripMenuItem_Click);
+            // 
+            // DangXuat
+            // 
+            this.DangXuat.Name = "DangXuat";
+            this.DangXuat.Size = new System.Drawing.Size(91, 24);
+            this.DangXuat.Text = "Đăng xuất";
+            this.DangXuat.Click += new System.EventHandler(this.DangXuat_Click);
             // 
             // TroGiup
             // 
@@ -222,6 +231,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmMain";
             this.Text = "Quản Lý Thư Viện";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -245,6 +255,7 @@
         private System.Windows.Forms.ToolStripMenuItem DangNhap;
         private System.Windows.Forms.ToolStripMenuItem TroGiup;
         private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.ToolStripMenuItem DangXuat;
     }
 }
 

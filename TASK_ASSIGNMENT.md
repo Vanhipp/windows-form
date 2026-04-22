@@ -51,9 +51,9 @@ QuanLyThuVien/
 > Hiệp
 
 ✅ **Nhiệm vụ chính:**
-- Form Đăng nhập, Phân quyền
+- Form Đăng nhập, Phân quyền //Oke 
 - Quản lý Nhân viên, Thiết lập hệ thống
-- Xây dựng Permission system, quản lý vai trò người dùng
+- Xây dựng Permission system, quản lý vai trò người dùng //Oke
 
 ✅ **File được phân công:**
 ```

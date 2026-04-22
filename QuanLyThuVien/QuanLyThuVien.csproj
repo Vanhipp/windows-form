@@ -51,10 +51,12 @@
     <Compile Include="Attributes\RequiresRoleAttribute.cs" />
     <Compile Include="Constants\AppSettings.cs" />
     <Compile Include="Constants\UIConstants.cs" />
+    <Compile Include="Managers\DataProvider.cs" />
     <Compile Include="Enums\BookCategory.cs" />
     <Compile Include="Enums\BookStatus.cs" />
     <Compile Include="Enums\Department.cs" />
     <Compile Include="Enums\LiquidationReason.cs" />
+    <Compile Include="Enums\Permission.cs" />
     <Compile Include="Enums\Position.cs" />
     <Compile Include="Enums\ReaderType.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
@@ -133,6 +135,8 @@
     </Compile>
     <Compile Include="Interfaces\IPermissionForm.cs" />
     <Compile Include="Managers\FormManager.cs" />
+    <Compile Include="Managers\PermissionManager.cs" />
+    <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookLiquidation.cs" />
     <Compile Include="Models\BorrowSlip.cs" />
