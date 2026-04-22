@@ -55,7 +55,7 @@ namespace QuanLyThuVien
                 if (taikhoa != null && taikhoa.Rows.Count > 0)
                 {
                     var row = taikhoa.Rows[0];
-
+                    
                     CurrentUser.ID = row["IDNhanVien"].ToString();
                     CurrentUser.HoTen = row["HoTen"].ToString();
                     CurrentUser.BoPhan = row["BoPhan"].ToString();

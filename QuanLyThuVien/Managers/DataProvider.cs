@@ -20,7 +20,7 @@ namespace QuanLyThuVien.Managers
     {
         public static string ChuoiKetNoi
         {
-            get { return @"Server=VanHipp; Database=QUANLYTHUVIEN; Integrated Security=True;"; }
+            get { return @"Server=.; Database=QUANLYTHUVIEN; Integrated Security=True;"; }
         }
         public static bool TruyVan_XuLy(string sql)
         {
