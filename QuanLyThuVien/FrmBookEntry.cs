@@ -155,7 +155,7 @@ namespace QuanLyThuVien
                 return;
             }
 
-            if (!int.TryParse(txtGiaBan.Text.Trim(), out int triGia) || triGia < 0)
+            if (!int.TryParse(txtGiaBan.Text.Trim(), out int giaBan) || giaBan < 0)
             {
                 MessageBox.Show("Giá bán (trị giá) không hợp lệ.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtGiaBan.Focus();
@@ -182,13 +182,13 @@ namespace QuanLyThuVien
                     NhaXuatBan = txtNhaXuatBan.Text.Trim(),
                     NgayNhap = dtpNgayNhap.Value,
                     NamXuatBan = namXB,
-                    TriGia = triGia,
+                    GiaBan = giaBan,
                     IDDauSach = (cboTheLoai.SelectedItem is CategoryItem cat) ? cat.Id : null
                 };
 
                 if (!string.IsNullOrEmpty(_editingId))
                 {
-                    string updateSql = "UPDATE ThongTinSach SET TenSach=@TenSach, TacGia=@TacGia, NhaXuatBan=@NhaXuatBan, NamXuatBan=@NamXuatBan, NgayNhap=@NgayNhap, TriGia=@TriGia, GiaThue=@GiaThue, IDDauSach=@IDDauSach WHERE IDSach=@id";
+                    string updateSql = "UPDATE ThongTinSach SET TenSach=@TenSach, TacGia=@TacGia, NhaXuatBan=@NhaXuatBan, NamXuatBan=@NamXuatBan, NgayNhap=@NgayNhap, GiaBan=@GiaBan, GiaThue=@GiaThue, IDDauSach=@IDDauSach WHERE IDSach=@id";
                     var updateParams = new SqlParameter[]
                     {
                         new SqlParameter("@TenSach", book.TenSach),
@@ -196,7 +196,7 @@ namespace QuanLyThuVien
                         new SqlParameter("@NhaXuatBan", book.NhaXuatBan),
                         new SqlParameter("@NamXuatBan", book.NamXuatBan),
                         new SqlParameter("@NgayNhap", book.NgayNhap.Date),
-                        new SqlParameter("@TriGia", book.TriGia),
+                        new SqlParameter("@GiaBan", book.GiaBan),
                         new SqlParameter("@GiaThue", giaThue),
                         new SqlParameter("@IDDauSach", (object)book.IDDauSach ?? DBNull.Value),
                         new SqlParameter("@id", _editingId)
@@ -211,8 +211,8 @@ namespace QuanLyThuVien
                 else
                 {
                     var newId = GenerateNewBookId();
-                    string sql = "INSERT INTO ThongTinSach (IDSach, TenSach, TacGia, NhaXuatBan, NamXuatBan, NgayNhap, TriGia, GiaThue, IDDauSach, TinhTrang) " +
-                                 "VALUES (@IDSach, @TenSach, @TacGia, @NhaXuatBan, @NamXuatBan, @NgayNhap, @TriGia, @GiaThue, @IDDauSach, N'OK');";
+                    string sql = "INSERT INTO ThongTinSach (IDSach, TenSach, TacGia, NhaXuatBan, NamXuatBan, NgayNhap, GiaBan, GiaThue, IDDauSach, TinhTrang) " +
+                                 "VALUES (@IDSach, @TenSach, @TacGia, @NhaXuatBan, @NamXuatBan, @NgayNhap, @GiaBan, @GiaThue, @IDDauSach, N'OK');";
 
                     var parameters = new SqlParameter[]
                     {
@@ -222,7 +222,7 @@ namespace QuanLyThuVien
                         new SqlParameter("@NhaXuatBan", book.NhaXuatBan),
                         new SqlParameter("@NamXuatBan", (object)book.NamXuatBan),
                         new SqlParameter("@NgayNhap", (object)book.NgayNhap.Date),
-                        new SqlParameter("@TriGia", (object)book.TriGia),
+                        new SqlParameter("@GiaBan", (object)book.GiaBan),
                         new SqlParameter("@GiaThue", giaThue),
                         new SqlParameter("@IDDauSach", (object)book.IDDauSach ?? DBNull.Value)
                     };
@@ -300,7 +300,7 @@ namespace QuanLyThuVien
                 txtNhaXuatBan.Text = r["NhaXuatBan"]?.ToString().Trim();
                 txtNamXuatBan.Text = r["NamXuatBan"]?.ToString().Trim();
                 if (DateTime.TryParse(r["NgayNhap"]?.ToString(), out var dn)) dtpNgayNhap.Value = dn;
-                txtGiaBan.Text = r["TriGia"]?.ToString().Trim();
+                txtGiaBan.Text = r["GiaBan"]?.ToString().Trim();
                 txtGiaThue.Text = r.Table.Columns.Contains("GiaThue") ? r["GiaThue"]?.ToString().Trim() : "0";
                 var cat = r.Table.Columns.Contains("IDDauSach") ? r["IDDauSach"]?.ToString().Trim() : null;
                 if (!string.IsNullOrWhiteSpace(cat))

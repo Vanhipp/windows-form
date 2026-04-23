@@ -88,7 +88,7 @@ namespace QuanLyThuVien
             dgvBooks.Columns.Add("TacGia", "Tác giả");
             dgvBooks.Columns.Add("NhaXuatBan", "Nhà xuất bản");
             dgvBooks.Columns.Add("NamXuatBan", "Năm XB");
-            dgvBooks.Columns.Add("TriGia", "Trị giá");
+            dgvBooks.Columns.Add("GiaBan", "Trị giá");
             dgvBooks.Columns.Add("GiaThue", "Giá thuê");
             dgvBooks.Columns.Add("TheLoai", "Thể loại");
             dgvBooks.Columns.Add("TinhTrang", "Tình trạng");
@@ -111,7 +111,7 @@ namespace QuanLyThuVien
                 catch { }
 
                 string giaThueCol = hasGiaThue ? ", s.GiaThue" : ", 0 AS GiaThue";
-                string sql = "SELECT s.IDSach, s.TenSach, s.TacGia, s.NhaXuatBan, s.NamXuatBan, s.TriGia" + giaThueCol + ", ISNULL(d.TenDauSach, s.IDDauSach) AS TheLoai, s.IDDauSach, s.TinhTrang FROM ThongTinSach s LEFT JOIN DauSach d ON s.IDDauSach = d.IDDauSach";
+                string sql = "SELECT s.IDSach, s.TenSach, s.TacGia, s.NhaXuatBan, s.NamXuatBan, s.GiaBan" + giaThueCol + ", ISNULL(d.TenDauSach, s.IDDauSach) AS TheLoai, s.IDDauSach, s.TinhTrang FROM ThongTinSach s LEFT JOIN DauSach d ON s.IDDauSach = d.IDDauSach";
 
                 string finalWhere = "";
 
@@ -166,7 +166,7 @@ namespace QuanLyThuVien
                         r["TacGia"]?.ToString()?.Trim(),
                         r["NhaXuatBan"]?.ToString()?.Trim(),
                         r["NamXuatBan"],
-                        r["TriGia"],
+                        r["GiaBan"],
                         r["GiaThue"],
                         theLoai,
                         statusText);
