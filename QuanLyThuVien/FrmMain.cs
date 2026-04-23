@@ -23,6 +23,60 @@ namespace QuanLyThuVien
             DangNhap.Text = CurrentUser.HoTen;
             DangXuat.Visible = true;
             DangNhap.Enabled = false;
+            if(CurrentUser.BoPhan == "Ban Giám Đốc")
+            {
+                HSNhanVien.Enabled = true;
+                TheDocGia.Enabled = false;
+                PhieuMuonSach.Enabled = false;
+                PhieuTraSach.Enabled = false;
+                TiepNhanSachMoi.Enabled = false;
+                TraCuuSach.Enabled = true;
+                ThuTienPhat.Enabled = false;
+                ThanhLy.Enabled = false;
+                BaoCaoThongKe.Enabled = true;
+                CaiDat.Enabled = true;
+            }
+            else if(CurrentUser.BoPhan == "Thủ Thư")
+            {
+                HSNhanVien.Enabled = false;
+                TheDocGia.Enabled = true;
+                PhieuMuonSach.Enabled = true;
+                PhieuTraSach.Enabled = true;
+                TiepNhanSachMoi.Enabled = false;
+                TraCuuSach.Enabled = true;
+                ThuTienPhat.Enabled = false;
+                ThanhLy.Enabled = false;
+                BaoCaoThongKe.Enabled = false;
+                CaiDat.Enabled = false;
+
+            }
+            else if(CurrentUser.BoPhan == "Thủ Kho")
+            {
+                HSNhanVien.Enabled = false;
+                TheDocGia.Enabled = false;
+                PhieuMuonSach.Enabled = false;
+                PhieuTraSach.Enabled = false;
+                TiepNhanSachMoi.Enabled = true;
+                TraCuuSach.Enabled = true;
+                ThuTienPhat.Enabled = false;
+                ThanhLy.Enabled = true;
+                BaoCaoThongKe.Enabled = false;
+                CaiDat.Enabled = false;
+
+            }
+            else if(CurrentUser.BoPhan == "Thủ Quỹ")
+            {
+                HSNhanVien.Enabled = false;
+                TheDocGia.Enabled = false;
+                PhieuMuonSach.Enabled = false;
+                PhieuTraSach.Enabled = false;
+                TiepNhanSachMoi.Enabled = false;
+                TraCuuSach.Enabled = true;
+                ThuTienPhat.Enabled = true;
+                ThanhLy.Enabled = false;
+                BaoCaoThongKe.Enabled = false;
+                CaiDat.Enabled = false;
+            }
         }
 
         private void DangNhapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -236,7 +290,32 @@ namespace QuanLyThuVien
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            // Show login form automatically on startup (as MDI child)
+            foreach (Form frm in this.MdiChildren)
+            {
+                if (frm is FrmLogin)
+                {
+                    frm.Activate();
+                    return;
+                }
+            }
+
+            FrmLogin frmLogin = new FrmLogin();
+            frmLogin.MdiParent = this;
+            frmLogin.Show();
+
             DangXuat.Visible = false;
+
+            HSNhanVien.Enabled = false;
+            TheDocGia.Enabled = false;
+            PhieuMuonSach.Enabled = false;
+            PhieuTraSach.Enabled = false;
+            TiepNhanSachMoi.Enabled = false;
+            TraCuuSach.Enabled = false;
+            ThuTienPhat.Enabled = false;
+            ThanhLy.Enabled = false;
+            BaoCaoThongKe.Enabled = false;
+            CaiDat.Enabled = false;
         }
 
         private void DangXuat_Click(object sender, EventArgs e)
@@ -254,10 +333,34 @@ namespace QuanLyThuVien
                     frm.Close();
             }
 
+            foreach (Form frm in this.MdiChildren)
+            {
+                if (frm is FrmLogin)
+                {
+                    frm.Activate();
+                    return;
+                }
+            }
+
+            FrmLogin frmLogin = new FrmLogin();
+            frmLogin.MdiParent = this;
+            frmLogin.Show();
+
             // Update UI to logged-out state
             DangXuat.Visible = false;
             DangNhap.Text = "Đăng nhập";
             DangNhap.Enabled = true;
+
+            HSNhanVien.Enabled = false;
+            TheDocGia.Enabled = false;
+            PhieuMuonSach.Enabled = false;
+            PhieuTraSach.Enabled = false;
+            TiepNhanSachMoi.Enabled = false;
+            TraCuuSach.Enabled = false;
+            ThuTienPhat.Enabled = false;
+            ThanhLy.Enabled = false;
+            BaoCaoThongKe.Enabled = false;
+            CaiDat.Enabled = false;
         }
     }
 }
