@@ -8,7 +8,8 @@ namespace QuanLyThuVien.Enums
 {
     public enum ReaderType
     {
-        X,
-        Y
+        Whitelist,
+        Blacklist,
+        Graylist
     }
 }

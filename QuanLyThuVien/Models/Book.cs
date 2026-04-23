@@ -17,7 +17,7 @@ namespace QuanLyThuVien.Models
 
         public DateTime NgayNhap { get; set; }
 
-        public int TriGia { get; set; }
+        public int GiaBan { get; set; }
 
         public BookStatus TinhTrang { get; set; }
 
