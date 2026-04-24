@@ -94,22 +94,15 @@ namespace QuanLyThuVien
             try
             {
                 cboTheLoai.Items.Clear();
-                string[] orderSequence = { "Mathematics", "Physics", "Chemistry", "Biology", "History", "Geography", "English", "Literature" };
                 var dt = DatabaseHelper.ExecuteQuery("SELECT IDDauSach, TenDauSach FROM DauSach", null);
 
-                foreach (var name in orderSequence)
+                foreach (DataRow r in dt.Rows)
                 {
-                    foreach (DataRow r in dt.Rows)
-                    {
-                        if (r["TenDauSach"]?.ToString().Trim() == name)
-                        {
-                            cboTheLoai.Items.Add(new CategoryItem(r["IDDauSach"]?.ToString().Trim(), r["TenDauSach"]?.ToString().Trim()));
-                            break;
-                        }
-                    }
+                    cboTheLoai.Items.Add(new CategoryItem(r["IDDauSach"]?.ToString().Trim(), r["TenDauSach"]?.ToString().Trim()));
                 }
 
-                if (cboTheLoai.Items.Count > 0) cboTheLoai.SelectedIndex = 0;
+                if (cboTheLoai.Items.Count > 0) 
+                    cboTheLoai.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -212,7 +205,7 @@ namespace QuanLyThuVien
                 {
                     var newId = GenerateNewBookId();
                     string sql = "INSERT INTO ThongTinSach (IDSach, TenSach, TacGia, NhaXuatBan, NamXuatBan, NgayNhap, GiaBan, GiaThue, IDDauSach, TinhTrang) " +
-                                 "VALUES (@IDSach, @TenSach, @TacGia, @NhaXuatBan, @NamXuatBan, @NgayNhap, @GiaBan, @GiaThue, @IDDauSach, N'OK');";
+                                 "VALUES (@IDSach, @TenSach, @TacGia, @NhaXuatBan, @NamXuatBan, @NgayNhap, @GiaBan, @GiaThue, @IDDauSach, N'Sẵn sàng');";
 
                     var parameters = new SqlParameter[]
                     {
@@ -268,18 +261,25 @@ namespace QuanLyThuVien
         {
             try
             {
-                var dt = DatabaseHelper.ExecuteQuery("SELECT TOP 1 IDSach FROM ThongTinSach ORDER BY IDSach DESC", null);
-                if (dt.Rows.Count > 0)
+                var dt = DatabaseHelper.ExecuteQuery("SELECT IDSach FROM ThongTinSach", null);
+                int maxId = 0;
+                foreach (DataRow row in dt.Rows)
                 {
-                    var lastId = dt.Rows[0]["IDSach"]?.ToString().Trim();
-                    if (!string.IsNullOrWhiteSpace(lastId) && lastId.StartsWith("S"))
+                    string idStr = row["IDSach"]?.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(idStr))
                     {
-                        if (int.TryParse(lastId.Substring(1), out int num))
+                        // Lấy riêng phần số từ chuỗi (ví dụ: S015 -> 15, 3 -> 3)
+                        string numPart = new string(idStr.Where(char.IsDigit).ToArray());
+                        if (int.TryParse(numPart, out int num))
                         {
-                            return "S" + (num + 1).ToString("D3");
+                            if (num > maxId)
+                            {
+                                maxId = num;
+                            }
                         }
                     }
                 }
+                return "S" + (maxId + 1).ToString("D3");
             }
             catch { }
             return "S001";

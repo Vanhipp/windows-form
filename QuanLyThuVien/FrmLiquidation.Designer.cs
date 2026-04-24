@@ -1,4 +1,4 @@
-﻿namespace QuanLyThuVien
+namespace QuanLyThuVien
 {
     partial class FrmLiquidation
     {
@@ -39,12 +39,13 @@
             this.txtMaSach = new System.Windows.Forms.TextBox();
             this.lblMaSach = new System.Windows.Forms.Label();
             this.dgvBooks = new System.Windows.Forms.DataGridView();
+            this.btnDatimthay = new System.Windows.Forms.Button();
             this.grpThanhLy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTienPhat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // grpThanhLy
             // 
             this.grpThanhLy.Controls.Add(this.nudTienPhat);
             this.grpThanhLy.Controls.Add(this.cboLyDo);
@@ -57,12 +58,12 @@
             this.grpThanhLy.Margin = new System.Windows.Forms.Padding(4);
             this.grpThanhLy.Name = "grpThanhLy";
             this.grpThanhLy.Padding = new System.Windows.Forms.Padding(4);
-            this.grpThanhLy.Size = new System.Drawing.Size(287, 270);
+            this.grpThanhLy.Size = new System.Drawing.Size(287, 304);
             this.grpThanhLy.TabIndex = 7;
             this.grpThanhLy.TabStop = false;
             this.grpThanhLy.Text = "Thanh lý";
             // 
-            // numericUpDown1
+            // nudTienPhat
             // 
             this.nudTienPhat.Location = new System.Drawing.Point(13, 129);
             this.nudTienPhat.Margin = new System.Windows.Forms.Padding(4);
@@ -70,7 +71,7 @@
             this.nudTienPhat.Size = new System.Drawing.Size(261, 32);
             this.nudTienPhat.TabIndex = 9;
             // 
-            // comboBox1
+            // cboLyDo
             // 
             this.cboLyDo.FormattingEnabled = true;
             this.cboLyDo.Location = new System.Drawing.Point(13, 65);
@@ -99,7 +100,7 @@
             this.lblTienPhat.TabIndex = 7;
             this.lblTienPhat.Text = "Tiền phạt";
             // 
-            // Dong
+            // btnDong
             // 
             this.btnDong.Location = new System.Drawing.Point(8, 218);
             this.btnDong.Margin = new System.Windows.Forms.Padding(4);
@@ -110,7 +111,7 @@
             this.btnDong.UseVisualStyleBackColor = true;
             this.btnDong.Click += new System.EventHandler(this.Dong_Click);
             // 
-            // XacNhan
+            // btnXacNhan
             // 
             this.btnXacNhan.Location = new System.Drawing.Point(8, 174);
             this.btnXacNhan.Margin = new System.Windows.Forms.Padding(4);
@@ -121,7 +122,7 @@
             this.btnXacNhan.UseVisualStyleBackColor = true;
             this.btnXacNhan.Click += new System.EventHandler(this.XacNhan_Click);
             // 
-            // Timkiem
+            // btnTimKiem
             // 
             this.btnTimKiem.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTimKiem.Location = new System.Drawing.Point(19, 79);
@@ -133,7 +134,7 @@
             this.btnTimKiem.UseVisualStyleBackColor = true;
             this.btnTimKiem.Click += new System.EventHandler(this.Timkiem_Click);
             // 
-            // textBox1
+            // txtMaSach
             // 
             this.txtMaSach.Location = new System.Drawing.Point(19, 47);
             this.txtMaSach.Margin = new System.Windows.Forms.Padding(4);
@@ -152,7 +153,7 @@
             this.lblMaSach.TabIndex = 9;
             this.lblMaSach.Text = "Mã sách";
             // 
-            // dataGridView1
+            // dgvBooks
             // 
             this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBooks.Location = new System.Drawing.Point(325, 15);
@@ -162,16 +163,28 @@
             this.dgvBooks.Size = new System.Drawing.Size(773, 538);
             this.dgvBooks.TabIndex = 8;
             // 
+            // btnDatimthay
+            // 
+            this.btnDatimthay.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnDatimthay.Location = new System.Drawing.Point(27, 404);
+            this.btnDatimthay.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDatimthay.Name = "btnDatimthay";
+            this.btnDatimthay.Size = new System.Drawing.Size(267, 33);
+            this.btnDatimthay.TabIndex = 6;
+            this.btnDatimthay.Text = "Đã tìm thấy";
+            this.btnDatimthay.UseVisualStyleBackColor = true;
+            // 
             // FrmLiquidation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1112, 567);
-            this.Controls.Add(this.grpThanhLy);
             this.Controls.Add(this.btnTimKiem);
             this.Controls.Add(this.txtMaSach);
             this.Controls.Add(this.lblMaSach);
             this.Controls.Add(this.dgvBooks);
+            this.Controls.Add(this.btnDatimthay);
+            this.Controls.Add(this.grpThanhLy);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmLiquidation";
             this.Text = "Thanh Lý";
@@ -197,5 +210,6 @@
         private System.Windows.Forms.TextBox txtMaSach;
         private System.Windows.Forms.Label lblMaSach;
         private System.Windows.Forms.DataGridView dgvBooks;
+        private System.Windows.Forms.Button btnDatimthay;
     }
 }
