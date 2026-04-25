@@ -46,19 +46,11 @@ namespace QuanLyThuVien
                 cboTheLoaiFilter.Items.Clear();
                 cboTheLoaiFilter.Items.Add("Tất cả");
 
-                string[] orderSequence = { "Mathematics", "Physics", "Chemistry", "Biology", "History", "Geography", "English", "Literature" };
                 var dt = DatabaseHelper.ExecuteQuery("SELECT IDDauSach, TenDauSach FROM DauSach", null);
 
-                foreach (var name in orderSequence)
+                foreach (DataRow r in dt.Rows)
                 {
-                    foreach (DataRow r in dt.Rows)
-                    {
-                        if (r["TenDauSach"]?.ToString().Trim() == name)
-                        {
-                            cboTheLoaiFilter.Items.Add(new CategoryItem(r["IDDauSach"]?.ToString().Trim(), r["TenDauSach"]?.ToString().Trim()));
-                            break;
-                        }
-                    }
+                    cboTheLoaiFilter.Items.Add(new CategoryItem(r["IDDauSach"]?.ToString().Trim(), r["TenDauSach"]?.ToString().Trim()));
                 }
 
                 cboTheLoaiFilter.SelectedIndex = 0;
@@ -207,6 +199,7 @@ namespace QuanLyThuVien
                 case "mat":
                 case "lost":
                 case "lost by user":
+                case "lostbyuser":
                     return "Mất";
                 case "người dùng làm mất":
                     return "Mất";
@@ -245,7 +238,7 @@ namespace QuanLyThuVien
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            LoadData("s.TinhTrang = N'OK'");
+            LoadData("s.TinhTrang IN (N'OK', N'Sẵn sàng')");
         }
 
         private void Button4_Click(object sender, EventArgs e)
