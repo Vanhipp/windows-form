@@ -40,7 +40,7 @@
             this.cboBangCap = new System.Windows.Forms.ComboBox();
             this.cboSDT = new System.Windows.Forms.TextBox();
             this.cboDiaChi = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnxoa = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -67,7 +67,7 @@
             this.groupBox1.Controls.Add(this.cboBangCap);
             this.groupBox1.Controls.Add(this.cboSDT);
             this.groupBox1.Controls.Add(this.cboDiaChi);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.btnxoa);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -202,15 +202,16 @@
             this.cboDiaChi.Size = new System.Drawing.Size(195, 32);
             this.cboDiaChi.TabIndex = 10;
             // 
-            // button2
+            // btnxoa
             // 
-            this.button2.Location = new System.Drawing.Point(176, 425);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(160, 42);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Xóa";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnxoa.Location = new System.Drawing.Point(176, 425);
+            this.btnxoa.Margin = new System.Windows.Forms.Padding(4);
+            this.btnxoa.Name = "btnxoa";
+            this.btnxoa.Size = new System.Drawing.Size(160, 42);
+            this.btnxoa.TabIndex = 9;
+            this.btnxoa.Text = "Xóa";
+            this.btnxoa.UseVisualStyleBackColor = true;
+            this.btnxoa.Click += new System.EventHandler(this.btnxoa_Click_1);
             // 
             // label6
             // 
@@ -330,7 +331,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox cboDiaChi;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnxoa;
         private System.Windows.Forms.TextBox cboSDT;
         private System.Windows.Forms.ComboBox cboBangCap;
         private System.Windows.Forms.TextBox cboMatKhau;

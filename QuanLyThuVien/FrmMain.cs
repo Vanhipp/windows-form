@@ -23,7 +23,7 @@ namespace QuanLyThuVien
             DangNhap.Text = CurrentUser.HoTen;
             DangXuat.Visible = true;
             DangNhap.Enabled = false;
-            if(CurrentUser.BoPhan == "Ban Giám Đốc")
+            if (CurrentUser.BoPhan == "Ban Giám Đốc")
             {
                 HSNhanVien.Enabled = true;
                 TheDocGia.Enabled = false;
@@ -36,7 +36,7 @@ namespace QuanLyThuVien
                 BaoCaoThongKe.Enabled = true;
                 CaiDat.Enabled = true;
             }
-            else if(CurrentUser.BoPhan == "Thủ Thư")
+            else if (CurrentUser.BoPhan == "Thủ Thư")
             {
                 HSNhanVien.Enabled = false;
                 TheDocGia.Enabled = true;
@@ -50,7 +50,7 @@ namespace QuanLyThuVien
                 CaiDat.Enabled = false;
 
             }
-            else if(CurrentUser.BoPhan == "Thủ Kho")
+            else if (CurrentUser.BoPhan == "Thủ Kho")
             {
                 HSNhanVien.Enabled = false;
                 TheDocGia.Enabled = false;
@@ -64,7 +64,7 @@ namespace QuanLyThuVien
                 CaiDat.Enabled = false;
 
             }
-            else if(CurrentUser.BoPhan == "Thủ Quỹ")
+            else if (CurrentUser.BoPhan == "Thủ Quỹ")
             {
                 HSNhanVien.Enabled = false;
                 TheDocGia.Enabled = false;
@@ -83,7 +83,7 @@ namespace QuanLyThuVien
         {
             foreach (Form frm in this.MdiChildren)
             {
-                if(frm is FrmLogin)
+                if (frm is FrmLogin)
                 {
                     frm.Activate();
                     return;
@@ -107,8 +107,8 @@ namespace QuanLyThuVien
                     }
                 }
                 FrmStaff frmStaff = new FrmStaff();
-                frmStaff.MdiParent = this;
-                frmStaff.Show();
+            frmStaff.MdiParent = this;
+            frmStaff.Show();
             }
         }
 
@@ -262,7 +262,7 @@ namespace QuanLyThuVien
         private void CaiDat_Click(object sender, EventArgs e)
         {
             if (CurrentUser.BoPhan == "Ban Giám Đốc") //Oke
-            {   
+            {
                 foreach (Form frm in this.MdiChildren)
                 {
                     if (frm is FrmSettings)
@@ -273,10 +273,10 @@ namespace QuanLyThuVien
                 }
                 FrmSettings frmSettings = new FrmSettings();
                 frmSettings.MdiParent = this;
-                frmSettings.Show(); 
+                frmSettings.Show();
             }
         }
-        
+
 
         private void TroGiupToolStripMenuItem_Click(object sender, EventArgs e)
         {

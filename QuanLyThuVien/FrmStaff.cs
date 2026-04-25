@@ -14,7 +14,7 @@ namespace QuanLyThuVien
 {
     public partial class FrmStaff : Form
     {
-        string chuoiketnoi = @"Data Source=VanHipp;Initial Catalog=QUANLYTHUVIEN;Integrated Security=True";
+        string chuoiketnoi = @"Data Source=.;Initial Catalog=QUANLYTHUVIEN;Integrated Security=True";
         public FrmStaff()
         {
             InitializeComponent();
@@ -118,6 +118,23 @@ namespace QuanLyThuVien
                 MessageBox.Show("Lỗi: " + ex.Message);
                 return false;
             }
+        }
+
+        private void btnxoa_Click_1(object sender, EventArgs e)
+        {
+            var malop = cboidnhanvien.Text.Trim();
+            if (malop.Length > 0)
+            {
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa lớp không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    var sql = $"DELETE FROM HoSoNhanVien WHERE IDNhanVien = N'{cboidnhanvien.Text}'";
+                    var xoatat = DataProvider.TruyVan_XuLy(sql);
+                    FrmStaff_Load(sender, e);
+                }
+            }
+
         }
     }
 }
