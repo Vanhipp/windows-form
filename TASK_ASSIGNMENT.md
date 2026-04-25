@@ -138,7 +138,7 @@ QuanLyThuVien/
 
 ✅ **Nhiệm vụ chính:**
 - Form chính Menu hệ thống
-- Tất cả các module báo cáo, thống kê
+- Tất cả các module báo cáo, thống kê//OK
 - Xây dựng giao diện chung, điều hướng //Ok
 
 ✅ **File được phân công:**

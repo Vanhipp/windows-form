@@ -14,7 +14,7 @@ namespace QuanLyThuVien
 {
     public partial class FrmStaff : Form
     {
-        string chuoiketnoi = @"Data Source=VanHipp;Initial Catalog=QUANLYTHUVIEN;Integrated Security=True";
+        string chuoiketnoi = @"Data Source=.;Initial Catalog=QUANLYTHUVIEN;Integrated Security=True";
         public FrmStaff()
         {
             InitializeComponent();

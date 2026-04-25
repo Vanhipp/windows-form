@@ -23,7 +23,7 @@ namespace QuanLyThuVien
             DangNhap.Text = CurrentUser.HoTen;
             DangXuat.Visible = true;
             DangNhap.Enabled = false;
-            if(CurrentUser.BoPhan == "Ban Giám Đốc")
+            if (CurrentUser.BoPhan == "Ban Giám Đốc")
             {
                 HSNhanVien.Enabled = true;
                 TheDocGia.Enabled = false;
@@ -36,7 +36,7 @@ namespace QuanLyThuVien
                 BaoCaoThongKe.Enabled = true;
                 CaiDat.Enabled = true;
             }
-            else if(CurrentUser.BoPhan == "Thủ Thư")
+            else if (CurrentUser.BoPhan == "Thủ Thư")
             {
                 HSNhanVien.Enabled = false;
                 TheDocGia.Enabled = true;
@@ -50,7 +50,7 @@ namespace QuanLyThuVien
                 CaiDat.Enabled = false;
 
             }
-            else if(CurrentUser.BoPhan == "Thủ Kho")
+            else if (CurrentUser.BoPhan == "Thủ Kho")
             {
                 HSNhanVien.Enabled = false;
                 TheDocGia.Enabled = false;
@@ -64,7 +64,7 @@ namespace QuanLyThuVien
                 CaiDat.Enabled = false;
 
             }
-            else if(CurrentUser.BoPhan == "Thủ Quỹ")
+            else if (CurrentUser.BoPhan == "Thủ Quỹ")
             {
                 HSNhanVien.Enabled = false;
                 TheDocGia.Enabled = false;
