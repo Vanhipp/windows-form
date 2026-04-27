@@ -148,17 +148,25 @@ namespace QuanLyThuVien
                 return;
             }
 
-            if (!int.TryParse(txtGiaBan.Text.Trim(), out int giaBan) || giaBan < 0)
+            // QĐ3: Chỉ nhận các sách xuất bản trong vòng 8 năm
+            if (DateTime.Now.Year - namXB > 8)
+            {
+                MessageBox.Show("Chỉ nhận các sách xuất bản trong vòng 8 năm gần đây!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNamXuatBan.Focus();
+                return;
+            }
+
+            if (!decimal.TryParse(txtGiaBan.Text.Trim(), out decimal giaBan) || giaBan < 0)
             {
                 MessageBox.Show("Giá bán (trị giá) không hợp lệ.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtGiaBan.Focus();
                 return;
             }
 
-            int giaThue = 0;
+            decimal giaThue = 0;
             if (!string.IsNullOrWhiteSpace(txtGiaThue.Text.Trim()))
             {
-                if (!int.TryParse(txtGiaThue.Text.Trim(), out giaThue) || giaThue < 0)
+                if (!decimal.TryParse(txtGiaThue.Text.Trim(), out giaThue) || giaThue < 0)
                 {
                     MessageBox.Show("Giá thuê không hợp lệ.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtGiaThue.Focus();

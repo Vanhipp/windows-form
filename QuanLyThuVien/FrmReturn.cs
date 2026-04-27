@@ -77,27 +77,44 @@ namespace QuanLyThuVien
 
         private void CalculateFine()
         {
-            DateTime dueDate = dtpBorrowDate.Value.AddDays(14);
-            DateTime returnDate = dtpReturnDate.Value;
-            decimal fine = 0;
+            if (dgvBorrowingList.SelectedRows.Count == 0) return;
 
-            if (returnDate > dueDate)
+            decimal totalFine = 0;
+            DateTime returnDate = dtpReturnDate.Value.Date;
+
+            foreach (DataGridViewRow row in dgvBorrowingList.SelectedRows)
             {
-                int lateDays = (returnDate - dueDate).Days;
-                txtLateDays.Text = lateDays.ToString();
-                fine = lateDays * FINE_PER_DAY;
-            }
-            else
-            {
-                txtLateDays.Text = "0";
+                if (row.Cells["HanTra"].Value == null) continue;
+                
+                DateTime dueDate = Convert.ToDateTime(row.Cells["HanTra"].Value).Date;
+                decimal rowFine = 0;
+
+                if (returnDate > dueDate)
+                {
+                    int lateDays = (returnDate - dueDate).Days;
+                    rowFine = lateDays * FINE_PER_DAY;
+                }
+
+                if (chkIsLost.Checked)
+                {
+                    // QĐ8: Tiền phạt không nhỏ hơn trị giá quyển sách
+                    string sachID = row.Cells["IDSach"].Value.ToString();
+                    string queryGia = "SELECT GiaBan FROM ThongTinSach WHERE IDSach = @SachID";
+                    object resultGia = DatabaseHelper.ExecuteScalar(queryGia, new SqlParameter[] { new SqlParameter("@SachID", sachID) });
+                    decimal giaBan = resultGia != null ? Convert.ToDecimal(resultGia) : 0;
+                    
+                    rowFine = Math.Max(rowFine, giaBan);
+                }
+                totalFine += rowFine;
             }
 
-            if (chkIsLost.Checked)
+            txtTotalFine.Text = totalFine.ToString();
+            // Cập nhật số ngày trễ của dòng đầu tiên đang chọn để tham khảo
+            if (dgvBorrowingList.SelectedRows[0].Cells["HanTra"].Value != null)
             {
-                fine += 100000;
+                DateTime firstDueDate = Convert.ToDateTime(dgvBorrowingList.SelectedRows[0].Cells["HanTra"].Value).Date;
+                txtLateDays.Text = returnDate > firstDueDate ? (returnDate - firstDueDate).Days.ToString() : "0";
             }
-
-            txtTotalFine.Text = fine.ToString();
         }
 
         private void BtnConfirmReturn_Click(object sender, EventArgs e)
@@ -110,56 +127,122 @@ namespace QuanLyThuVien
 
             try
             {
+                decimal totalFineIssued = 0;
+                DateTime returnDate = dtpReturnDate.Value.Date;
+
                 foreach (DataGridViewRow row in dgvBorrowingList.SelectedRows)
                 {
                     string ctID = row.Cells["IDChiTietMuon"].Value.ToString();
                     string sachID = row.Cells["IDSach"].Value.ToString();
-                    decimal fine = decimal.Parse(txtTotalFine.Text);
+                    DateTime dueDate = Convert.ToDateTime(row.Cells["HanTra"].Value).Date;
+                    
+                    decimal rowFine = 0;
+                    if (returnDate > dueDate)
+                    {
+                        rowFine = (returnDate - dueDate).Days * FINE_PER_DAY;
+                    }
 
                     if (chkIsLost.Checked)
                     {
-                        // 1. Record in GhiNhanMatSach
+                        string queryGia = "SELECT GiaBan FROM ThongTinSach WHERE IDSach = @SachID";
+                        object resultGia = DatabaseHelper.ExecuteScalar(queryGia, new SqlParameter[] { new SqlParameter("@SachID", sachID) });
+                        decimal giaBan = resultGia != null ? Convert.ToDecimal(resultGia) : 0;
+                        rowFine = Math.Max(rowFine, giaBan);
+
+                        // 1. Ghi nhận mất sách
                         string matSachID = "MS" + DateTime.Now.Ticks.ToString().Substring(10);
                         string queryMat = "INSERT INTO GhiNhanMatSach (IDPhieuMatSach, IDNguoiMuon, IDSach, NgayGhiNhan, TienPhat) " +
                                           "VALUES (@MSID, @ReaderID, @SachID, @Ngay, @Fine)";
-                        SqlParameter[] paramsMat = {
+                        DatabaseHelper.ExecuteNonQuery(queryMat, new SqlParameter[] {
                             new SqlParameter("@MSID", matSachID),
                             new SqlParameter("@ReaderID", txtReaderID.Text),
                             new SqlParameter("@SachID", sachID),
-                            new SqlParameter("@Ngay", dtpReturnDate.Value),
-                            new SqlParameter("@Fine", fine)
-                        };
-                        DatabaseHelper.ExecuteNonQuery(queryMat, paramsMat);
+                            new SqlParameter("@Ngay", returnDate),
+                            new SqlParameter("@Fine", rowFine)
+                        });
 
-                        // 2. Update Book status to 'Đã mất' or similar
-                        string queryUpdateBook = "UPDATE ThongTinSach SET TinhTrang = N'Đã mất' WHERE IDSach = @SachID";
-                        DatabaseHelper.ExecuteNonQuery(queryUpdateBook, new SqlParameter[] { new SqlParameter("@SachID", sachID) });
+                        // 2. Cập nhật trạng thái sách
+                        DatabaseHelper.ExecuteNonQuery("UPDATE ThongTinSach SET TinhTrang = N'Mất' WHERE IDSach = @SachID", 
+                            new SqlParameter[] { new SqlParameter("@SachID", sachID) });
                     }
                     else
                     {
-                        // Update ChiTietMuon with return info
+                        // 1. Cập nhật ChiTietMuon
                         string queryUpdateCT = "UPDATE ChiTietMuon SET NgayTra = @ReturnDate, TienPhat = @Fine, TinhTrangTra = N'Đã trả' " +
                                                "WHERE IDChiTietMuon = @CTID";
-                        SqlParameter[] paramsUpdate = {
-                            new SqlParameter("@ReturnDate", dtpReturnDate.Value),
-                            new SqlParameter("@Fine", fine),
+                        DatabaseHelper.ExecuteNonQuery(queryUpdateCT, new SqlParameter[] {
+                            new SqlParameter("@ReturnDate", returnDate),
+                            new SqlParameter("@Fine", rowFine),
                             new SqlParameter("@CTID", ctID)
-                        };
-                        DatabaseHelper.ExecuteNonQuery(queryUpdateCT, paramsUpdate);
+                        });
 
-                        // Update Book status back to 'Sẵn sàng'
-                        string queryUpdateBook = "UPDATE ThongTinSach SET TinhTrang = N'Sẵn sàng' WHERE IDSach = @SachID";
-                        DatabaseHelper.ExecuteNonQuery(queryUpdateBook, new SqlParameter[] { new SqlParameter("@SachID", sachID) });
+                        // 2. Trả sách về trạng thái Sẵn sàng
+                        DatabaseHelper.ExecuteNonQuery("UPDATE ThongTinSach SET TinhTrang = N'Sẵn sàng' WHERE IDSach = @SachID", 
+                            new SqlParameter[] { new SqlParameter("@SachID", sachID) });
                     }
+                    totalFineIssued += rowFine;
                 }
 
-                string message = chkIsLost.Checked ? "Đã ghi nhận mất sách và thu phí bồi thường." : "Đã nhận trả sách thành công!";
+                // 3. CẬP NHẬT NỢ CHO ĐỘC GIẢ
+                if (totalFineIssued > 0)
+                {
+                    string queryUpdateDebt = "UPDATE TheDocGia SET TienNo = TienNo + @TotalFine WHERE IDDocGia = @ReaderID";
+                    DatabaseHelper.ExecuteNonQuery(queryUpdateDebt, new SqlParameter[] {
+                        new SqlParameter("@TotalFine", totalFineIssued),
+                        new SqlParameter("@ReaderID", txtReaderID.Text)
+                    });
+                }
+
+                // 4. TỰ ĐỘNG CẬP NHẬT LOẠI ĐỘC GIẢ (Cơ chế chuyển đổi W -> G -> B)
+                UpdateReaderViolationStatus(txtReaderID.Text.Trim());
+
+                string message = chkIsLost.Checked ? "Đã ghi nhận mất sách." : "Đã nhận trả sách thành công!";
+                if (totalFineIssued > 0) message += $"\nTổng tiền phạt phát sinh: {totalFineIssued:N0} VNĐ (Đã cộng vào nợ độc giả).";
+                
                 MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi xử lý trả sách: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateReaderViolationStatus(string readerID)
+        {
+            try
+            {
+                // Đếm tổng số lần vi phạm: (Trả muộn) HOẶC (Làm mất/hỏng sách)
+                string queryCount = @"
+                    SELECT COUNT(*) 
+                    FROM ChiTietMuon CT 
+                    JOIN PhieuMuon PM ON CT.IDPhieuMuon = PM.IDPhieuMuon 
+                    WHERE PM.IDNguoiMuon = @ID 
+                      AND (CT.NgayTra > CT.HanTra OR CT.TinhTrangTra = N'Mất' OR CT.TinhTrangTra = N'Hỏng')";
+                
+                int violationCount = Convert.ToInt32(DatabaseHelper.ExecuteScalar(queryCount, new SqlParameter[] { new SqlParameter("@ID", readerID) }));
+
+                string newType = "Whitelist";
+                if (violationCount >= 3)
+                {
+                    newType = "Blacklist";
+                }
+                else if (violationCount >= 1)
+                {
+                    newType = "Graylist";
+                }
+
+                // Cập nhật lại vào bảng TheDocGia
+                string queryUpdate = "UPDATE TheDocGia SET LoaiDocGia = @NewType WHERE IDDocGia = @ID";
+                DatabaseHelper.ExecuteNonQuery(queryUpdate, new SqlParameter[] {
+                    new SqlParameter("@NewType", newType),
+                    new SqlParameter("@ID", readerID)
+                });
+            }
+            catch (Exception ex)
+            {
+                // Không làm gián đoạn luồng chính nếu lỗi phần tự động hạ bậc
+                Console.WriteLine("Lỗi cập nhật hạng độc giả: " + ex.Message);
             }
         }
 

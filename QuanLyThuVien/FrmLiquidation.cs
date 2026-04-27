@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -204,6 +204,14 @@ namespace QuanLyThuVien
 
             var id = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim();
             if (string.IsNullOrWhiteSpace(id)) return;
+
+            // Kiểm tra trạng thái sách trước khi thanh lý
+            string currentStatus = dgvBooks.SelectedRows[0].Cells[5].Value?.ToString()?.Trim();
+            if (currentStatus == "Đang mượn")
+            {
+                MessageBox.Show("Không thể thanh lý sách đang được mượn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             var result = MessageBox.Show($"Ban co chac chan muon thanh ly sach ma {id}?", "Xac nhan", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result != DialogResult.Yes) return;

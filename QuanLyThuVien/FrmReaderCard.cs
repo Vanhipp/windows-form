@@ -38,6 +38,15 @@ namespace QuanLyThuVien
                 return;
             }
 
+            // Kiểm tra tuổi từ 18 đến 55
+            int age = DateTime.Now.Year - dtpBirthDate.Value.Year;
+            if (dtpBirthDate.Value > DateTime.Now.AddYears(-age)) age--;
+            if (age < 18 || age > 55)
+            {
+                MessageBox.Show("Tuổi độc giả phải từ 18 đến 55!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             string readerID = "DG" + DateTime.Now.ToString("yyyyMMddHHmmss").Substring(8);
             
             string query = "INSERT INTO TheDocGia (IDDocGia, HoTen, NgaySinh, DiaChi, Email, NgayLap, LoaiDocGia, TienNo) " +
