@@ -5,7 +5,7 @@ namespace QuanLyThuVien.Models
 {
     internal class Book
     {
-        public int IDSach { get; set; }
+        public string IDSach { get; set; }
 
         public string TenSach { get; set; }
 
@@ -17,7 +17,9 @@ namespace QuanLyThuVien.Models
 
         public DateTime NgayNhap { get; set; }
 
-        public int GiaBan { get; set; }
+        public decimal GiaBan { get; set; }
+
+        public decimal GiaThue { get; set; }
 
         public BookStatus TinhTrang { get; set; }
 
