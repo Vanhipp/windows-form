@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QuanLyThuVien.Enums;
 using QuanLyThuVien.Models;
 using QuanLyThuVien.Helpers;
 using System.Data.SqlClient;
@@ -27,7 +26,9 @@ namespace QuanLyThuVien
 
         private void LoadReaderTypes()
         {
-            cboReaderType.DataSource = Enum.GetValues(typeof(ReaderType));
+            var allowedTypes = new[] { "Whitelist", "Graylist" };
+            cboReaderType.DataSource = allowedTypes;
+            cboReaderType.SelectedIndex = 0;
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
