@@ -269,8 +269,10 @@ namespace QuanLyThuVien
         {
             try
             {
+                // Tìm ID lớn nhất đang tồn tại trong DB
                 var dt = DatabaseHelper.ExecuteQuery("SELECT IDSach FROM ThongTinSach", null);
-                int maxId = 0;
+                HashSet<int> existingIds = new HashSet<int>();
+                
                 foreach (DataRow row in dt.Rows)
                 {
                     string idStr = row["IDSach"]?.ToString().Trim();
@@ -280,14 +282,19 @@ namespace QuanLyThuVien
                         string numPart = new string(idStr.Where(char.IsDigit).ToArray());
                         if (int.TryParse(numPart, out int num))
                         {
-                            if (num > maxId)
-                            {
-                                maxId = num;
-                            }
+                            existingIds.Add(num);
                         }
                     }
                 }
-                return "S" + (maxId + 1).ToString("D3");
+
+                // Tìm số nhỏ nhất chưa tồn tại
+                int newId = 1;
+                while (existingIds.Contains(newId))
+                {
+                    newId++;
+                }
+                
+                return "S" + newId.ToString("D3");
             }
             catch { }
             return "S001";
