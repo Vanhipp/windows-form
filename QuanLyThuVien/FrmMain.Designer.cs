@@ -49,6 +49,7 @@
             // 
             // TraCuuSach
             // 
+            this.TraCuuSach.BackColor = System.Drawing.Color.White;
             this.TraCuuSach.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TraCuuSach.Location = new System.Drawing.Point(16, 439);
             this.TraCuuSach.Margin = new System.Windows.Forms.Padding(4);
@@ -56,11 +57,12 @@
             this.TraCuuSach.Size = new System.Drawing.Size(200, 37);
             this.TraCuuSach.TabIndex = 0;
             this.TraCuuSach.Text = "Tra cứu sách";
-            this.TraCuuSach.UseVisualStyleBackColor = true;
+            this.TraCuuSach.UseVisualStyleBackColor = false;
             this.TraCuuSach.Click += new System.EventHandler(this.TraCuuSach_Click);
             // 
             // PhieuMuonSach
             // 
+            this.PhieuMuonSach.BackColor = System.Drawing.Color.White;
             this.PhieuMuonSach.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PhieuMuonSach.Location = new System.Drawing.Point(16, 192);
             this.PhieuMuonSach.Margin = new System.Windows.Forms.Padding(4);
@@ -68,23 +70,25 @@
             this.PhieuMuonSach.Size = new System.Drawing.Size(200, 37);
             this.PhieuMuonSach.TabIndex = 1;
             this.PhieuMuonSach.Text = "Phiếu mượn sách";
-            this.PhieuMuonSach.UseVisualStyleBackColor = true;
+            this.PhieuMuonSach.UseVisualStyleBackColor = false;
             this.PhieuMuonSach.Click += new System.EventHandler(this.PhieuMuonSach_Click);
             // 
             // HSNhanVien
             // 
+            this.HSNhanVien.BackColor = System.Drawing.Color.White;
             this.HSNhanVien.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HSNhanVien.Location = new System.Drawing.Point(16, 22);
+            this.HSNhanVien.Location = new System.Drawing.Point(16, 28);
             this.HSNhanVien.Margin = new System.Windows.Forms.Padding(4);
             this.HSNhanVien.Name = "HSNhanVien";
             this.HSNhanVien.Size = new System.Drawing.Size(200, 37);
             this.HSNhanVien.TabIndex = 2;
             this.HSNhanVien.Text = "Hồ sơ nhân viên";
-            this.HSNhanVien.UseVisualStyleBackColor = true;
+            this.HSNhanVien.UseVisualStyleBackColor = false;
             this.HSNhanVien.Click += new System.EventHandler(this.HSNhanVien_Click);
             // 
             // TiepNhanSachMoi
             // 
+            this.TiepNhanSachMoi.BackColor = System.Drawing.Color.White;
             this.TiepNhanSachMoi.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TiepNhanSachMoi.Location = new System.Drawing.Point(16, 359);
             this.TiepNhanSachMoi.Margin = new System.Windows.Forms.Padding(4);
@@ -92,23 +96,25 @@
             this.TiepNhanSachMoi.Size = new System.Drawing.Size(200, 37);
             this.TiepNhanSachMoi.TabIndex = 3;
             this.TiepNhanSachMoi.Text = "Tiếp nhận sách mới";
-            this.TiepNhanSachMoi.UseVisualStyleBackColor = true;
+            this.TiepNhanSachMoi.UseVisualStyleBackColor = false;
             this.TiepNhanSachMoi.Click += new System.EventHandler(this.TiepNhanSachMoi_Click);
             // 
             // TheDocGia
             // 
+            this.TheDocGia.BackColor = System.Drawing.Color.White;
             this.TheDocGia.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TheDocGia.Location = new System.Drawing.Point(16, 107);
+            this.TheDocGia.Location = new System.Drawing.Point(16, 109);
             this.TheDocGia.Margin = new System.Windows.Forms.Padding(4);
             this.TheDocGia.Name = "TheDocGia";
             this.TheDocGia.Size = new System.Drawing.Size(200, 37);
             this.TheDocGia.TabIndex = 4;
             this.TheDocGia.Text = "Thẻ đọc giả";
-            this.TheDocGia.UseVisualStyleBackColor = true;
+            this.TheDocGia.UseVisualStyleBackColor = false;
             this.TheDocGia.Click += new System.EventHandler(this.TheDocGia_Click);
             // 
             // PhieuTraSach
             // 
+            this.PhieuTraSach.BackColor = System.Drawing.Color.White;
             this.PhieuTraSach.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PhieuTraSach.Location = new System.Drawing.Point(16, 274);
             this.PhieuTraSach.Margin = new System.Windows.Forms.Padding(4);
@@ -116,11 +122,12 @@
             this.PhieuTraSach.Size = new System.Drawing.Size(200, 37);
             this.PhieuTraSach.TabIndex = 5;
             this.PhieuTraSach.Text = "Phiếu trả sách";
-            this.PhieuTraSach.UseVisualStyleBackColor = true;
+            this.PhieuTraSach.UseVisualStyleBackColor = false;
             this.PhieuTraSach.Click += new System.EventHandler(this.PhieuTraSach_Click);
             // 
             // ThuTienPhat
             // 
+            this.ThuTienPhat.BackColor = System.Drawing.Color.White;
             this.ThuTienPhat.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ThuTienPhat.Location = new System.Drawing.Point(16, 520);
             this.ThuTienPhat.Margin = new System.Windows.Forms.Padding(4);
@@ -128,11 +135,12 @@
             this.ThuTienPhat.Size = new System.Drawing.Size(200, 37);
             this.ThuTienPhat.TabIndex = 6;
             this.ThuTienPhat.Text = "Thu tiền phạt";
-            this.ThuTienPhat.UseVisualStyleBackColor = true;
+            this.ThuTienPhat.UseVisualStyleBackColor = false;
             this.ThuTienPhat.Click += new System.EventHandler(this.ThuTienPhat_Click);
             // 
             // ThanhLy
             // 
+            this.ThanhLy.BackColor = System.Drawing.Color.White;
             this.ThanhLy.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ThanhLy.Location = new System.Drawing.Point(16, 599);
             this.ThanhLy.Margin = new System.Windows.Forms.Padding(4);
@@ -140,11 +148,12 @@
             this.ThanhLy.Size = new System.Drawing.Size(200, 37);
             this.ThanhLy.TabIndex = 7;
             this.ThanhLy.Text = "Thanh lý";
-            this.ThanhLy.UseVisualStyleBackColor = true;
+            this.ThanhLy.UseVisualStyleBackColor = false;
             this.ThanhLy.Click += new System.EventHandler(this.ThanhLy_Click);
             // 
             // BaoCaoThongKe
             // 
+            this.BaoCaoThongKe.BackColor = System.Drawing.Color.White;
             this.BaoCaoThongKe.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BaoCaoThongKe.Location = new System.Drawing.Point(16, 681);
             this.BaoCaoThongKe.Margin = new System.Windows.Forms.Padding(4);
@@ -152,11 +161,12 @@
             this.BaoCaoThongKe.Size = new System.Drawing.Size(200, 37);
             this.BaoCaoThongKe.TabIndex = 8;
             this.BaoCaoThongKe.Text = "Báo cáo - thống kê";
-            this.BaoCaoThongKe.UseVisualStyleBackColor = true;
+            this.BaoCaoThongKe.UseVisualStyleBackColor = false;
             this.BaoCaoThongKe.Click += new System.EventHandler(this.BaoCaoThongKe_Click);
             // 
             // CaiDat
             // 
+            this.CaiDat.BackColor = System.Drawing.Color.White;
             this.CaiDat.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CaiDat.Location = new System.Drawing.Point(16, 761);
             this.CaiDat.Margin = new System.Windows.Forms.Padding(4);
@@ -164,11 +174,12 @@
             this.CaiDat.Size = new System.Drawing.Size(200, 37);
             this.CaiDat.TabIndex = 9;
             this.CaiDat.Text = "Cài đặt";
-            this.CaiDat.UseVisualStyleBackColor = true;
+            this.CaiDat.UseVisualStyleBackColor = false;
             this.CaiDat.Click += new System.EventHandler(this.CaiDat_Click);
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(55)))), ((int)(((byte)(49)))));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DangNhap,
@@ -182,27 +193,34 @@
             // 
             // DangNhap
             // 
+            this.DangNhap.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DangNhap.ForeColor = System.Drawing.SystemColors.Control;
             this.DangNhap.Name = "DangNhap";
-            this.DangNhap.Size = new System.Drawing.Size(96, 24);
+            this.DangNhap.Size = new System.Drawing.Size(99, 24);
             this.DangNhap.Text = "Đăng nhập";
             this.DangNhap.Click += new System.EventHandler(this.DangNhapToolStripMenuItem_Click);
             // 
             // DangXuat
             // 
+            this.DangXuat.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DangXuat.ForeColor = System.Drawing.SystemColors.Control;
             this.DangXuat.Name = "DangXuat";
-            this.DangXuat.Size = new System.Drawing.Size(91, 24);
+            this.DangXuat.Size = new System.Drawing.Size(95, 24);
             this.DangXuat.Text = "Đăng xuất";
             this.DangXuat.Click += new System.EventHandler(this.DangXuat_Click);
             // 
             // TroGiup
             // 
+            this.TroGiup.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TroGiup.ForeColor = System.Drawing.SystemColors.Control;
             this.TroGiup.Name = "TroGiup";
-            this.TroGiup.Size = new System.Drawing.Size(78, 24);
+            this.TroGiup.Size = new System.Drawing.Size(81, 24);
             this.TroGiup.Text = "Trợ giúp";
             this.TroGiup.Click += new System.EventHandler(this.TroGiupToolStripMenuItem_Click);
             // 
             // splitter1
             // 
+            this.splitter1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.splitter1.Location = new System.Drawing.Point(0, 0);
             this.splitter1.Margin = new System.Windows.Forms.Padding(4);
             this.splitter1.Name = "splitter1";
@@ -212,6 +230,7 @@
             // 
             // PanelContent
             // 
+            this.PanelContent.BackColor = System.Drawing.Color.White;
             this.PanelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelContent.Location = new System.Drawing.Point(236, 28);
             this.PanelContent.Name = "PanelContent";

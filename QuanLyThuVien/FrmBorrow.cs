@@ -203,5 +203,10 @@ namespace QuanLyThuVien
         {
             this.Close();
         }
+
+        private void dgvBooks_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

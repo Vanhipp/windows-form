@@ -53,6 +53,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(556, 0);
@@ -64,6 +65,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Controls.Add(this.comboBoxTongQuan);
             this.groupBox1.Controls.Add(this.buttonHuy);
             this.groupBox1.Controls.Add(this.labelBaoCao);
@@ -89,7 +91,7 @@
             "Tình hình mượn sách theo thể loại",
             "Sách trả trễ",
             "Độc giả nợ tiền phạt"});
-            this.comboBoxTongQuan.Location = new System.Drawing.Point(83, 163);
+            this.comboBoxTongQuan.Location = new System.Drawing.Point(17, 90);
             this.comboBoxTongQuan.Name = "comboBoxTongQuan";
             this.comboBoxTongQuan.Size = new System.Drawing.Size(406, 30);
             this.comboBoxTongQuan.TabIndex = 8;
@@ -97,7 +99,7 @@
             // 
             // buttonHuy
             // 
-            this.buttonHuy.Location = new System.Drawing.Point(340, 381);
+            this.buttonHuy.Location = new System.Drawing.Point(166, 284);
             this.buttonHuy.Margin = new System.Windows.Forms.Padding(4);
             this.buttonHuy.Name = "buttonHuy";
             this.buttonHuy.Size = new System.Drawing.Size(108, 37);
@@ -108,7 +110,7 @@
             // 
             // buttonTimKiem
             // 
-            this.buttonTimKiem.Location = new System.Drawing.Point(105, 381);
+            this.buttonTimKiem.Location = new System.Drawing.Point(17, 284);
             this.buttonTimKiem.Margin = new System.Windows.Forms.Padding(4);
             this.buttonTimKiem.Name = "buttonTimKiem";
             this.buttonTimKiem.Size = new System.Drawing.Size(108, 37);
@@ -121,7 +123,7 @@
             // 
             this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(83, 282);
+            this.dateTimePicker1.Location = new System.Drawing.Point(17, 191);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(406, 29);
@@ -130,7 +132,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(80, 232);
+            this.label4.Location = new System.Drawing.Point(13, 144);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 24);

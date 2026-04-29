@@ -19,36 +19,7 @@ namespace QuanLyThuVien
         public FrmMain()
         {
             InitializeComponent();
-
-            splitter1.BackColor = Color.FromArgb(30, 30, 45);
-
-            //style button
-            foreach (Control ctrl in splitter1.Controls)
-            {
-                if (ctrl is Button btn)
-                {
-                    StyleButton(btn);
-                    AddHover(btn);
-                }
-            }
-
         }
-
-        private void AddHover(Button button)
-        {
-            button.MouseEnter += (s, e) => button.BackColor = Color.FromArgb(50, 50, 70);
-            button.MouseLeave += (s, e) => button.BackColor = Color.FromArgb(30, 30, 45);
-        }
-
-        private void StyleButton(Button btn)
-        {
-            btn.FlatStyle = FlatStyle.Flat;
-            btn.ForeColor = Color.White;
-            btn.BackColor = Color.FromArgb(30, 30, 45);
-
-            btn.FlatAppearance.BorderSize = 0;
-        }
-
 
         void OpenForm(Form f)
         {
@@ -56,6 +27,7 @@ namespace QuanLyThuVien
                 currentForm.Close();
 
             currentForm = f;
+
 
             f.TopLevel = false;
             f.FormBorderStyle = FormBorderStyle.None;

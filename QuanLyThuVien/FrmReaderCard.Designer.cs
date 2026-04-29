@@ -48,7 +48,7 @@ namespace QuanLyThuVien
             // 
             this.btnCancel.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(268, 277);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(133, 37);
             this.btnCancel.TabIndex = 35;
@@ -59,7 +59,7 @@ namespace QuanLyThuVien
             // 
             this.btnAdd.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Location = new System.Drawing.Point(81, 277);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(133, 37);
             this.btnAdd.TabIndex = 34;
@@ -71,7 +71,7 @@ namespace QuanLyThuVien
             this.cboReaderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboReaderType.FormattingEnabled = true;
             this.cboReaderType.Location = new System.Drawing.Point(208, 94);
-            this.cboReaderType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cboReaderType.Margin = new System.Windows.Forms.Padding(4);
             this.cboReaderType.Name = "cboReaderType";
             this.cboReaderType.Size = new System.Drawing.Size(265, 24);
             this.cboReaderType.TabIndex = 33;
@@ -79,7 +79,7 @@ namespace QuanLyThuVien
             // txtAddress
             // 
             this.txtAddress.Location = new System.Drawing.Point(212, 218);
-            this.txtAddress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(265, 22);
             this.txtAddress.TabIndex = 32;
@@ -87,7 +87,7 @@ namespace QuanLyThuVien
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(212, 177);
-            this.txtEmail.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(265, 22);
             this.txtEmail.TabIndex = 31;
@@ -95,7 +95,7 @@ namespace QuanLyThuVien
             // dtpBirthDate
             // 
             this.dtpBirthDate.Location = new System.Drawing.Point(212, 138);
-            this.dtpBirthDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpBirthDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpBirthDate.Name = "dtpBirthDate";
             this.dtpBirthDate.Size = new System.Drawing.Size(265, 22);
             this.dtpBirthDate.TabIndex = 29;
@@ -103,7 +103,7 @@ namespace QuanLyThuVien
             // txtPhone
             // 
             this.txtPhone.Location = new System.Drawing.Point(208, 48);
-            this.txtPhone.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPhone.Margin = new System.Windows.Forms.Padding(4);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(265, 22);
             this.txtPhone.TabIndex = 27;
@@ -111,7 +111,7 @@ namespace QuanLyThuVien
             // txtFullName
             // 
             this.txtFullName.Location = new System.Drawing.Point(208, 10);
-            this.txtFullName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFullName.Margin = new System.Windows.Forms.Padding(4);
             this.txtFullName.Name = "txtFullName";
             this.txtFullName.Size = new System.Drawing.Size(265, 22);
             this.txtFullName.TabIndex = 26;
@@ -186,6 +186,7 @@ namespace QuanLyThuVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(500, 345);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAdd);
@@ -201,7 +202,7 @@ namespace QuanLyThuVien
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmReaderCard";
             this.Text = "Thẻ Đọc Giả";
             this.ResumeLayout(false);

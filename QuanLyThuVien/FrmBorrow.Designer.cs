@@ -55,11 +55,11 @@ namespace QuanLyThuVien
             this.groupBox1.Controls.Add(this.txtReaderID);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(13, 129);
+            this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(332, 256);
+            this.groupBox1.Size = new System.Drawing.Size(332, 287);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Chi tiết thông tin";
@@ -112,6 +112,7 @@ namespace QuanLyThuVien
             // 
             // dgvBooks
             // 
+            this.dgvBooks.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBooks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBooks.Location = new System.Drawing.Point(0, 0);
@@ -120,9 +121,11 @@ namespace QuanLyThuVien
             this.dgvBooks.RowHeadersWidth = 51;
             this.dgvBooks.Size = new System.Drawing.Size(753, 515);
             this.dgvBooks.TabIndex = 1;
+            this.dgvBooks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBooks_CellContentClick);
             // 
             // btnBorrow
             // 
+            this.btnBorrow.BackColor = System.Drawing.Color.White;
             this.btnBorrow.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBorrow.Location = new System.Drawing.Point(941, 6);
             this.btnBorrow.Margin = new System.Windows.Forms.Padding(4);
@@ -130,10 +133,11 @@ namespace QuanLyThuVien
             this.btnBorrow.Size = new System.Drawing.Size(133, 37);
             this.btnBorrow.TabIndex = 2;
             this.btnBorrow.Text = "Mượn";
-            this.btnBorrow.UseVisualStyleBackColor = true;
+            this.btnBorrow.UseVisualStyleBackColor = false;
             // 
             // btnCancel
             // 
+            this.btnCancel.BackColor = System.Drawing.Color.White;
             this.btnCancel.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(768, 7);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
@@ -141,10 +145,11 @@ namespace QuanLyThuVien
             this.btnCancel.Size = new System.Drawing.Size(133, 37);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Hủy";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnBorrow);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -155,6 +160,7 @@ namespace QuanLyThuVien
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel2.Controls.Add(this.groupBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);

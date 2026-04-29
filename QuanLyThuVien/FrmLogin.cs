@@ -22,6 +22,20 @@ namespace QuanLyThuVien
             _main = main;
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            int borderSize = 1;
+            Color borderColor = Color.Black;
+
+            ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle,
+                borderColor, borderSize, ButtonBorderStyle.Solid,
+                borderColor, borderSize, ButtonBorderStyle.Solid,
+                borderColor, borderSize, ButtonBorderStyle.Solid,
+                borderColor, borderSize, ButtonBorderStyle.Solid);
+        }
+
         public static class CurrentUser
         {
             public static string ID { get; set; }

@@ -155,6 +155,7 @@ namespace QuanLyThuVien
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel1.Controls.Add(this.txtMaSach);
             this.panel1.Controls.Add(this.grpBoLoc);
             this.panel1.Controls.Add(this.btnTimKiem);
@@ -167,6 +168,7 @@ namespace QuanLyThuVien
             // 
             // dgvBooks
             // 
+            this.dgvBooks.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBooks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBooks.Location = new System.Drawing.Point(358, 0);

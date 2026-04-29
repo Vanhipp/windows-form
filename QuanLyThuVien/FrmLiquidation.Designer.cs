@@ -52,11 +52,11 @@
             this.grpThanhLy.Controls.Add(this.btnDong);
             this.grpThanhLy.Controls.Add(this.btnXacNhan);
             this.grpThanhLy.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpThanhLy.Location = new System.Drawing.Point(13, 249);
+            this.grpThanhLy.Location = new System.Drawing.Point(13, 138);
             this.grpThanhLy.Margin = new System.Windows.Forms.Padding(4);
             this.grpThanhLy.Name = "grpThanhLy";
             this.grpThanhLy.Padding = new System.Windows.Forms.Padding(4);
-            this.grpThanhLy.Size = new System.Drawing.Size(232, 190);
+            this.grpThanhLy.Size = new System.Drawing.Size(232, 209);
             this.grpThanhLy.TabIndex = 7;
             this.grpThanhLy.TabStop = false;
             this.grpThanhLy.Text = "Thanh ly";
@@ -105,7 +105,7 @@
             // btnTimKiem
             // 
             this.btnTimKiem.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTimKiem.Location = new System.Drawing.Point(13, 183);
+            this.btnTimKiem.Location = new System.Drawing.Point(17, 92);
             this.btnTimKiem.Margin = new System.Windows.Forms.Padding(4);
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(207, 38);
@@ -116,7 +116,7 @@
             // 
             // txtMaSach
             // 
-            this.txtMaSach.Location = new System.Drawing.Point(11, 153);
+            this.txtMaSach.Location = new System.Drawing.Point(17, 52);
             this.txtMaSach.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaSach.Name = "txtMaSach";
             this.txtMaSach.Size = new System.Drawing.Size(207, 22);
@@ -126,7 +126,7 @@
             // 
             this.lblMaSach.AutoSize = true;
             this.lblMaSach.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaSach.Location = new System.Drawing.Point(7, 119);
+            this.lblMaSach.Location = new System.Drawing.Point(13, 24);
             this.lblMaSach.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMaSach.Name = "lblMaSach";
             this.lblMaSach.Size = new System.Drawing.Size(82, 24);
@@ -135,6 +135,7 @@
             // 
             // dgvBooks
             // 
+            this.dgvBooks.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBooks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBooks.Location = new System.Drawing.Point(0, 0);
@@ -146,6 +147,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel1.Controls.Add(this.grpThanhLy);
             this.panel1.Controls.Add(this.txtMaSach);
             this.panel1.Controls.Add(this.btnTimKiem);
