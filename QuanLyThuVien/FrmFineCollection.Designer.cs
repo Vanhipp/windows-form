@@ -29,12 +29,10 @@ namespace QuanLyThuVien
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtReaderID = new System.Windows.Forms.TextBox();
-            this.txtStaffID = new System.Windows.Forms.TextBox();
             this.txtCurrentFine = new System.Windows.Forms.TextBox();
             this.txtAmountCollected = new System.Windows.Forms.TextBox();
             this.txtRemainingFine = new System.Windows.Forms.TextBox();
@@ -55,17 +53,6 @@ namespace QuanLyThuVien
             this.label1.Size = new System.Drawing.Size(106, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "Mã đọc giả";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(16, 239);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(129, 24);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Mã nhân viên";
             // 
             // label3
             // 
@@ -107,14 +94,6 @@ namespace QuanLyThuVien
             this.txtReaderID.Name = "txtReaderID";
             this.txtReaderID.Size = new System.Drawing.Size(196, 22);
             this.txtReaderID.TabIndex = 5;
-            // 
-            // txtStaffID
-            // 
-            this.txtStaffID.Location = new System.Drawing.Point(197, 238);
-            this.txtStaffID.Margin = new System.Windows.Forms.Padding(4);
-            this.txtStaffID.Name = "txtStaffID";
-            this.txtStaffID.Size = new System.Drawing.Size(265, 22);
-            this.txtStaffID.TabIndex = 6;
             // 
             // txtCurrentFine
             // 
@@ -201,9 +180,7 @@ namespace QuanLyThuVien
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSearchReader);
             this.Controls.Add(this.btnConfirm);
-            this.Controls.Add(this.txtStaffID);
             this.Controls.Add(this.txtReaderID);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmFineCollection";
@@ -218,12 +195,10 @@ namespace QuanLyThuVien
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtReaderID;
-        private System.Windows.Forms.TextBox txtStaffID;
         private System.Windows.Forms.TextBox txtCurrentFine;
         private System.Windows.Forms.TextBox txtAmountCollected;
         private System.Windows.Forms.TextBox txtRemainingFine;

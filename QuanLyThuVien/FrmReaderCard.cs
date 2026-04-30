@@ -48,7 +48,7 @@ namespace QuanLyThuVien
                 return;
             }
 
-            string readerID = "DG" + DateTime.Now.ToString("yyyyMMddHHmmss").Substring(8);
+            string readerID = "DG" + DateTime.Now.ToString("yyyyMMddHHmmss");
             
             string query = "INSERT INTO TheDocGia (IDDocGia, HoTen, NgaySinh, DiaChi, Email, NgayLap, LoaiDocGia, TienNo) " +
                            "VALUES (@ID, @Name, @DOB, @Address, @Email, @RegDate, @Type, @Debt)";
@@ -61,7 +61,7 @@ namespace QuanLyThuVien
                 new SqlParameter("@Email", txtEmail.Text),
                 new SqlParameter("@RegDate", DateTime.Now),
                 new SqlParameter("@Type", cboReaderType.SelectedItem.ToString()),
-                new SqlParameter("@Debt", 0)
+                new SqlParameter("@Debt", SqlDbType.Int) { Value = 0 } // Fixed here
             };
 
             try

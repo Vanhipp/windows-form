@@ -45,8 +45,7 @@ namespace QuanLyThuVien
             try
             {
                 // Kiểm tra dữ liệu trống
-                if (string.IsNullOrWhiteSpace(cboidnhanvien.Text) ||
-                    string.IsNullOrWhiteSpace(cboHoTen.Text) ||
+                if (string.IsNullOrWhiteSpace(cboHoTen.Text) ||
                     string.IsNullOrWhiteSpace(cboDiaChi.Text) ||
                     string.IsNullOrWhiteSpace(cboSDT.Text) ||
                     string.IsNullOrWhiteSpace(cboMatKhau.Text))
@@ -59,17 +58,6 @@ namespace QuanLyThuVien
                 if (!DateTime.TryParse(date_NS.Text, out DateTime ngaySinh))
                 {
                     MessageBox.Show("Ngày sinh không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Kiểm tra trùng ID
-                string checkSql = "SELECT COUNT(*) FROM HoSoNhanVien WHERE IDNhanVien = @ID";
-                int count = Convert.ToInt32(DatabaseHelper.ExecuteScalar(checkSql, new SqlParameter[] { 
-                    new SqlParameter("@ID", cboidnhanvien.Text.Trim()) 
-                }));
-                if (count > 0)
-                {
-                    MessageBox.Show("Mã nhân viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -91,11 +79,33 @@ namespace QuanLyThuVien
                     return;
                 }
 
+                string identifierBoPhan = "";
+                switch (selectedBoPhan)
+                {
+                    case "Quản Trị":
+                        identifierBoPhan = "QT";
+                        break;
+                    case "Ban Giám Đốc":
+                        identifierBoPhan = "BGD";
+                        break;
+                    case "Thủ Quỹ":
+                        identifierBoPhan = "TQ";
+                        break;
+                    case "Thủ Kho":
+                        identifierBoPhan = "TK";
+                        break;
+                    case "Thủ Thư":
+                        identifierBoPhan = "TT";
+                        break;
+                }
+
+                string staffID = identifierBoPhan + DateTime.Now.ToString("yyyyMMddHHmmss");
+
                 string sql = "INSERT INTO HoSoNhanVien (IDNhanVien, HoTen, NgaySinh, DiaChi, DienThoai, BangCap, BoPhan, ChucVu, MatKhau) " +
                              "VALUES (@ID, @HoTen, @NgaySinh, @DiaChi, @DienThoai, @BangCap, @BoPhan, @ChucVu, @MatKhau)";
 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@ID", cboidnhanvien.Text.Trim()),
+                    new SqlParameter("@ID", staffID),
                     new SqlParameter("@HoTen", cboHoTen.Text.Trim()),
                     new SqlParameter("@NgaySinh", ngaySinh),
                     new SqlParameter("@DiaChi", cboDiaChi.Text.Trim()),
@@ -107,7 +117,7 @@ namespace QuanLyThuVien
                 };
 
                 DatabaseHelper.ExecuteNonQuery(sql, parameters);
-                MessageBox.Show("Thêm nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Thêm nhân viên thành công! ID: " + staffID, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LayHS_NhanVien();
             }
             catch (Exception ex)
@@ -118,27 +128,48 @@ namespace QuanLyThuVien
 
         private void btnxoa_Click_1(object sender, EventArgs e)
         {
-            string idNhanVien = cboidnhanvien.Text.Trim();
-            if (string.IsNullOrEmpty(idNhanVien))
+            try
             {
-                MessageBox.Show("Vui lòng chọn nhân viên cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                // Ensure a row is selected
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Vui lòng chọn một nhân viên để xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            var result = MessageBox.Show($"Bạn có chắc chắn muốn xóa nhân viên {idNhanVien} không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
+                // Get the ID of the selected row
+                var selectedRow = dataGridView1.SelectedRows[0];
+                string selectedID = selectedRow.Cells["IDNhanVien"].Value?.ToString();
+
+                if (string.IsNullOrEmpty(selectedID))
+                {
+                    MessageBox.Show("Không thể xác định mã nhân viên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Confirm deletion
+                var confirmResult = MessageBox.Show($"Bạn có chắc chắn muốn xóa nhân viên với mã {selectedID}?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirmResult != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                // Delete the record from the database
+                string sql = "DELETE FROM HoSoNhanVien WHERE IDNhanVien = @ID";
+                SqlParameter[] parameters = {
+                    new SqlParameter("@ID", selectedID)
+                };
+
+                DatabaseHelper.ExecuteNonQuery(sql, parameters);
+
+                // Remove the row from the DataGridView
+                dataGridView1.Rows.Remove(selectedRow);
+
+                MessageBox.Show("Xóa nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    string sql = "DELETE FROM HoSoNhanVien WHERE IDNhanVien = @ID";
-                    DatabaseHelper.ExecuteNonQuery(sql, new SqlParameter[] { new SqlParameter("@ID", idNhanVien) });
-                    MessageBox.Show("Xóa nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LayHS_NhanVien();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi khi xóa nhân viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Lỗi khi xóa nhân viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

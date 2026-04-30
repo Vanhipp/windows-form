@@ -47,8 +47,6 @@ namespace QuanLyThuVien
             this.Thembtn = new System.Windows.Forms.Button();
             this.date_NS = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
-            this.cboidnhanvien = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -75,8 +73,6 @@ namespace QuanLyThuVien
             this.groupBox1.Controls.Add(this.Thembtn);
             this.groupBox1.Controls.Add(this.date_NS);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cboidnhanvien);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -92,7 +88,7 @@ namespace QuanLyThuVien
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 367);
+            this.label9.Location = new System.Drawing.Point(8, 334);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(92, 24);
@@ -102,7 +98,7 @@ namespace QuanLyThuVien
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 287);
+            this.label8.Location = new System.Drawing.Point(8, 254);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(83, 24);
@@ -112,7 +108,7 @@ namespace QuanLyThuVien
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 247);
+            this.label7.Location = new System.Drawing.Point(8, 214);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(92, 24);
@@ -121,7 +117,7 @@ namespace QuanLyThuVien
             // 
             // cboMatKhau
             // 
-            this.cboMatKhau.Location = new System.Drawing.Point(137, 364);
+            this.cboMatKhau.Location = new System.Drawing.Point(137, 331);
             this.cboMatKhau.Margin = new System.Windows.Forms.Padding(4);
             this.cboMatKhau.Name = "cboMatKhau";
             this.cboMatKhau.Size = new System.Drawing.Size(308, 32);
@@ -136,7 +132,7 @@ namespace QuanLyThuVien
             "Trưởng Phòng",
             "Phó Phòng",
             "Nhân Viên"});
-            this.cboChucVu.Location = new System.Drawing.Point(138, 324);
+            this.cboChucVu.Location = new System.Drawing.Point(138, 291);
             this.cboChucVu.Margin = new System.Windows.Forms.Padding(4);
             this.cboChucVu.Name = "cboChucVu";
             this.cboChucVu.Size = new System.Drawing.Size(308, 32);
@@ -151,7 +147,7 @@ namespace QuanLyThuVien
             "Thủ Quỹ",
             "Thủ Kho",
             "Thủ Thư"});
-            this.cboBoPhan.Location = new System.Drawing.Point(138, 284);
+            this.cboBoPhan.Location = new System.Drawing.Point(138, 251);
             this.cboBoPhan.Margin = new System.Windows.Forms.Padding(4);
             this.cboBoPhan.Name = "cboBoPhan";
             this.cboBoPhan.Size = new System.Drawing.Size(308, 32);
@@ -159,7 +155,7 @@ namespace QuanLyThuVien
             // 
             // cboHoTen
             // 
-            this.cboHoTen.Location = new System.Drawing.Point(138, 84);
+            this.cboHoTen.Location = new System.Drawing.Point(138, 51);
             this.cboHoTen.Margin = new System.Windows.Forms.Padding(4);
             this.cboHoTen.Name = "cboHoTen";
             this.cboHoTen.Size = new System.Drawing.Size(308, 32);
@@ -168,7 +164,7 @@ namespace QuanLyThuVien
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 87);
+            this.label3.Location = new System.Drawing.Point(8, 54);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 24);
             this.label3.TabIndex = 13;
@@ -184,7 +180,7 @@ namespace QuanLyThuVien
             "Cao Đẳng",
             "Trung Cấp ",
             "Tú Tài"});
-            this.cboBangCap.Location = new System.Drawing.Point(138, 244);
+            this.cboBangCap.Location = new System.Drawing.Point(138, 211);
             this.cboBangCap.Margin = new System.Windows.Forms.Padding(4);
             this.cboBangCap.Name = "cboBangCap";
             this.cboBangCap.Size = new System.Drawing.Size(308, 32);
@@ -192,7 +188,7 @@ namespace QuanLyThuVien
             // 
             // cboSDT
             // 
-            this.cboSDT.Location = new System.Drawing.Point(137, 204);
+            this.cboSDT.Location = new System.Drawing.Point(137, 171);
             this.cboSDT.Margin = new System.Windows.Forms.Padding(4);
             this.cboSDT.Name = "cboSDT";
             this.cboSDT.Size = new System.Drawing.Size(308, 32);
@@ -200,7 +196,7 @@ namespace QuanLyThuVien
             // 
             // cboDiaChi
             // 
-            this.cboDiaChi.Location = new System.Drawing.Point(138, 164);
+            this.cboDiaChi.Location = new System.Drawing.Point(138, 131);
             this.cboDiaChi.Margin = new System.Windows.Forms.Padding(4);
             this.cboDiaChi.Name = "cboDiaChi";
             this.cboDiaChi.Size = new System.Drawing.Size(308, 32);
@@ -208,7 +204,7 @@ namespace QuanLyThuVien
             // 
             // btnxoa
             // 
-            this.btnxoa.Location = new System.Drawing.Point(176, 425);
+            this.btnxoa.Location = new System.Drawing.Point(176, 392);
             this.btnxoa.Margin = new System.Windows.Forms.Padding(4);
             this.btnxoa.Name = "btnxoa";
             this.btnxoa.Size = new System.Drawing.Size(160, 42);
@@ -220,7 +216,7 @@ namespace QuanLyThuVien
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 327);
+            this.label6.Location = new System.Drawing.Point(8, 294);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(81, 24);
@@ -230,7 +226,7 @@ namespace QuanLyThuVien
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 167);
+            this.label5.Location = new System.Drawing.Point(8, 134);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 24);
@@ -240,7 +236,7 @@ namespace QuanLyThuVien
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 207);
+            this.label4.Location = new System.Drawing.Point(8, 174);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 24);
@@ -249,7 +245,7 @@ namespace QuanLyThuVien
             // 
             // Thembtn
             // 
-            this.Thembtn.Location = new System.Drawing.Point(8, 425);
+            this.Thembtn.Location = new System.Drawing.Point(8, 392);
             this.Thembtn.Margin = new System.Windows.Forms.Padding(4);
             this.Thembtn.Name = "Thembtn";
             this.Thembtn.Size = new System.Drawing.Size(160, 42);
@@ -261,7 +257,7 @@ namespace QuanLyThuVien
             // date_NS
             // 
             this.date_NS.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.date_NS.Location = new System.Drawing.Point(137, 124);
+            this.date_NS.Location = new System.Drawing.Point(137, 91);
             this.date_NS.Margin = new System.Windows.Forms.Padding(4);
             this.date_NS.Name = "date_NS";
             this.date_NS.Size = new System.Drawing.Size(308, 28);
@@ -270,30 +266,12 @@ namespace QuanLyThuVien
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 130);
+            this.label2.Location = new System.Drawing.Point(8, 97);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(97, 24);
             this.label2.TabIndex = 2;
             this.label2.Text = "Ngày sinh";
-            // 
-            // cboidnhanvien
-            // 
-            this.cboidnhanvien.Location = new System.Drawing.Point(138, 44);
-            this.cboidnhanvien.Margin = new System.Windows.Forms.Padding(4);
-            this.cboidnhanvien.Name = "cboidnhanvien";
-            this.cboidnhanvien.Size = new System.Drawing.Size(308, 32);
-            this.cboidnhanvien.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 47);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(129, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Mã nhân viên";
             // 
             // dataGridView1
             // 
@@ -331,8 +309,6 @@ namespace QuanLyThuVien
         private System.Windows.Forms.Button Thembtn;
         private System.Windows.Forms.DateTimePicker date_NS;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox cboidnhanvien;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
