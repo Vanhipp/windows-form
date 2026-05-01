@@ -14,6 +14,7 @@ namespace QuanLyThuVien
 {
     public partial class FrmSearchBook : Form
     {
+        string borrowStatusClause;
         public FrmSearchBook()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace QuanLyThuVien
 
         private void FrmSearchBook_Load(object sender, EventArgs e)
         {
+            comboSearchMethod.SelectedIndex = 0;
             LoadCategories();
             SetupGridColumns();
             LoadData();
@@ -219,30 +221,55 @@ namespace QuanLyThuVien
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtMaSach.Text))
+            if (string.IsNullOrWhiteSpace(txtMaSach.Text))
             {
-                var p = new SqlParameter[] { new SqlParameter("@id", txtMaSach.Text.Trim()) };
-                LoadData("s.IDSach = @id", p);
+                LoadData(borrowStatusClause);
             }
-            else
+
+            string searchField = "s.IDSach"; // Default search field is ID
+            string searchValue = txtMaSach.Text.Trim();
+
+            // Determine the search field based on the comboSearchMethod dropdown
+            if (comboSearchMethod.SelectedIndex == 1) // Search by Name
             {
-                LoadData();
+                searchField = "s.TenSach";
+            }
+
+            // Build the WHERE clause
+            string whereClause = $"{searchField} LIKE @searchValue";
+            SqlParameter[] parameters = { new SqlParameter("@searchValue", "%" + searchValue + "%") };
+
+            try
+            {
+                LoadData(whereClause + (string.IsNullOrWhiteSpace(borrowStatusClause) ? "" : " AND " + borrowStatusClause), parameters);
+
+                if (dgvBooks.Rows.Count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy kết quả nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            LoadData();
+            borrowStatusClause = null;
+            LoadData(borrowStatusClause);
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            LoadData("s.TinhTrang = N'Sẵn sàng'");
+            borrowStatusClause = "s.TinhTrang = N'Sẵn sàng'";
+            LoadData(borrowStatusClause);
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            LoadData("s.TinhTrang = N'Đang mượn'");
+            borrowStatusClause = "s.TinhTrang = N'Đang mượn'";
+            LoadData(borrowStatusClause);
         }
     }
 }

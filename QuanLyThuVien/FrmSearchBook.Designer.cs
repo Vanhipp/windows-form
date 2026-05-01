@@ -30,7 +30,6 @@ namespace QuanLyThuVien
         {
             this.btnTimKiem = new System.Windows.Forms.Button();
             this.txtMaSach = new System.Windows.Forms.TextBox();
-            this.lblMaSach = new System.Windows.Forms.Label();
             this.grpBoLoc = new System.Windows.Forms.GroupBox();
             this.cboTheLoaiFilter = new System.Windows.Forms.ComboBox();
             this.lblTheLoaiFilterLabel = new System.Windows.Forms.Label();
@@ -40,6 +39,7 @@ namespace QuanLyThuVien
             this.btnTatCa = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvBooks = new System.Windows.Forms.DataGridView();
+            this.comboSearchMethod = new System.Windows.Forms.ComboBox();
             this.grpBoLoc.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
@@ -63,17 +63,6 @@ namespace QuanLyThuVien
             this.txtMaSach.Name = "txtMaSach";
             this.txtMaSach.Size = new System.Drawing.Size(334, 22);
             this.txtMaSach.TabIndex = 0;
-            // 
-            // lblMaSach
-            // 
-            this.lblMaSach.AutoSize = true;
-            this.lblMaSach.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaSach.Location = new System.Drawing.Point(4, 60);
-            this.lblMaSach.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblMaSach.Name = "lblMaSach";
-            this.lblMaSach.Size = new System.Drawing.Size(82, 24);
-            this.lblMaSach.TabIndex = 4;
-            this.lblMaSach.Text = "Mã sách";
             // 
             // grpBoLoc
             // 
@@ -156,10 +145,10 @@ namespace QuanLyThuVien
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.Controls.Add(this.comboSearchMethod);
             this.panel1.Controls.Add(this.txtMaSach);
             this.panel1.Controls.Add(this.grpBoLoc);
             this.panel1.Controls.Add(this.btnTimKiem);
-            this.panel1.Controls.Add(this.lblMaSach);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -177,6 +166,19 @@ namespace QuanLyThuVien
             this.dgvBooks.RowTemplate.Height = 24;
             this.dgvBooks.Size = new System.Drawing.Size(754, 567);
             this.dgvBooks.TabIndex = 6;
+            // 
+            // comboSearchMethod
+            // 
+            this.comboSearchMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboSearchMethod.FormattingEnabled = true;
+            this.comboSearchMethod.Items.AddRange(new object[] {
+            "Tìm bằng mã sách",
+            "Tìm bằng tên sách"});
+            this.comboSearchMethod.Location = new System.Drawing.Point(9, 60);
+            this.comboSearchMethod.Margin = new System.Windows.Forms.Padding(4);
+            this.comboSearchMethod.Name = "comboSearchMethod";
+            this.comboSearchMethod.Size = new System.Drawing.Size(334, 24);
+            this.comboSearchMethod.TabIndex = 9;
             // 
             // FrmSearchBook
             // 
@@ -201,7 +203,6 @@ namespace QuanLyThuVien
 
         public System.Windows.Forms.Button btnTimKiem;
         public System.Windows.Forms.TextBox txtMaSach;
-        public System.Windows.Forms.Label lblMaSach;
         public System.Windows.Forms.GroupBox grpBoLoc;
         public System.Windows.Forms.ComboBox cboTheLoaiFilter;
         public System.Windows.Forms.Label lblTheLoaiFilterLabel;
@@ -211,5 +212,6 @@ namespace QuanLyThuVien
         public System.Windows.Forms.Button btnTatCa;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dgvBooks;
+        public System.Windows.Forms.ComboBox comboSearchMethod;
     }
 }
