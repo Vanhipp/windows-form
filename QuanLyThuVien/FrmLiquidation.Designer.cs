@@ -59,7 +59,7 @@
             this.grpThanhLy.Size = new System.Drawing.Size(232, 209);
             this.grpThanhLy.TabIndex = 7;
             this.grpThanhLy.TabStop = false;
-            this.grpThanhLy.Text = "Thanh ly";
+            this.grpThanhLy.Text = "Thanh lý";
             // 
             // cboLyDo
             // 
@@ -78,7 +78,7 @@
             this.lblLyDo.Name = "lblLyDo";
             this.lblLyDo.Size = new System.Drawing.Size(58, 24);
             this.lblLyDo.TabIndex = 8;
-            this.lblLyDo.Text = "Ly do";
+            this.lblLyDo.Text = "Lý do";
             // 
             // btnDong
             // 
@@ -87,7 +87,7 @@
             this.btnDong.Name = "btnDong";
             this.btnDong.Size = new System.Drawing.Size(207, 38);
             this.btnDong.TabIndex = 6;
-            this.btnDong.Text = "Dong";
+            this.btnDong.Text = "Đóng";
             this.btnDong.UseVisualStyleBackColor = true;
             this.btnDong.Click += new System.EventHandler(this.Dong_Click);
             // 
@@ -98,7 +98,7 @@
             this.btnXacNhan.Name = "btnXacNhan";
             this.btnXacNhan.Size = new System.Drawing.Size(207, 38);
             this.btnXacNhan.TabIndex = 5;
-            this.btnXacNhan.Text = "Xac nhan";
+            this.btnXacNhan.Text = "Xác nhận";
             this.btnXacNhan.UseVisualStyleBackColor = true;
             this.btnXacNhan.Click += new System.EventHandler(this.XacNhan_Click);
             // 
@@ -110,7 +110,7 @@
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(207, 38);
             this.btnTimKiem.TabIndex = 6;
-            this.btnTimKiem.Text = "Tim kiem";
+            this.btnTimKiem.Text = "Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = true;
             this.btnTimKiem.Click += new System.EventHandler(this.Timkiem_Click);
             // 
@@ -131,7 +131,7 @@
             this.lblMaSach.Name = "lblMaSach";
             this.lblMaSach.Size = new System.Drawing.Size(82, 24);
             this.lblMaSach.TabIndex = 9;
-            this.lblMaSach.Text = "Ma sach";
+            this.lblMaSach.Text = "Mã sách";
             // 
             // dgvBooks
             // 
@@ -176,7 +176,7 @@
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmLiquidation";
-            this.Text = "Thanh Ly";
+            this.Text = "Thanh Lý";
             this.grpThanhLy.ResumeLayout(false);
             this.grpThanhLy.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
