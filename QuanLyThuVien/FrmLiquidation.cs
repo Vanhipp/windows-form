@@ -18,6 +18,7 @@ namespace QuanLyThuVien
         public FrmLiquidation()
         {
             InitializeComponent();
+            InitializeCustomComponents();
             Load += FrmLiquidation_Load;
             btnTimKiem.Click += Timkiem_Click;
             btnXacNhan.Click += XacNhan_Click;
@@ -25,14 +26,7 @@ namespace QuanLyThuVien
             dgvBooks.SelectionChanged += DgvBooks_SelectionChanged;
         }
 
-        private class ReasonItem
-        {
-            public LiquidationReason Value { get; set; }
-            public string Text { get; set; }
-            public override string ToString() { return Text; }
-        }
-
-        private void FrmLiquidation_Load(object sender, EventArgs e)
+        private void InitializeCustomComponents()
         {
             cboLyDo.Items.Clear();
             cboLyDo.Items.Add(new ReasonItem { Value = LiquidationReason.Lost, Text = "Mất" });
@@ -55,7 +49,17 @@ namespace QuanLyThuVien
             dgvBooks.Columns["LyDoThanhLy_SQL"].Visible = true;
 
             dgvBooks.DoubleClick += DataGridView1_DoubleClick;
+        }
 
+        private class ReasonItem
+        {
+            public LiquidationReason Value { get; set; }
+            public string Text { get; set; }
+            public override string ToString() { return Text; }
+        }
+
+        private void FrmLiquidation_Load(object sender, EventArgs e)
+        {
             LoadData();
         }
 
@@ -158,7 +162,11 @@ namespace QuanLyThuVien
             if (dgvBooks.SelectedRows.Count > 0)
             {
                 var id = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim();
-                if (!string.IsNullOrWhiteSpace(id)) txtMaSach.Text = id;
+                if (!string.IsNullOrWhiteSpace(id)) 
+                {
+                    txtMaSach.Text = id;
+                    Timkiem_Click(null, null);
+                }
             }
         }
 

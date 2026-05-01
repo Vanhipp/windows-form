@@ -213,9 +213,8 @@ namespace QuanLyThuVien
             if (dgvBooks.SelectedRows.Count == 0) return;
             var id = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim();
             if (string.IsNullOrWhiteSpace(id)) return;
-            var frm = new FrmLiquidation();
-            frm.SelectAndHighlight(id);
-            frm.ShowDialog(this);
+            txtMaSach.Text = id;
+            Button1_Click(null, null);
         }
 
         private void Button1_Click(object sender, EventArgs e)
