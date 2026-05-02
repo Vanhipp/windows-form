@@ -28,140 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.TraCuuSach = new System.Windows.Forms.Button();
-            this.PhieuMuonSach = new System.Windows.Forms.Button();
-            this.HSNhanVien = new System.Windows.Forms.Button();
-            this.TiepNhanSachMoi = new System.Windows.Forms.Button();
-            this.TheDocGia = new System.Windows.Forms.Button();
-            this.PhieuTraSach = new System.Windows.Forms.Button();
-            this.ThuTienPhat = new System.Windows.Forms.Button();
-            this.ThanhLy = new System.Windows.Forms.Button();
-            this.BaoCaoThongKe = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.DangNhap = new System.Windows.Forms.ToolStripMenuItem();
             this.DangXuat = new System.Windows.Forms.ToolStripMenuItem();
             this.TroGiup = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.PanelContent = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.BaoCaoThongKe = new FontAwesome.Sharp.IconButton();
+            this.ThanhLy = new FontAwesome.Sharp.IconButton();
+            this.ThuTienPhat = new FontAwesome.Sharp.IconButton();
+            this.TraCuuSach = new FontAwesome.Sharp.IconButton();
+            this.TiepNhanSachMoi = new FontAwesome.Sharp.IconButton();
+            this.PhieuTraSach = new FontAwesome.Sharp.IconButton();
+            this.PhieuMuonSach = new FontAwesome.Sharp.IconButton();
+            this.TheDocGia = new FontAwesome.Sharp.IconButton();
+            this.HSNhanVien = new FontAwesome.Sharp.IconButton();
             this.menuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // TraCuuSach
-            // 
-            this.TraCuuSach.BackColor = System.Drawing.Color.White;
-            this.TraCuuSach.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TraCuuSach.Location = new System.Drawing.Point(16, 439);
-            this.TraCuuSach.Margin = new System.Windows.Forms.Padding(4);
-            this.TraCuuSach.Name = "TraCuuSach";
-            this.TraCuuSach.Size = new System.Drawing.Size(200, 37);
-            this.TraCuuSach.TabIndex = 0;
-            this.TraCuuSach.Text = "Tra cứu sách";
-            this.TraCuuSach.UseVisualStyleBackColor = false;
-            this.TraCuuSach.Click += new System.EventHandler(this.TraCuuSach_Click);
-            // 
-            // PhieuMuonSach
-            // 
-            this.PhieuMuonSach.BackColor = System.Drawing.Color.White;
-            this.PhieuMuonSach.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PhieuMuonSach.Location = new System.Drawing.Point(16, 192);
-            this.PhieuMuonSach.Margin = new System.Windows.Forms.Padding(4);
-            this.PhieuMuonSach.Name = "PhieuMuonSach";
-            this.PhieuMuonSach.Size = new System.Drawing.Size(200, 37);
-            this.PhieuMuonSach.TabIndex = 1;
-            this.PhieuMuonSach.Text = "Phiếu mượn sách";
-            this.PhieuMuonSach.UseVisualStyleBackColor = false;
-            this.PhieuMuonSach.Click += new System.EventHandler(this.PhieuMuonSach_Click);
-            // 
-            // HSNhanVien
-            // 
-            this.HSNhanVien.BackColor = System.Drawing.Color.White;
-            this.HSNhanVien.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HSNhanVien.Location = new System.Drawing.Point(16, 28);
-            this.HSNhanVien.Margin = new System.Windows.Forms.Padding(4);
-            this.HSNhanVien.Name = "HSNhanVien";
-            this.HSNhanVien.Size = new System.Drawing.Size(200, 37);
-            this.HSNhanVien.TabIndex = 2;
-            this.HSNhanVien.Text = "Hồ sơ nhân viên";
-            this.HSNhanVien.UseVisualStyleBackColor = false;
-            this.HSNhanVien.Click += new System.EventHandler(this.HSNhanVien_Click);
-            // 
-            // TiepNhanSachMoi
-            // 
-            this.TiepNhanSachMoi.BackColor = System.Drawing.Color.White;
-            this.TiepNhanSachMoi.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TiepNhanSachMoi.Location = new System.Drawing.Point(16, 359);
-            this.TiepNhanSachMoi.Margin = new System.Windows.Forms.Padding(4);
-            this.TiepNhanSachMoi.Name = "TiepNhanSachMoi";
-            this.TiepNhanSachMoi.Size = new System.Drawing.Size(200, 37);
-            this.TiepNhanSachMoi.TabIndex = 3;
-            this.TiepNhanSachMoi.Text = "Tiếp nhận sách mới";
-            this.TiepNhanSachMoi.UseVisualStyleBackColor = false;
-            this.TiepNhanSachMoi.Click += new System.EventHandler(this.TiepNhanSachMoi_Click);
-            // 
-            // TheDocGia
-            // 
-            this.TheDocGia.BackColor = System.Drawing.Color.White;
-            this.TheDocGia.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TheDocGia.Location = new System.Drawing.Point(16, 109);
-            this.TheDocGia.Margin = new System.Windows.Forms.Padding(4);
-            this.TheDocGia.Name = "TheDocGia";
-            this.TheDocGia.Size = new System.Drawing.Size(200, 37);
-            this.TheDocGia.TabIndex = 4;
-            this.TheDocGia.Text = "Thẻ đọc giả";
-            this.TheDocGia.UseVisualStyleBackColor = false;
-            this.TheDocGia.Click += new System.EventHandler(this.TheDocGia_Click);
-            // 
-            // PhieuTraSach
-            // 
-            this.PhieuTraSach.BackColor = System.Drawing.Color.White;
-            this.PhieuTraSach.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PhieuTraSach.Location = new System.Drawing.Point(16, 274);
-            this.PhieuTraSach.Margin = new System.Windows.Forms.Padding(4);
-            this.PhieuTraSach.Name = "PhieuTraSach";
-            this.PhieuTraSach.Size = new System.Drawing.Size(200, 37);
-            this.PhieuTraSach.TabIndex = 5;
-            this.PhieuTraSach.Text = "Phiếu trả sách";
-            this.PhieuTraSach.UseVisualStyleBackColor = false;
-            this.PhieuTraSach.Click += new System.EventHandler(this.PhieuTraSach_Click);
-            // 
-            // ThuTienPhat
-            // 
-            this.ThuTienPhat.BackColor = System.Drawing.Color.White;
-            this.ThuTienPhat.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ThuTienPhat.Location = new System.Drawing.Point(16, 520);
-            this.ThuTienPhat.Margin = new System.Windows.Forms.Padding(4);
-            this.ThuTienPhat.Name = "ThuTienPhat";
-            this.ThuTienPhat.Size = new System.Drawing.Size(200, 37);
-            this.ThuTienPhat.TabIndex = 6;
-            this.ThuTienPhat.Text = "Thu tiền phạt";
-            this.ThuTienPhat.UseVisualStyleBackColor = false;
-            this.ThuTienPhat.Click += new System.EventHandler(this.ThuTienPhat_Click);
-            // 
-            // ThanhLy
-            // 
-            this.ThanhLy.BackColor = System.Drawing.Color.White;
-            this.ThanhLy.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ThanhLy.Location = new System.Drawing.Point(16, 599);
-            this.ThanhLy.Margin = new System.Windows.Forms.Padding(4);
-            this.ThanhLy.Name = "ThanhLy";
-            this.ThanhLy.Size = new System.Drawing.Size(200, 37);
-            this.ThanhLy.TabIndex = 7;
-            this.ThanhLy.Text = "Thanh lý";
-            this.ThanhLy.UseVisualStyleBackColor = false;
-            this.ThanhLy.Click += new System.EventHandler(this.ThanhLy_Click);
-            // 
-            // BaoCaoThongKe
-            // 
-            this.BaoCaoThongKe.BackColor = System.Drawing.Color.White;
-            this.BaoCaoThongKe.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BaoCaoThongKe.Location = new System.Drawing.Point(16, 681);
-            this.BaoCaoThongKe.Margin = new System.Windows.Forms.Padding(4);
-            this.BaoCaoThongKe.Name = "BaoCaoThongKe";
-            this.BaoCaoThongKe.Size = new System.Drawing.Size(200, 37);
-            this.BaoCaoThongKe.TabIndex = 8;
-            this.BaoCaoThongKe.Text = "Báo cáo - thống kê";
-            this.BaoCaoThongKe.UseVisualStyleBackColor = false;
-            this.BaoCaoThongKe.Click += new System.EventHandler(this.BaoCaoThongKe_Click);
             // 
             // menuStrip1
             // 
@@ -223,21 +108,210 @@
             this.PanelContent.Size = new System.Drawing.Size(1449, 810);
             this.PanelContent.TabIndex = 13;
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.panel1.Controls.Add(this.BaoCaoThongKe);
+            this.panel1.Controls.Add(this.ThanhLy);
+            this.panel1.Controls.Add(this.ThuTienPhat);
+            this.panel1.Controls.Add(this.TraCuuSach);
+            this.panel1.Controls.Add(this.TiepNhanSachMoi);
+            this.panel1.Controls.Add(this.PhieuTraSach);
+            this.panel1.Controls.Add(this.PhieuMuonSach);
+            this.panel1.Controls.Add(this.TheDocGia);
+            this.panel1.Controls.Add(this.HSNhanVien);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(236, 838);
+            this.panel1.TabIndex = 14;
+            // 
+            // BaoCaoThongKe
+            // 
+            this.BaoCaoThongKe.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.BaoCaoThongKe.FlatAppearance.BorderSize = 2;
+            this.BaoCaoThongKe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BaoCaoThongKe.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BaoCaoThongKe.IconChar = FontAwesome.Sharp.IconChar.ChartColumn;
+            this.BaoCaoThongKe.IconColor = System.Drawing.Color.Black;
+            this.BaoCaoThongKe.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.BaoCaoThongKe.IconSize = 30;
+            this.BaoCaoThongKe.Location = new System.Drawing.Point(3, 707);
+            this.BaoCaoThongKe.Name = "BaoCaoThongKe";
+            this.BaoCaoThongKe.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.BaoCaoThongKe.Size = new System.Drawing.Size(229, 50);
+            this.BaoCaoThongKe.TabIndex = 17;
+            this.BaoCaoThongKe.Text = "Báo cáo - Thống kê";
+            this.BaoCaoThongKe.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BaoCaoThongKe.UseVisualStyleBackColor = true;
+            this.BaoCaoThongKe.Click += new System.EventHandler(this.BaoCaoThongKe_Click);
+            // 
+            // ThanhLy
+            // 
+            this.ThanhLy.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ThanhLy.FlatAppearance.BorderSize = 2;
+            this.ThanhLy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ThanhLy.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ThanhLy.IconChar = FontAwesome.Sharp.IconChar.Sellcast;
+            this.ThanhLy.IconColor = System.Drawing.Color.Black;
+            this.ThanhLy.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.ThanhLy.IconSize = 30;
+            this.ThanhLy.Location = new System.Drawing.Point(3, 628);
+            this.ThanhLy.Name = "ThanhLy";
+            this.ThanhLy.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.ThanhLy.Size = new System.Drawing.Size(229, 50);
+            this.ThanhLy.TabIndex = 16;
+            this.ThanhLy.Text = "Thanh lý";
+            this.ThanhLy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.ThanhLy.UseVisualStyleBackColor = true;
+            this.ThanhLy.Click += new System.EventHandler(this.ThanhLy_Click);
+            // 
+            // ThuTienPhat
+            // 
+            this.ThuTienPhat.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ThuTienPhat.FlatAppearance.BorderSize = 2;
+            this.ThuTienPhat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ThuTienPhat.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ThuTienPhat.IconChar = FontAwesome.Sharp.IconChar.MoneyBill1Wave;
+            this.ThuTienPhat.IconColor = System.Drawing.Color.Black;
+            this.ThuTienPhat.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.ThuTienPhat.IconSize = 30;
+            this.ThuTienPhat.Location = new System.Drawing.Point(3, 547);
+            this.ThuTienPhat.Name = "ThuTienPhat";
+            this.ThuTienPhat.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.ThuTienPhat.Size = new System.Drawing.Size(229, 50);
+            this.ThuTienPhat.TabIndex = 15;
+            this.ThuTienPhat.Text = "Thu tiền phạt";
+            this.ThuTienPhat.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.ThuTienPhat.UseVisualStyleBackColor = true;
+            this.ThuTienPhat.Click += new System.EventHandler(this.ThuTienPhat_Click);
+            // 
+            // TraCuuSach
+            // 
+            this.TraCuuSach.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.TraCuuSach.FlatAppearance.BorderSize = 2;
+            this.TraCuuSach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TraCuuSach.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TraCuuSach.IconChar = FontAwesome.Sharp.IconChar.Searchengin;
+            this.TraCuuSach.IconColor = System.Drawing.Color.Black;
+            this.TraCuuSach.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.TraCuuSach.IconSize = 30;
+            this.TraCuuSach.Location = new System.Drawing.Point(3, 466);
+            this.TraCuuSach.Name = "TraCuuSach";
+            this.TraCuuSach.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.TraCuuSach.Size = new System.Drawing.Size(229, 50);
+            this.TraCuuSach.TabIndex = 14;
+            this.TraCuuSach.Text = "Tra cứu sách";
+            this.TraCuuSach.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.TraCuuSach.UseVisualStyleBackColor = true;
+            this.TraCuuSach.Click += new System.EventHandler(this.TraCuuSach_Click);
+            // 
+            // TiepNhanSachMoi
+            // 
+            this.TiepNhanSachMoi.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.TiepNhanSachMoi.FlatAppearance.BorderSize = 2;
+            this.TiepNhanSachMoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TiepNhanSachMoi.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TiepNhanSachMoi.IconChar = FontAwesome.Sharp.IconChar.Info;
+            this.TiepNhanSachMoi.IconColor = System.Drawing.Color.Black;
+            this.TiepNhanSachMoi.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.TiepNhanSachMoi.IconSize = 30;
+            this.TiepNhanSachMoi.Location = new System.Drawing.Point(3, 389);
+            this.TiepNhanSachMoi.Name = "TiepNhanSachMoi";
+            this.TiepNhanSachMoi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.TiepNhanSachMoi.Size = new System.Drawing.Size(229, 50);
+            this.TiepNhanSachMoi.TabIndex = 13;
+            this.TiepNhanSachMoi.Text = "Tiếp nhận sách mới";
+            this.TiepNhanSachMoi.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.TiepNhanSachMoi.UseVisualStyleBackColor = true;
+            this.TiepNhanSachMoi.Click += new System.EventHandler(this.TiepNhanSachMoi_Click);
+            // 
+            // PhieuTraSach
+            // 
+            this.PhieuTraSach.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.PhieuTraSach.FlatAppearance.BorderSize = 2;
+            this.PhieuTraSach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PhieuTraSach.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PhieuTraSach.IconChar = FontAwesome.Sharp.IconChar.Repeat;
+            this.PhieuTraSach.IconColor = System.Drawing.Color.Black;
+            this.PhieuTraSach.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.PhieuTraSach.IconSize = 30;
+            this.PhieuTraSach.Location = new System.Drawing.Point(3, 311);
+            this.PhieuTraSach.Name = "PhieuTraSach";
+            this.PhieuTraSach.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.PhieuTraSach.Size = new System.Drawing.Size(229, 50);
+            this.PhieuTraSach.TabIndex = 12;
+            this.PhieuTraSach.Text = "Phiếu Trả sách";
+            this.PhieuTraSach.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.PhieuTraSach.UseVisualStyleBackColor = true;
+            this.PhieuTraSach.Click += new System.EventHandler(this.PhieuTraSach_Click);
+            // 
+            // PhieuMuonSach
+            // 
+            this.PhieuMuonSach.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.PhieuMuonSach.FlatAppearance.BorderSize = 2;
+            this.PhieuMuonSach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PhieuMuonSach.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PhieuMuonSach.IconChar = FontAwesome.Sharp.IconChar.BookOpen;
+            this.PhieuMuonSach.IconColor = System.Drawing.Color.Black;
+            this.PhieuMuonSach.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.PhieuMuonSach.IconSize = 30;
+            this.PhieuMuonSach.Location = new System.Drawing.Point(3, 233);
+            this.PhieuMuonSach.Name = "PhieuMuonSach";
+            this.PhieuMuonSach.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.PhieuMuonSach.Size = new System.Drawing.Size(229, 50);
+            this.PhieuMuonSach.TabIndex = 11;
+            this.PhieuMuonSach.Text = "Phiếu mượn sách";
+            this.PhieuMuonSach.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.PhieuMuonSach.UseVisualStyleBackColor = true;
+            this.PhieuMuonSach.Click += new System.EventHandler(this.PhieuMuonSach_Click);
+            // 
+            // TheDocGia
+            // 
+            this.TheDocGia.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.TheDocGia.FlatAppearance.BorderSize = 2;
+            this.TheDocGia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TheDocGia.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TheDocGia.IconChar = FontAwesome.Sharp.IconChar.IdCard;
+            this.TheDocGia.IconColor = System.Drawing.Color.Black;
+            this.TheDocGia.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.TheDocGia.IconSize = 30;
+            this.TheDocGia.Location = new System.Drawing.Point(3, 151);
+            this.TheDocGia.Name = "TheDocGia";
+            this.TheDocGia.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.TheDocGia.Size = new System.Drawing.Size(229, 50);
+            this.TheDocGia.TabIndex = 10;
+            this.TheDocGia.Text = "Thẻ độc giả";
+            this.TheDocGia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.TheDocGia.UseVisualStyleBackColor = true;
+            this.TheDocGia.Click += new System.EventHandler(this.TheDocGia_Click);
+            // 
+            // HSNhanVien
+            // 
+            this.HSNhanVien.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.HSNhanVien.FlatAppearance.BorderSize = 2;
+            this.HSNhanVien.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HSNhanVien.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HSNhanVien.IconChar = FontAwesome.Sharp.IconChar.User;
+            this.HSNhanVien.IconColor = System.Drawing.Color.Black;
+            this.HSNhanVien.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.HSNhanVien.IconSize = 20;
+            this.HSNhanVien.Location = new System.Drawing.Point(3, 73);
+            this.HSNhanVien.Name = "HSNhanVien";
+            this.HSNhanVien.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.HSNhanVien.Size = new System.Drawing.Size(229, 50);
+            this.HSNhanVien.TabIndex = 9;
+            this.HSNhanVien.Text = "Hồ sơ nhân viên";
+            this.HSNhanVien.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.HSNhanVien.UseVisualStyleBackColor = true;
+            this.HSNhanVien.Click += new System.EventHandler(this.HSNhanVien_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1685, 838);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanelContent);
-            this.Controls.Add(this.BaoCaoThongKe);
-            this.Controls.Add(this.ThanhLy);
-            this.Controls.Add(this.ThuTienPhat);
-            this.Controls.Add(this.PhieuTraSach);
-            this.Controls.Add(this.TheDocGia);
-            this.Controls.Add(this.TiepNhanSachMoi);
-            this.Controls.Add(this.HSNhanVien);
-            this.Controls.Add(this.PhieuMuonSach);
-            this.Controls.Add(this.TraCuuSach);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.splitter1);
             this.MainMenuStrip = this.menuStrip1;
@@ -247,28 +321,29 @@
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button TraCuuSach;
-        private System.Windows.Forms.Button PhieuMuonSach;
-        private System.Windows.Forms.Button HSNhanVien;
-        private System.Windows.Forms.Button TiepNhanSachMoi;
-        private System.Windows.Forms.Button TheDocGia;
-        private System.Windows.Forms.Button PhieuTraSach;
-        private System.Windows.Forms.Button ThuTienPhat;
-        private System.Windows.Forms.Button ThanhLy;
-        private System.Windows.Forms.Button BaoCaoThongKe;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem DangNhap;
         private System.Windows.Forms.ToolStripMenuItem TroGiup;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.ToolStripMenuItem DangXuat;
         private System.Windows.Forms.Panel PanelContent;
+        private System.Windows.Forms.Panel panel1;
+        private FontAwesome.Sharp.IconButton TheDocGia;
+        private FontAwesome.Sharp.IconButton HSNhanVien;
+        private FontAwesome.Sharp.IconButton TiepNhanSachMoi;
+        private FontAwesome.Sharp.IconButton PhieuTraSach;
+        private FontAwesome.Sharp.IconButton PhieuMuonSach;
+        private FontAwesome.Sharp.IconButton ThanhLy;
+        private FontAwesome.Sharp.IconButton ThuTienPhat;
+        private FontAwesome.Sharp.IconButton TraCuuSach;
+        private FontAwesome.Sharp.IconButton BaoCaoThongKe;
     }
 }
 

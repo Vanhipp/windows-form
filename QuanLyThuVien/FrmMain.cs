@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static QuanLyThuVien.FrmLogin;
+using FontAwesome.Sharp;
 
 namespace QuanLyThuVien
 {
@@ -15,6 +16,12 @@ namespace QuanLyThuVien
     {
 
         Form currentForm = null;
+
+        bool isCollapsed = false;
+        Timer sidebarTimer = new Timer();
+
+        int sidebarMaxWidth = 200;
+        int sidebarMinWidth = 60;
 
         public FrmMain()
         {
@@ -70,51 +77,51 @@ namespace QuanLyThuVien
             }
             else if (CurrentUser.BoPhan == "Ban Giám Đốc")
             {
-                HSNhanVien.Enabled = true;
-                TheDocGia.Enabled = false;
-                PhieuMuonSach.Enabled = false;
-                PhieuTraSach.Enabled = false;
-                TiepNhanSachMoi.Enabled = false;
-                TraCuuSach.Enabled = true;
-                ThuTienPhat.Enabled = false;
-                ThanhLy.Enabled = false;
-                BaoCaoThongKe.Enabled = true;
+                EnableButton(HSNhanVien);
+                DisableButton(TheDocGia);
+                DisableButton(PhieuMuonSach);
+                DisableButton(PhieuTraSach);
+                DisableButton(TiepNhanSachMoi);
+                EnableButton(TraCuuSach);
+                DisableButton(ThuTienPhat);
+                DisableButton(ThanhLy);
+                EnableButton(BaoCaoThongKe);
             }
             else if (CurrentUser.BoPhan == "Thủ Thư")
             {
-                HSNhanVien.Enabled = false;
-                TheDocGia.Enabled = true;
-                PhieuMuonSach.Enabled = true;
-                PhieuTraSach.Enabled = true;
-                TiepNhanSachMoi.Enabled = false;
-                TraCuuSach.Enabled = true;
-                ThuTienPhat.Enabled = false;
-                ThanhLy.Enabled = false;
-                BaoCaoThongKe.Enabled = false;
+                DisableButton(HSNhanVien);
+                EnableButton(TheDocGia);
+                EnableButton(PhieuMuonSach);
+                EnableButton(PhieuTraSach);
+                DisableButton(TiepNhanSachMoi);
+                EnableButton(TraCuuSach);
+                DisableButton(ThuTienPhat);
+                DisableButton(ThanhLy);
+                DisableButton(BaoCaoThongKe);
             }
             else if (CurrentUser.BoPhan == "Thủ Kho")
             {
-                HSNhanVien.Enabled = false;
-                TheDocGia.Enabled = false;
-                PhieuMuonSach.Enabled = false;
-                PhieuTraSach.Enabled = false;
-                TiepNhanSachMoi.Enabled = true;
-                TraCuuSach.Enabled = true;
-                ThuTienPhat.Enabled = false;
-                ThanhLy.Enabled = true;
-                BaoCaoThongKe.Enabled = false;
+                DisableButton(HSNhanVien);
+                DisableButton(TheDocGia);
+                DisableButton(PhieuMuonSach);
+                DisableButton(PhieuTraSach);
+                EnableButton(TiepNhanSachMoi);
+                EnableButton(TraCuuSach);
+                DisableButton(ThuTienPhat);
+                EnableButton(ThanhLy);
+                DisableButton(BaoCaoThongKe);
             }
             else if (CurrentUser.BoPhan == "Thủ Quỹ")
             {
-                HSNhanVien.Enabled = false;
-                TheDocGia.Enabled = false;
-                PhieuMuonSach.Enabled = false;
-                PhieuTraSach.Enabled = false;
-                TiepNhanSachMoi.Enabled = false;
-                TraCuuSach.Enabled = true;
-                ThuTienPhat.Enabled = true;
-                ThanhLy.Enabled = false;
-                BaoCaoThongKe.Enabled = false;
+                DisableButton(HSNhanVien);
+                DisableButton(TheDocGia);
+                DisableButton(PhieuMuonSach);
+                DisableButton(PhieuTraSach);
+                DisableButton(TiepNhanSachMoi);
+                EnableButton(TraCuuSach);
+                EnableButton(ThuTienPhat);
+                DisableButton(ThanhLy);
+                DisableButton(BaoCaoThongKe);
             }
         }
 
@@ -209,26 +216,89 @@ namespace QuanLyThuVien
                 "5. Nguyễn Hữu Giàu - 2311553450", "Thông tin nhóm 3", MessageBoxButtons.OK);
         }
 
+        private void ShowText()
+        {
+            HSNhanVien.Text = "  Hồ sơ nhân viên";
+            TheDocGia.Text = "  Thẻ độc giả";
+            PhieuMuonSach.Text = "  Phiếu mượn sách";
+            // thêm các nút khác
+
+            foreach (var ctrl in panel1.Controls)
+            {
+                if (ctrl is FontAwesome.Sharp.IconButton btn)
+                {
+                    btn.Padding = new Padding(10, 0, 0, 0);
+                }
+            }
+        }
+
+        private void HideText()
+        {
+            foreach (var ctrl in panel1.Controls)
+            {
+                if (ctrl is FontAwesome.Sharp.IconButton btn)
+                {
+                    btn.Text = "";
+                    btn.Padding = new Padding(0);
+                }
+            }
+        }
+
+        private void SidebarTimer_Tick(object sender, EventArgs e)
+        {
+            if (isCollapsed)
+            {
+                panel1.Width += 10;
+
+                if (panel1.Width >= sidebarMaxWidth)
+                {
+                    sidebarTimer.Stop();
+                    isCollapsed = false;
+                    ShowText(); // hiện lại chữ
+                }
+            }
+            else
+            {
+                panel1.Width -= 10;
+
+                if (panel1.Width <= sidebarMinWidth)
+                {
+                    sidebarTimer.Stop();
+                    isCollapsed = true;
+                    HideText(); // ẩn chữ
+                }
+            }
+        }
+
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            // Show login form automatically on startup (as MDI child)
+            InitHover();
+
+            sidebarTimer.Interval = 10;
+            sidebarTimer.Tick += SidebarTimer_Tick;
+
             OpenForm(new FrmLogin(this));
 
             DangXuat.Visible = false;
 
-            HSNhanVien.Enabled = false;
-            TheDocGia.Enabled = false;
-            PhieuMuonSach.Enabled = false;
-            PhieuTraSach.Enabled = false;
-            TiepNhanSachMoi.Enabled = false;
-            TraCuuSach.Enabled = false;
-            ThuTienPhat.Enabled = false;
-            ThanhLy.Enabled = false;
-            BaoCaoThongKe.Enabled = false;
+            DisableButton(HSNhanVien);
+            DisableButton(TheDocGia);
+            DisableButton(PhieuMuonSach);
+            DisableButton(PhieuTraSach);
+            DisableButton(TiepNhanSachMoi);
+            DisableButton(TraCuuSach);
+            DisableButton(ThuTienPhat);
+            DisableButton(ThanhLy);
+            DisableButton(BaoCaoThongKe);
         }
 
         private void DangXuat_Click(object sender, EventArgs e)
         {
+            if(MessageBox.Show("Bạn đã có chắc chắn muốn đăng xuất?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+            {
+                return;
+            }
+
             // Clear current user info
             CurrentUser.ID = string.Empty;
             CurrentUser.HoTen = string.Empty;
@@ -242,15 +312,78 @@ namespace QuanLyThuVien
             DangNhap.Text = "Đăng nhập";
             DangNhap.Enabled = true;
 
-            HSNhanVien.Enabled = false;
-            TheDocGia.Enabled = false;
-            PhieuMuonSach.Enabled = false;
-            PhieuTraSach.Enabled = false;
-            TiepNhanSachMoi.Enabled = false;
-            TraCuuSach.Enabled = false;
-            ThuTienPhat.Enabled = false;
-            ThanhLy.Enabled = false;
-            BaoCaoThongKe.Enabled = false;
+            DisableButton(HSNhanVien);
+            DisableButton(TheDocGia);
+            DisableButton(PhieuMuonSach);
+            DisableButton(PhieuTraSach);
+            DisableButton(TiepNhanSachMoi);
+            DisableButton(TraCuuSach);
+            DisableButton(ThuTienPhat);
+            DisableButton(ThanhLy);
+            DisableButton(BaoCaoThongKe);
         }
+
+        private void DisableButton(IconButton btn)
+        {
+            btn.Enabled = false;
+
+            btn.BackColor = Color.White;
+            btn.ForeColor = Color.Gray;
+            btn.IconColor = Color.Gray;
+
+            btn.Font = new Font(btn.Font, FontStyle.Regular);
+        }
+
+        private void EnableButton(IconButton btn)
+        {
+            btn.Enabled = true;
+
+            btn.BackColor = Color.White;
+            btn.ForeColor = Color.Black;
+            btn.IconColor = Color.Black;
+            btn.Font = new Font(btn.Font, FontStyle.Bold);
+        }
+
+        private void Hover_Enter(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            var rect = (Rectangle)btn.Tag;
+
+            if (!btn.Enabled) return;
+
+            btn.BackColor = Color.LightBlue;
+
+            btn.Bounds = new Rectangle(
+                rect.X - 3,
+                rect.Y - 8,
+                rect.Width + 6,
+                rect.Height + 6
+            );
+        }
+
+        private void Hover_Leave(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            var rect = (Rectangle)btn.Tag;
+
+            btn.BackColor = Color.White;
+            btn.Bounds = rect;
+        }
+
+        private void InitHover()
+        {
+            foreach (Control ctrl in panel1.Controls)
+            {
+                if (ctrl is Button btn)
+                {
+                    // Lưu vị trí + size gốc
+                    btn.Tag = new Rectangle(btn.Location, btn.Size);
+
+                    btn.MouseEnter += Hover_Enter;
+                    btn.MouseLeave += Hover_Leave;
+                }
+            }
+        }
+
     }
 }

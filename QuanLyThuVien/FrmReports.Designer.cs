@@ -91,7 +91,7 @@
             "Tình hình mượn sách theo thể loại",
             "Sách trả trễ",
             "Độc giả nợ tiền phạt"});
-            this.comboBoxTongQuan.Location = new System.Drawing.Point(17, 90);
+            this.comboBoxTongQuan.Location = new System.Drawing.Point(63, 111);
             this.comboBoxTongQuan.Name = "comboBoxTongQuan";
             this.comboBoxTongQuan.Size = new System.Drawing.Size(406, 30);
             this.comboBoxTongQuan.TabIndex = 8;
@@ -99,7 +99,7 @@
             // 
             // buttonHuy
             // 
-            this.buttonHuy.Location = new System.Drawing.Point(166, 284);
+            this.buttonHuy.Location = new System.Drawing.Point(280, 302);
             this.buttonHuy.Margin = new System.Windows.Forms.Padding(4);
             this.buttonHuy.Name = "buttonHuy";
             this.buttonHuy.Size = new System.Drawing.Size(108, 37);
@@ -110,7 +110,7 @@
             // 
             // buttonTimKiem
             // 
-            this.buttonTimKiem.Location = new System.Drawing.Point(17, 284);
+            this.buttonTimKiem.Location = new System.Drawing.Point(139, 302);
             this.buttonTimKiem.Margin = new System.Windows.Forms.Padding(4);
             this.buttonTimKiem.Name = "buttonTimKiem";
             this.buttonTimKiem.Size = new System.Drawing.Size(108, 37);
@@ -123,7 +123,7 @@
             // 
             this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(17, 191);
+            this.dateTimePicker1.Location = new System.Drawing.Point(63, 211);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(406, 29);
@@ -132,7 +132,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 144);
+            this.label4.Location = new System.Drawing.Point(59, 172);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 24);
