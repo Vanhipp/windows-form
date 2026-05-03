@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using QuanLyThuVien.Helpers;
+using ClosedXML.Excel;
 
 namespace QuanLyThuVien
 {
@@ -201,6 +202,139 @@ namespace QuanLyThuVien
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        // =========================
+        // BUTTON XUẤT EXCEL
+        // =========================
+        private void btnXuatFileExcel_Click(object sender, EventArgs e)
+        {
+            // =========================
+            // KIỂM TRA CHƯA CÓ DỮ LIỆU (chưa tìm kiếm)
+            // =========================
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng tìm kiếm trước khi xuất file!",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            // =========================
+            // KIỂM TRA CÓ DỮ LIỆU THỰC SỰ HAY KHÔNG
+            // (trường hợp tìm kiếm nhưng không có kết quả)
+            // =========================
+            bool hasData = false;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    hasData = true;
+                    break;
+                }
+            }
+
+            if (!hasData)
+            {
+                MessageBox.Show("Không có dữ liệu sau khi tìm kiếm!",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Excel File|*.xlsx";
+            save.Title = "Chọn nơi lưu file Excel";
+
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                ExportToExcel(dataGridView1, save.FileName);
+            }
+        }
+
+        // =========================
+        // HÀM EXPORT EXCEL
+        // =========================
+        public void ExportToExcel(DataGridView dgv, string filePath)
+        {
+            try
+            {
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("BaoCao");
+
+                    // ===== HEADER =====
+                    for (int i = 0; i < dgv.Columns.Count; i++)
+                    {
+                        var cell = worksheet.Cell(1, i + 1);
+                        cell.Value = dgv.Columns[i].HeaderText;
+
+                        cell.Style.Font.Bold = true;
+                        cell.Style.Fill.BackgroundColor = XLColor.LightGray;
+                        cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                        cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    }
+
+                    // ===== DATA =====
+                    for (int i = 0; i < dgv.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dgv.Columns.Count; j++)
+                        {
+                            var value = dgv.Rows[i].Cells[j].Value;
+
+                            var cell = worksheet.Cell(i + 2, j + 1);
+                            cell.Value = value?.ToString() ?? "";
+
+                            cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                        }
+                    }
+
+                    // ===== AUTO FIT =====
+                    worksheet.Columns().AdjustToContents();
+
+                    workbook.SaveAs(filePath);
+                }
+
+                MessageBox.Show("Xuất Excel thành công!",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xuất Excel:\n" + ex.Message,
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnMoFileExcel_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+
+            // chỉ cho chọn file Excel
+            open.Filter = "Excel Files|*.xlsx;*.xls";
+            open.Title = "Chọn file Excel để mở";
+
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(open.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Không mở được file:\n" + ex.Message,
+                        "Lỗi",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
         }
     }

@@ -51,7 +51,7 @@ namespace QuanLyThuVien
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(157, 136);
+            this.label2.Location = new System.Drawing.Point(152, 140);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(117, 29);
@@ -62,7 +62,7 @@ namespace QuanLyThuVien
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(157, 187);
+            this.label3.Location = new System.Drawing.Point(157, 196);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 29);
@@ -71,25 +71,27 @@ namespace QuanLyThuVien
             // 
             // taikhoan
             // 
+            this.taikhoan.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.taikhoan.Location = new System.Drawing.Point(288, 140);
             this.taikhoan.Margin = new System.Windows.Forms.Padding(4);
             this.taikhoan.Name = "taikhoan";
-            this.taikhoan.Size = new System.Drawing.Size(440, 22);
+            this.taikhoan.Size = new System.Drawing.Size(422, 32);
             this.taikhoan.TabIndex = 3;
             // 
             // matkhau
             // 
+            this.matkhau.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.matkhau.Location = new System.Drawing.Point(288, 193);
             this.matkhau.Margin = new System.Windows.Forms.Padding(4);
             this.matkhau.Name = "matkhau";
             this.matkhau.PasswordChar = '*';
-            this.matkhau.Size = new System.Drawing.Size(440, 22);
+            this.matkhau.Size = new System.Drawing.Size(422, 32);
             this.matkhau.TabIndex = 4;
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(399, 252);
+            this.button1.Location = new System.Drawing.Point(384, 255);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(133, 37);

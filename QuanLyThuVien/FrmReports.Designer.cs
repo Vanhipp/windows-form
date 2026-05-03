@@ -31,6 +31,8 @@
             this.labelBaoCao = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnMoFileExcel = new System.Windows.Forms.Button();
+            this.btnXuatFileExcel = new System.Windows.Forms.Button();
             this.comboBoxTongQuan = new System.Windows.Forms.ComboBox();
             this.buttonHuy = new System.Windows.Forms.Button();
             this.buttonTimKiem = new System.Windows.Forms.Button();
@@ -66,6 +68,8 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.groupBox1.Controls.Add(this.btnMoFileExcel);
+            this.groupBox1.Controls.Add(this.btnXuatFileExcel);
             this.groupBox1.Controls.Add(this.comboBoxTongQuan);
             this.groupBox1.Controls.Add(this.buttonHuy);
             this.groupBox1.Controls.Add(this.labelBaoCao);
@@ -83,26 +87,48 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tổng quan ";
             // 
+            // btnMoFileExcel
+            // 
+            this.btnMoFileExcel.Location = new System.Drawing.Point(340, 371);
+            this.btnMoFileExcel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMoFileExcel.Name = "btnMoFileExcel";
+            this.btnMoFileExcel.Size = new System.Drawing.Size(158, 37);
+            this.btnMoFileExcel.TabIndex = 10;
+            this.btnMoFileExcel.Text = "Mở File Excel";
+            this.btnMoFileExcel.UseVisualStyleBackColor = true;
+            this.btnMoFileExcel.Click += new System.EventHandler(this.btnMoFileExcel_Click);
+            // 
+            // btnXuatFileExcel
+            // 
+            this.btnXuatFileExcel.Location = new System.Drawing.Point(340, 302);
+            this.btnXuatFileExcel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnXuatFileExcel.Name = "btnXuatFileExcel";
+            this.btnXuatFileExcel.Size = new System.Drawing.Size(158, 37);
+            this.btnXuatFileExcel.TabIndex = 9;
+            this.btnXuatFileExcel.Text = "Xuất File Excel";
+            this.btnXuatFileExcel.UseVisualStyleBackColor = true;
+            this.btnXuatFileExcel.Click += new System.EventHandler(this.btnXuatFileExcel_Click);
+            // 
             // comboBoxTongQuan
             // 
-            this.comboBoxTongQuan.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxTongQuan.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxTongQuan.FormattingEnabled = true;
             this.comboBoxTongQuan.Items.AddRange(new object[] {
             "Tình hình mượn sách theo thể loại",
             "Sách trả trễ",
             "Độc giả nợ tiền phạt"});
-            this.comboBoxTongQuan.Location = new System.Drawing.Point(63, 111);
+            this.comboBoxTongQuan.Location = new System.Drawing.Point(47, 111);
             this.comboBoxTongQuan.Name = "comboBoxTongQuan";
-            this.comboBoxTongQuan.Size = new System.Drawing.Size(406, 30);
+            this.comboBoxTongQuan.Size = new System.Drawing.Size(451, 36);
             this.comboBoxTongQuan.TabIndex = 8;
             this.comboBoxTongQuan.SelectedIndexChanged += new System.EventHandler(this.comboBoxTongQuan_SelectedIndexChanged);
             // 
             // buttonHuy
             // 
-            this.buttonHuy.Location = new System.Drawing.Point(280, 302);
+            this.buttonHuy.Location = new System.Drawing.Point(47, 371);
             this.buttonHuy.Margin = new System.Windows.Forms.Padding(4);
             this.buttonHuy.Name = "buttonHuy";
-            this.buttonHuy.Size = new System.Drawing.Size(108, 37);
+            this.buttonHuy.Size = new System.Drawing.Size(158, 37);
             this.buttonHuy.TabIndex = 7;
             this.buttonHuy.Text = "Hủy";
             this.buttonHuy.UseVisualStyleBackColor = true;
@@ -110,10 +136,10 @@
             // 
             // buttonTimKiem
             // 
-            this.buttonTimKiem.Location = new System.Drawing.Point(139, 302);
+            this.buttonTimKiem.Location = new System.Drawing.Point(47, 302);
             this.buttonTimKiem.Margin = new System.Windows.Forms.Padding(4);
             this.buttonTimKiem.Name = "buttonTimKiem";
-            this.buttonTimKiem.Size = new System.Drawing.Size(108, 37);
+            this.buttonTimKiem.Size = new System.Drawing.Size(158, 37);
             this.buttonTimKiem.TabIndex = 6;
             this.buttonTimKiem.Text = "Tìm kiếm";
             this.buttonTimKiem.UseVisualStyleBackColor = true;
@@ -122,11 +148,11 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker1.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(63, 211);
+            this.dateTimePicker1.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Location = new System.Drawing.Point(47, 211);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(406, 29);
+            this.dateTimePicker1.Size = new System.Drawing.Size(451, 35);
             this.dateTimePicker1.TabIndex = 5;
             // 
             // label4
@@ -167,5 +193,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxTongQuan;
+        private System.Windows.Forms.Button btnXuatFileExcel;
+        private System.Windows.Forms.Button btnMoFileExcel;
     }
 }
