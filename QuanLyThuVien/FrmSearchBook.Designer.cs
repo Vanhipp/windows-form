@@ -38,8 +38,8 @@ namespace QuanLyThuVien
             this.btnSanSang = new System.Windows.Forms.Button();
             this.btnTatCa = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dgvBooks = new System.Windows.Forms.DataGridView();
             this.comboSearchMethod = new System.Windows.Forms.ComboBox();
+            this.dgvBooks = new System.Windows.Forms.DataGridView();
             this.grpBoLoc.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
@@ -98,9 +98,9 @@ namespace QuanLyThuVien
             this.lblTheLoaiFilterLabel.Location = new System.Drawing.Point(8, 52);
             this.lblTheLoaiFilterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTheLoaiFilterLabel.Name = "lblTheLoaiFilterLabel";
-            this.lblTheLoaiFilterLabel.Size = new System.Drawing.Size(82, 24);
+            this.lblTheLoaiFilterLabel.Size = new System.Drawing.Size(92, 24);
             this.lblTheLoaiFilterLabel.TabIndex = 8;
-            this.lblTheLoaiFilterLabel.Text = "Thể loại";
+            this.lblTheLoaiFilterLabel.Text = "Đầu sách";
             // 
             // lblTinhTrangLabel
             // 
@@ -155,18 +155,6 @@ namespace QuanLyThuVien
             this.panel1.Size = new System.Drawing.Size(358, 567);
             this.panel1.TabIndex = 5;
             // 
-            // dgvBooks
-            // 
-            this.dgvBooks.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBooks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvBooks.Location = new System.Drawing.Point(358, 0);
-            this.dgvBooks.Name = "dgvBooks";
-            this.dgvBooks.RowHeadersWidth = 51;
-            this.dgvBooks.RowTemplate.Height = 24;
-            this.dgvBooks.Size = new System.Drawing.Size(754, 567);
-            this.dgvBooks.TabIndex = 6;
-            // 
             // comboSearchMethod
             // 
             this.comboSearchMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -179,6 +167,18 @@ namespace QuanLyThuVien
             this.comboSearchMethod.Name = "comboSearchMethod";
             this.comboSearchMethod.Size = new System.Drawing.Size(334, 24);
             this.comboSearchMethod.TabIndex = 9;
+            // 
+            // dgvBooks
+            // 
+            this.dgvBooks.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBooks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvBooks.Location = new System.Drawing.Point(358, 0);
+            this.dgvBooks.Name = "dgvBooks";
+            this.dgvBooks.RowHeadersWidth = 51;
+            this.dgvBooks.RowTemplate.Height = 24;
+            this.dgvBooks.Size = new System.Drawing.Size(754, 567);
+            this.dgvBooks.TabIndex = 6;
             // 
             // FrmSearchBook
             // 

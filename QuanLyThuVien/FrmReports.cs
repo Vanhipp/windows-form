@@ -118,7 +118,7 @@ namespace QuanLyThuVien
                             // Báo mẫu BM10.2: Sách trả trễ (theo ngày)
                             // Lọc các phiếu trả có "Ngày trả" trong ngày được chọn và NgàyTra > NgayHenTra
                             string sql =
-                                "SELECT ds.TenDauSach AS [Tên sách], ct.NgayMuon AS [Ngày mượn], DATEDIFF(day, ct.HanTra, ct.NgayTra) AS [Số ngày trả trễ] " +
+                                "SELECT s.TenSach AS [Tên sách], ct.NgayMuon AS [Ngày mượn], DATEDIFF(day, ct.HanTra, ct.NgayTra) AS [Số ngày trả trễ] " +
                                 "FROM PhieuMuon pm " +
                                 "JOIN ChiTietMuon ct ON pm.IDPhieuMuon = ct.IDPhieuMuon " +
                                 "JOIN ThongTinSach s ON ct.IDSach = s.IDSach " +

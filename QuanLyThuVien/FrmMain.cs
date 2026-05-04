@@ -65,15 +65,16 @@ namespace QuanLyThuVien
 
             if (CurrentUser.BoPhan == "Quản Trị")
             {
-                HSNhanVien.Enabled = true;
-                TheDocGia.Enabled = true;
-                PhieuMuonSach.Enabled = true;
-                PhieuTraSach.Enabled = true;
-                TiepNhanSachMoi.Enabled = true;
-                TraCuuSach.Enabled = true;
-                ThuTienPhat.Enabled = true;
-                ThanhLy.Enabled = true;
-                BaoCaoThongKe.Enabled = true;
+                EnableButton(HSNhanVien);
+                EnableButton(TheDocGia);
+                EnableButton(PhieuMuonSach);
+                EnableButton(PhieuTraSach);
+                EnableButton(TiepNhanSachMoi);
+                EnableButton(TraCuuSach);
+                EnableButton(ThuTienPhat);
+                EnableButton(ThanhLy);
+                EnableButton(BaoCaoThongKe);
+
             }
             else if (CurrentUser.BoPhan == "Ban Giám Đốc")
             {

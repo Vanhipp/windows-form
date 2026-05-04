@@ -66,9 +66,9 @@
             this.lblTheLoai.Location = new System.Drawing.Point(16, 96);
             this.lblTheLoai.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTheLoai.Name = "lblTheLoai";
-            this.lblTheLoai.Size = new System.Drawing.Size(82, 24);
+            this.lblTheLoai.Size = new System.Drawing.Size(92, 24);
             this.lblTheLoai.TabIndex = 1;
-            this.lblTheLoai.Text = "Thể loại";
+            this.lblTheLoai.Text = "Đầu sách";
             // 
             // lblTacGia
             // 
