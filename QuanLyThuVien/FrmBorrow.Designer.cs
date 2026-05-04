@@ -29,6 +29,16 @@ namespace QuanLyThuVien
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ngayLap = new System.Windows.Forms.DateTimePicker();
+            this.ngaySinh = new System.Windows.Forms.DateTimePicker();
+            this.diaChi = new System.Windows.Forms.TextBox();
+            this.email = new System.Windows.Forms.TextBox();
+            this.tenDocGia = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnSearchReader = new System.Windows.Forms.Button();
             this.dtpBorrowDate = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
@@ -49,6 +59,16 @@ namespace QuanLyThuVien
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ngayLap);
+            this.groupBox1.Controls.Add(this.ngaySinh);
+            this.groupBox1.Controls.Add(this.diaChi);
+            this.groupBox1.Controls.Add(this.email);
+            this.groupBox1.Controls.Add(this.tenDocGia);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.btnSearchReader);
             this.groupBox1.Controls.Add(this.dtpBorrowDate);
             this.groupBox1.Controls.Add(this.label2);
@@ -59,14 +79,109 @@ namespace QuanLyThuVien
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(332, 287);
+            this.groupBox1.Size = new System.Drawing.Size(374, 568);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Chi tiết thông tin";
             // 
+            // ngayLap
+            // 
+            this.ngayLap.Enabled = false;
+            this.ngayLap.Location = new System.Drawing.Point(12, 510);
+            this.ngayLap.Margin = new System.Windows.Forms.Padding(4);
+            this.ngayLap.Name = "ngayLap";
+            this.ngayLap.Size = new System.Drawing.Size(336, 32);
+            this.ngayLap.TabIndex = 14;
+            // 
+            // ngaySinh
+            // 
+            this.ngaySinh.Enabled = false;
+            this.ngaySinh.Location = new System.Drawing.Point(12, 312);
+            this.ngaySinh.Margin = new System.Windows.Forms.Padding(4);
+            this.ngaySinh.Name = "ngaySinh";
+            this.ngaySinh.Size = new System.Drawing.Size(336, 32);
+            this.ngaySinh.TabIndex = 13;
+            // 
+            // diaChi
+            // 
+            this.diaChi.Enabled = false;
+            this.diaChi.Location = new System.Drawing.Point(12, 379);
+            this.diaChi.Margin = new System.Windows.Forms.Padding(4);
+            this.diaChi.Name = "diaChi";
+            this.diaChi.Size = new System.Drawing.Size(336, 32);
+            this.diaChi.TabIndex = 12;
+            // 
+            // email
+            // 
+            this.email.Enabled = false;
+            this.email.Location = new System.Drawing.Point(12, 443);
+            this.email.Margin = new System.Windows.Forms.Padding(4);
+            this.email.Name = "email";
+            this.email.Size = new System.Drawing.Size(336, 32);
+            this.email.TabIndex = 11;
+            // 
+            // tenDocGia
+            // 
+            this.tenDocGia.Enabled = false;
+            this.tenDocGia.Location = new System.Drawing.Point(12, 248);
+            this.tenDocGia.Margin = new System.Windows.Forms.Padding(4);
+            this.tenDocGia.Name = "tenDocGia";
+            this.tenDocGia.Size = new System.Drawing.Size(336, 32);
+            this.tenDocGia.TabIndex = 10;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(14, 482);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(88, 24);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Ngày lập";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(14, 415);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 24);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Email";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(14, 353);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(71, 24);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Địa chỉ";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 284);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(97, 24);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Ngày sinh";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 220);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(114, 24);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Tên đọc giả";
+            // 
             // btnSearchReader
             // 
-            this.btnSearchReader.Location = new System.Drawing.Point(80, 192);
+            this.btnSearchReader.Location = new System.Drawing.Point(81, 164);
             this.btnSearchReader.Margin = new System.Windows.Forms.Padding(4);
             this.btnSearchReader.Name = "btnSearchReader";
             this.btnSearchReader.Size = new System.Drawing.Size(160, 42);
@@ -76,16 +191,16 @@ namespace QuanLyThuVien
             // 
             // dtpBorrowDate
             // 
-            this.dtpBorrowDate.Location = new System.Drawing.Point(13, 132);
+            this.dtpBorrowDate.Location = new System.Drawing.Point(13, 124);
             this.dtpBorrowDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpBorrowDate.Name = "dtpBorrowDate";
-            this.dtpBorrowDate.Size = new System.Drawing.Size(305, 32);
+            this.dtpBorrowDate.Size = new System.Drawing.Size(335, 32);
             this.dtpBorrowDate.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 105);
+            this.label2.Location = new System.Drawing.Point(8, 97);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 24);
@@ -97,7 +212,7 @@ namespace QuanLyThuVien
             this.txtReaderID.Location = new System.Drawing.Point(13, 55);
             this.txtReaderID.Margin = new System.Windows.Forms.Padding(4);
             this.txtReaderID.Name = "txtReaderID";
-            this.txtReaderID.Size = new System.Drawing.Size(305, 32);
+            this.txtReaderID.Size = new System.Drawing.Size(335, 32);
             this.txtReaderID.TabIndex = 1;
             // 
             // label1
@@ -119,7 +234,7 @@ namespace QuanLyThuVien
             this.dgvBooks.Margin = new System.Windows.Forms.Padding(4);
             this.dgvBooks.Name = "dgvBooks";
             this.dgvBooks.RowHeadersWidth = 51;
-            this.dgvBooks.Size = new System.Drawing.Size(753, 515);
+            this.dgvBooks.Size = new System.Drawing.Size(706, 599);
             this.dgvBooks.TabIndex = 1;
             this.dgvBooks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBooks_CellContentClick);
             // 
@@ -153,7 +268,7 @@ namespace QuanLyThuVien
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnBorrow);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 515);
+            this.panel1.Location = new System.Drawing.Point(0, 599);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1112, 52);
             this.panel1.TabIndex = 4;
@@ -165,23 +280,23 @@ namespace QuanLyThuVien
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(359, 515);
+            this.panel2.Size = new System.Drawing.Size(406, 599);
             this.panel2.TabIndex = 5;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.dgvBooks);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(359, 0);
+            this.panel3.Location = new System.Drawing.Point(406, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(753, 515);
+            this.panel3.Size = new System.Drawing.Size(706, 599);
             this.panel3.TabIndex = 6;
             // 
             // FrmBorrow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1112, 567);
+            this.ClientSize = new System.Drawing.Size(1112, 651);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -212,5 +327,15 @@ namespace QuanLyThuVien
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox diaChi;
+        private System.Windows.Forms.TextBox email;
+        private System.Windows.Forms.TextBox tenDocGia;
+        private System.Windows.Forms.DateTimePicker ngayLap;
+        private System.Windows.Forms.DateTimePicker ngaySinh;
     }
 }
