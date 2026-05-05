@@ -42,6 +42,8 @@ namespace QuanLyThuVien
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -78,7 +80,7 @@ namespace QuanLyThuVien
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(212, 218);
+            this.txtAddress.Location = new System.Drawing.Point(208, 219);
             this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(265, 22);
@@ -86,7 +88,7 @@ namespace QuanLyThuVien
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(212, 177);
+            this.txtEmail.Location = new System.Drawing.Point(208, 178);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(265, 22);
@@ -94,7 +96,7 @@ namespace QuanLyThuVien
             // 
             // dtpBirthDate
             // 
-            this.dtpBirthDate.Location = new System.Drawing.Point(212, 138);
+            this.dtpBirthDate.Location = new System.Drawing.Point(208, 139);
             this.dtpBirthDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpBirthDate.Name = "dtpBirthDate";
             this.dtpBirthDate.Size = new System.Drawing.Size(265, 22);
@@ -182,12 +184,23 @@ namespace QuanLyThuVien
             this.label1.TabIndex = 18;
             this.label1.Text = "Họ tên";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(494, 10);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(711, 454);
+            this.dataGridView1.TabIndex = 36;
+            // 
             // FrmReaderCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(500, 345);
+            this.ClientSize = new System.Drawing.Size(1217, 476);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.cboReaderType);
@@ -205,6 +218,7 @@ namespace QuanLyThuVien
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmReaderCard";
             this.Text = "Thẻ Đọc Giả";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,5 +240,6 @@ namespace QuanLyThuVien
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
