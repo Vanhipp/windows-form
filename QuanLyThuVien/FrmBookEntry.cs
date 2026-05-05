@@ -262,10 +262,9 @@ namespace QuanLyThuVien
                         cmd.ExecuteNonQuery();
 
                         // 2. Update CaTheSach (Cập nhật ngày nhập cho cuốn đang chọn)
-                        cmd.CommandText = "UPDATE CaTheSach SET NgayNhap=@NgayNhap, TenCaTheSach=@TenSach WHERE IDCaTheSach=@id";
+                        cmd.CommandText = "UPDATE CaTheSach SET NgayNhap=@NgayNhap WHERE IDCaTheSach=@id";
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@NgayNhap", book.NgayNhap.Date);
-                        cmd.Parameters.AddWithValue("@TenSach", book.TenSach);
                         cmd.Parameters.AddWithValue("@id", _editingId);
                         cmd.ExecuteNonQuery();
                     });
@@ -328,16 +327,17 @@ namespace QuanLyThuVien
                         {
                             string childId = $"{masterId}_{ (maxSeq + i).ToString("D4") }";
                             
-                            cmd.CommandText = "INSERT INTO CaTheSach (IDCaTheSach, TenCaTheSach, IDSach, NgayNhap, TinhTrang) " +
-                                             "VALUES (@cid, @TenSach, @mid, @NgayNhap, N'Sẵn sàng');";
+                            cmd.CommandText = "INSERT INTO CaTheSach (IDCaTheSach, IDSach, NgayNhap, TinhTrang) " +
+                                             "VALUES (@cid, @mid, @NgayNhap, N'Sẵn sàng');";
                             cmd.Parameters.Clear();
                             cmd.Parameters.AddWithValue("@cid", childId);
-                            cmd.Parameters.AddWithValue("@TenSach", book.TenSach);
                             cmd.Parameters.AddWithValue("@mid", masterId);
                             cmd.Parameters.AddWithValue("@NgayNhap", book.NgayNhap.Date);
                             cmd.ExecuteNonQuery();
                         }
                     });
+
+                    UpdateBookCount();
 
                     MessageBox.Show($"Đã nhập thêm {quantity} cuốn sách thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -364,6 +364,32 @@ namespace QuanLyThuVien
                 {
                     MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void UpdateBookCount()
+        {
+            try
+            {
+                string query = @"
+                    UPDATE ThongTinSach
+                    SET SoLuong = (
+                        SELECT COUNT(*)
+                        FROM CaTheSach
+                        WHERE CaTheSach.IDSach = ThongTinSach.IDSach
+                        AND (CaTheSach.TinhTrang = N'Sẵn sàng' OR CaTheSach.TinhTrang = N'Đang mượn')
+                    )
+                    WHERE EXISTS (
+                        SELECT 1
+                        FROM CaTheSach
+                        WHERE CaTheSach.IDSach = ThongTinSach.IDSach
+                    );";
+
+                DatabaseHelper.ExecuteNonQuery(query, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi cập nhật số lượng sách: " + ex.Message);
             }
         }
 
@@ -435,12 +461,10 @@ namespace QuanLyThuVien
             {
                 // CHẾ ĐỘ DETAIL: Hiển thị CaTheSach của 1 cuốn
                 dgvBooks.Columns.Add("IDCaTheSach", "Mã Cá Thể");
-                dgvBooks.Columns.Add("TenCaTheSach", "Tên Sách");
                 dgvBooks.Columns.Add("NgayNhap", "Ngày Nhập");
                 dgvBooks.Columns.Add("TinhTrang", "Tình Trạng");
 
                 dgvBooks.Columns["IDCaTheSach"].DataPropertyName = "IDCaTheSach";
-                dgvBooks.Columns["TenCaTheSach"].DataPropertyName = "TenCaTheSach";
                 dgvBooks.Columns["NgayNhap"].DataPropertyName = "NgayNhap";
                 dgvBooks.Columns["TinhTrang"].DataPropertyName = "TinhTrang";
 
@@ -548,14 +572,14 @@ namespace QuanLyThuVien
                 else
                 {
                     // LOAD DETAIL
-                    string sql = @"SELECT IDCaTheSach, TenCaTheSach, NgayNhap, TinhTrang 
+                    string sql = @"SELECT IDCaTheSach, NgayNhap, TinhTrang 
                                  FROM CaTheSach 
                                  WHERE IDSach = @mid 
                                  ORDER BY IDCaTheSach ASC";
                     dt = DatabaseHelper.ExecuteQuery(sql, new[] { new SqlParameter("@mid", _viewingMasterId) });
                 }
                 
-                var dtCount = DatabaseHelper.ExecuteQuery("SELECT COUNT(*) FROM CaTheSach", null);
+                var dtCount = DatabaseHelper.ExecuteQuery("SELECT SUM(SoLuong) AS Total FROM ThongTinSach", null);
                 if (dtCount.Rows.Count > 0)
                 {
                     lblTotalBooksValue.Text = dtCount.Rows[0][0].ToString();
@@ -580,7 +604,6 @@ namespace QuanLyThuVien
                         string status = GetStatusText(r["TinhTrang"]?.ToString());
                         dgvBooks.Rows.Add(
                             r["IDCaTheSach"]?.ToString()?.Trim(),
-                            r["TenCaTheSach"]?.ToString()?.Trim(),
                             Convert.ToDateTime(r["NgayNhap"]).ToString("dd/MM/yyyy"),
                             status);
                     }

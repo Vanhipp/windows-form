@@ -205,6 +205,10 @@ namespace QuanLyThuVien
                 if (totalFineIssued > 0) message += $"\nTổng tiền phạt phát sinh: {totalFineIssued:N0} VNĐ (Đã cộng vào nợ độc giả).";
                 
                 MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                // Update book count after processing returns or losses
+                UpdateBookCount();
+                
                 this.Close();
             }
             catch (Exception ex)
@@ -271,6 +275,32 @@ namespace QuanLyThuVien
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void UpdateBookCount()
+        {
+            try
+            {
+                string query = @"
+                    UPDATE ThongTinSach
+                    SET SoLuong = (
+                        SELECT COUNT(*)
+                        FROM CaTheSach
+                        WHERE CaTheSach.IDSach = ThongTinSach.IDSach
+                          AND (CaTheSach.TinhTrang = N'Sẵn sàng' OR CaTheSach.TinhTrang = N'Đang mượn')
+                    )
+                    WHERE EXISTS (
+                        SELECT 1
+                        FROM CaTheSach
+                        WHERE CaTheSach.IDSach = ThongTinSach.IDSach
+                    );";
+
+                DatabaseHelper.ExecuteNonQuery(query, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating book count: " + ex.Message);
+            }
         }
     }
 }

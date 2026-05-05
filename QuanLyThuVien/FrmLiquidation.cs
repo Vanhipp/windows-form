@@ -39,6 +39,7 @@ namespace QuanLyThuVien
             dgvBooks.AutoGenerateColumns = false;
             dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBooks.MultiSelect = false;
+            dgvBooks.Columns.Add("IDCaTheSach", "Mã cá thể sách");
             dgvBooks.Columns.Add("IDSach", "Mã sách");
             dgvBooks.Columns.Add("TenSach", "Tên sách");
             dgvBooks.Columns.Add("TacGia", "Tác giả");
@@ -69,10 +70,10 @@ namespace QuanLyThuVien
             try
             {
                 string sql = @"
-                    SELECT s.IDSach, s.TenSach, s.TacGia, s.GiaBan, s.GiaThue, c.TinhTrang, t.LyDoThanhLy
+                    SELECT c.IDCaTheSach, s.IDSach, s.TenSach, s.TacGia, s.GiaBan, s.GiaThue, c.TinhTrang, t.LyDoThanhLy
                     FROM ThongTinSach s
                     LEFT JOIN CaTheSach c ON s.IDSach = c.IDSach
-                    LEFT JOIN ThanhLySach t ON s.IDSach = t.IDSach";
+                    LEFT JOIN ThanhLySach t ON c.IDCaTheSach = t.IDCaTheSach";
 
                 if (!string.IsNullOrWhiteSpace(whereClause))
                 {
@@ -91,6 +92,7 @@ namespace QuanLyThuVien
                     }
 
                     dgvBooks.Rows.Add(
+                        r["IDCaTheSach"]?.ToString()?.Trim(),
                         r["IDSach"]?.ToString()?.Trim(),
                         r["TenSach"]?.ToString()?.Trim(),
                         r["TacGia"]?.ToString()?.Trim(),
@@ -147,7 +149,7 @@ namespace QuanLyThuVien
             if (string.IsNullOrWhiteSpace(id)) return;
             txtMaSach.Text = id;
             var p = new SqlParameter[] { new SqlParameter("@id", id) };
-            LoadData("s.IDSach = @id", p);
+            LoadData("c.IDCaTheSach = @id", p);
             foreach (DataGridViewRow row in dgvBooks.Rows)
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null && row.Cells[0].Value.ToString().Trim() == id)
@@ -178,7 +180,7 @@ namespace QuanLyThuVien
             {
                 var p = new SqlParameter[] { new SqlParameter("@searchValue", txtMaSach.Text.Trim()) };
                 string field;
-                if (comboSearchMethod.SelectedIndex == 0) field = "s.IDSach";
+                if (comboSearchMethod.SelectedIndex == 0) field = "c.IDCaTheSach";
                 else field = "s.TenSach";
                 LoadData(field + " LIKE '%' + @searchValue + '%'", p);
             }
@@ -193,9 +195,9 @@ namespace QuanLyThuVien
             if (dgvBooks.SelectedRows.Count == 0) return;
 
             var row = dgvBooks.SelectedRows[0];
-            if (row.Cells.Count > 6 && row.Cells[6].Value != null && !string.IsNullOrWhiteSpace(row.Cells[6].Value.ToString()))
+            if (row.Cells.Count > 7 && row.Cells[7].Value != null && !string.IsNullOrWhiteSpace(row.Cells[7].Value.ToString()))
             {
-                string lydo = row.Cells[6].Value.ToString();
+                string lydo = row.Cells[7].Value.ToString();
                 foreach (ReasonItem ri in cboLyDo.Items)
                 {
                     if (ri.Value.ToString() == lydo)
@@ -215,18 +217,18 @@ namespace QuanLyThuVien
                 return;
             }
 
-            var id = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim();
-            if (string.IsNullOrWhiteSpace(id)) return;
+            var idCaTheSach = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim();
+            if (string.IsNullOrWhiteSpace(idCaTheSach)) return;
 
             // Kiểm tra trạng thái sách trước khi thanh lý
-            string currentStatus = dgvBooks.SelectedRows[0].Cells[5].Value?.ToString()?.Trim();
+            string currentStatus = dgvBooks.SelectedRows[0].Cells[6].Value?.ToString()?.Trim();
             if (currentStatus == "Đang mượn")
             {
                 MessageBox.Show("Không thể thanh lý sách đang được mượn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var result = MessageBox.Show($"Bạn có chắc chắn muốn thanh lý sách mã {id}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var result = MessageBox.Show($"Bạn có chắc chắn muốn thanh lý sách mã cá thể {idCaTheSach}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result != DialogResult.Yes) return;
 
             try
@@ -238,16 +240,16 @@ namespace QuanLyThuVien
                 try
                 {
                     string insertSql = @"
-                        IF EXISTS (SELECT 1 FROM ThanhLySach WHERE IDSach = @id)
+                        IF EXISTS (SELECT 1 FROM ThanhLySach WHERE IDCaTheSach = @id)
                         BEGIN
-                            UPDATE ThanhLySach SET NgayThanhLy = @ngay, LyDoThanhLy = @lydo WHERE IDSach = @id
+                            UPDATE ThanhLySach SET NgayThanhLy = @ngay, LyDoThanhLy = @lydo WHERE IDCaTheSach = @id
                         END
                         ELSE
                         BEGIN
-                            INSERT INTO ThanhLySach (IDSach, NgayThanhLy, LyDoThanhLy) VALUES (@id, @ngay, @lydo)
+                            INSERT INTO ThanhLySach (IDCaTheSach, NgayThanhLy, LyDoThanhLy) VALUES (@id, @ngay, @lydo)
                         END";
                     var insParams = new SqlParameter[] {
-                        new SqlParameter("@id", id),
+                        new SqlParameter("@id", idCaTheSach),
                         new SqlParameter("@ngay", DateTime.Now.Date),
                         new SqlParameter("@lydo", lydo ?? (object)DBNull.Value)
                     };
@@ -269,12 +271,14 @@ namespace QuanLyThuVien
                     newStatus = "Hỏng";
                 }
 
-                string updateSql = "UPDATE CaTheSach SET TinhTrang = @t WHERE IDSach = @id";
+                string updateSql = "UPDATE CaTheSach SET TinhTrang = @t WHERE IDCaTheSach = @id";
                 var p = new SqlParameter[] {
                     new SqlParameter("@t", newStatus),
-                    new SqlParameter("@id", id)
+                    new SqlParameter("@id", idCaTheSach)
                 };
                 DatabaseHelper.ExecuteNonQuery(updateSql, p);
+
+                UpdateBookCount();
 
                 MessageBox.Show("Đã thanh lý sách thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -292,6 +296,32 @@ namespace QuanLyThuVien
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi thanh lý sách: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateBookCount()
+        {
+            try
+            {
+                string query = @"
+                    UPDATE ThongTinSach
+                    SET SoLuong = (
+                        SELECT COUNT(*)
+                        FROM CaTheSach
+                        WHERE CaTheSach.IDSach = ThongTinSach.IDSach
+                        AND (CaTheSach.TinhTrang = N'Sẵn sàng' OR CaTheSach.TinhTrang = N'Đang mượn')
+                    )
+                    WHERE EXISTS (
+                        SELECT 1
+                        FROM CaTheSach
+                        WHERE CaTheSach.IDSach = ThongTinSach.IDSach
+                    );";
+
+                DatabaseHelper.ExecuteNonQuery(query, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating book count: " + ex.Message);
             }
         }
 

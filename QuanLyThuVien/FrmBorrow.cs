@@ -193,6 +193,8 @@ namespace QuanLyThuVien
                     }
                 });
 
+                UpdateBookCount(); // Update the book count after successful transaction
+
                 MessageBox.Show($"Lập phiếu mượn thành công!\nMã phiếu: {phieuMuonID}\nHạn trả: {dtpBorrowDate.Value.AddDays(4):dd/MM/yyyy}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
@@ -210,6 +212,32 @@ namespace QuanLyThuVien
         private void dgvBooks_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void UpdateBookCount()
+        {
+            try
+            {
+                string query = @"
+                    UPDATE ThongTinSach
+                    SET SoLuong = (
+                        SELECT COUNT(*)
+                        FROM CaTheSach
+                        WHERE CaTheSach.IDSach = ThongTinSach.IDSach
+                          AND (CaTheSach.TinhTrang = N'Sẵn sàng' OR CaTheSach.TinhTrang = N'Đang mượn')
+                    )
+                    WHERE EXISTS (
+                        SELECT 1
+                        FROM CaTheSach
+                        WHERE CaTheSach.IDSach = ThongTinSach.IDSach
+                    );";
+
+                DatabaseHelper.ExecuteNonQuery(query, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating book count: " + ex.Message);
+            }
         }
     }
 }
