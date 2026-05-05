@@ -105,7 +105,7 @@ namespace QuanLyThuVien
                 catch { }
 
                 string giaThueCol = hasGiaThue ? ", s.GiaThue" : ", 0 AS GiaThue";
-                string sql = "SELECT s.IDSach, s.TenSach, s.TacGia, s.NhaXuatBan, s.NamXuatBan, s.GiaBan" + giaThueCol + ", ISNULL(d.TenDauSach, s.IDDauSach) AS TheLoai, s.IDDauSach, s.TinhTrang FROM ThongTinSach s LEFT JOIN DauSach d ON s.IDDauSach = d.IDDauSach";
+                string sql = "SELECT s.IDSach, s.TenSach, s.TacGia, s.NhaXuatBan, s.NamXuatBan, s.GiaBan" + giaThueCol + ", ISNULL(d.TenDauSach, s.IDDauSach) AS TheLoai, s.IDDauSach, c.TinhTrang FROM ThongTinSach s LEFT JOIN DauSach d ON s.IDDauSach = d.IDDauSach LEFT JOIN CaTheSach c ON s.IDSach = c.IDSach";
 
                 string finalWhere = "";
 
@@ -262,13 +262,13 @@ namespace QuanLyThuVien
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            borrowStatusClause = "s.TinhTrang = N'Sẵn sàng'";
+            borrowStatusClause = "c.TinhTrang = N'Sẵn sàng'";
             LoadData(borrowStatusClause);
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            borrowStatusClause = "s.TinhTrang = N'Đang mượn'";
+            borrowStatusClause = "c.TinhTrang = N'Đang mượn'";
             LoadData(borrowStatusClause);
         }
     }

@@ -69,8 +69,9 @@ namespace QuanLyThuVien
             try
             {
                 string sql = @"
-                    SELECT s.IDSach, s.TenSach, s.TacGia, s.GiaBan, s.GiaThue, s.TinhTrang, t.LyDoThanhLy
+                    SELECT s.IDSach, s.TenSach, s.TacGia, s.GiaBan, s.GiaThue, c.TinhTrang, t.LyDoThanhLy
                     FROM ThongTinSach s
+                    LEFT JOIN CaTheSach c ON s.IDSach = c.IDSach
                     LEFT JOIN ThanhLySach t ON s.IDSach = t.IDSach";
 
                 if (!string.IsNullOrWhiteSpace(whereClause))
@@ -268,7 +269,7 @@ namespace QuanLyThuVien
                     newStatus = "Hỏng";
                 }
 
-                string updateSql = "UPDATE ThongTinSach SET TinhTrang = @t WHERE IDSach = @id";
+                string updateSql = "UPDATE CaTheSach SET TinhTrang = @t WHERE IDSach = @id";
                 var p = new SqlParameter[] {
                     new SqlParameter("@t", newStatus),
                     new SqlParameter("@id", id)

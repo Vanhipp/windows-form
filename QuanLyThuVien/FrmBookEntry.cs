@@ -18,12 +18,14 @@ namespace QuanLyThuVien
     {
         public event EventHandler BookSaved;
         private string _editingId = null;
+        private string _viewingMasterId = null; // ID sách gốc đang được xem chi tiết
         public FrmBookEntry()
         {
             InitializeComponent();
             Load += FrmBookEntry_Load;
             btnLuu.Click += btnLuu_Click;
             btnDong.Click += btnDong_Click;
+            btnBack.Click += btnBack_Click;
         }
 
         private void FrmBookEntry_Load(object sender, EventArgs e)
@@ -60,25 +62,17 @@ namespace QuanLyThuVien
                     ALTER TABLE DauSach ALTER COLUMN IDTheLoai nchar(10) NULL
                 END", null);
 
-                // Bỏ FK DauSach -> TheLoai nếu gây lỗi
                 DatabaseHelper.ExecuteNonQuery(@"
                 IF EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_DauSach_TheLoai')
                 BEGIN
                     ALTER TABLE DauSach DROP CONSTRAINT FK_DauSach_TheLoai
                 END", null);
 
-                // Thêm cột NgayNhap nếu chưa có
+                // Thêm cột SoLuong nếu chưa có
                 DatabaseHelper.ExecuteNonQuery(@"
-                IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('ThongTinSach') AND name = 'NgayNhap')
+                IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('ThongTinSach') AND name = 'SoLuong')
                 BEGIN
-                    ALTER TABLE ThongTinSach ADD NgayNhap datetime NULL
-                END", null);
-
-                // Thêm cột TinhTrang nếu chưa có
-                DatabaseHelper.ExecuteNonQuery(@"
-                IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('ThongTinSach') AND name = 'TinhTrang')
-                BEGIN
-                    ALTER TABLE ThongTinSach ADD TinhTrang nvarchar(50) NULL
+                    ALTER TABLE ThongTinSach ADD SoLuong int NOT NULL DEFAULT ((0))
                 END", null);
             }
             catch { }
@@ -154,16 +148,40 @@ namespace QuanLyThuVien
 
         private void btnDong_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(_editingId))
+            {
+                // Nếu đang sửa một cuốn cụ thể, nhấn Đóng sẽ hủy việc sửa và quay về chế độ "Thêm mới/Thêm bản sao"
+                if (!string.IsNullOrEmpty(_viewingMasterId))
+                {
+                    LoadMasterInfoIntoFields(_viewingMasterId);
+                }
+                else
+                {
+                    _editingId = null;
+                    btnLuu.Text = "Lưu";
+                    txtSoLuong.Enabled = true;
+                }
+                return;
+            }
+
+            // Nếu không đang sửa, thì xóa trắng để nhập mới hoàn toàn
             txtTenSach.Text = string.Empty;
             txtTacGia.Text = string.Empty;
             txtNhaXuatBan.Text = string.Empty;
             txtNamXuatBan.Text = string.Empty;
             txtGiaBan.Text = string.Empty;
             txtGiaThue.Text = string.Empty;
+            txtSoLuong.Value = 1;
             dtpNgayNhap.Value = DateTime.Now;
             if (cboTheLoai.Items.Count > 0) cboTheLoai.SelectedIndex = 0;
+            
             _editingId = null;
+            _viewingMasterId = null; // Thoát khỏi chế độ xem chi tiết
             btnLuu.Text = "Lưu";
+            txtSoLuong.Enabled = true;
+            
+            SetupGridColumns();
+            LoadData();
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
@@ -210,6 +228,7 @@ namespace QuanLyThuVien
 
             try
             {
+                int quantity = (int)txtSoLuong.Value;
                 var book = new Book
                 {
                     TenSach = txtTenSach.Text.Trim(),
@@ -223,116 +242,320 @@ namespace QuanLyThuVien
 
                 if (!string.IsNullOrEmpty(_editingId))
                 {
-                    string updateSql = "UPDATE ThongTinSach SET TenSach=@TenSach, TacGia=@TacGia, NhaXuatBan=@NhaXuatBan, NamXuatBan=@NamXuatBan, NgayNhap=@NgayNhap, GiaBan=@GiaBan, GiaThue=@GiaThue, IDDauSach=@IDDauSach WHERE IDSach=@id";
-                    var updateParams = new SqlParameter[]
+                    // CHẾ ĐỘ SỬA: Chỉ sửa thông tin của 1 cuốn cụ thể hoặc đầu sách
+                    DatabaseHelper.ExecuteWithTransaction(cmd =>
                     {
-                        new SqlParameter("@TenSach", book.TenSach),
-                        new SqlParameter("@TacGia", book.TacGia),
-                        new SqlParameter("@NhaXuatBan", book.NhaXuatBan),
-                        new SqlParameter("@NamXuatBan", book.NamXuatBan),
-                        new SqlParameter("@NgayNhap", book.NgayNhap.Date),
-                        new SqlParameter("@GiaBan", book.GiaBan),
-                        new SqlParameter("@GiaThue", giaThue),
-                        new SqlParameter("@IDDauSach", (object)book.IDDauSach ?? DBNull.Value),
-                        new SqlParameter("@id", _editingId)
-                    };
+                        // 1. Update ThongTinSach (Dùng IDSach từ _editingId - thường là S001_0001)
+                        // Lấy ID gốc (S001) từ mã con (S001_0001)
+                        string masterId = _editingId.Contains("_") ? _editingId.Split('_')[0] : _editingId;
 
-                    DatabaseHelper.ExecuteNonQuery(updateSql, updateParams);
-                    MessageBox.Show("Cập nhật sách thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    RefreshAllForms();
-                    BookSaved?.Invoke(this, EventArgs.Empty);
-                    this.Close();
+                        cmd.CommandText = "UPDATE ThongTinSach SET TenSach=@TenSach, TacGia=@TacGia, NhaXuatBan=@NhaXuatBan, NamXuatBan=@NamXuatBan, GiaBan=@GiaBan, GiaThue=@GiaThue, IDDauSach=@IDDauSach WHERE IDSach=@masterId";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@TenSach", book.TenSach);
+                        cmd.Parameters.AddWithValue("@TacGia", book.TacGia);
+                        cmd.Parameters.AddWithValue("@NhaXuatBan", book.NhaXuatBan);
+                        cmd.Parameters.AddWithValue("@NamXuatBan", book.NamXuatBan);
+                        cmd.Parameters.AddWithValue("@GiaBan", book.GiaBan);
+                        cmd.Parameters.AddWithValue("@GiaThue", giaThue);
+                        cmd.Parameters.AddWithValue("@IDDauSach", (object)book.IDDauSach ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@masterId", masterId);
+                        cmd.ExecuteNonQuery();
+
+                        // 2. Update CaTheSach (Cập nhật ngày nhập cho cuốn đang chọn)
+                        cmd.CommandText = "UPDATE CaTheSach SET NgayNhap=@NgayNhap, TenCaTheSach=@TenSach WHERE IDCaTheSach=@id";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@NgayNhap", book.NgayNhap.Date);
+                        cmd.Parameters.AddWithValue("@TenSach", book.TenSach);
+                        cmd.Parameters.AddWithValue("@id", _editingId);
+                        cmd.ExecuteNonQuery();
+                    });
+
+                    MessageBox.Show("Cập nhật thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    var newId = GenerateNewBookId(book.IDDauSach);
-                    string sql = "INSERT INTO ThongTinSach (IDSach, TenSach, TacGia, NhaXuatBan, NamXuatBan, NgayNhap, GiaBan, GiaThue, IDDauSach, TinhTrang, SoLuong) " +
-                                 "VALUES (@IDSach, @TenSach, @TacGia, @NhaXuatBan, @NamXuatBan, @NgayNhap, @GiaBan, @GiaThue, @IDDauSach, N'Sẵn sàng', 1);";
+                    // CHẾ ĐỘ THÊM MỚI (Hỗ trợ nhập số lượng)
+                    string masterId = "";
+                    
+                    // Kiểm tra xem Đầu Sách đã tồn tại chưa
+                    var dtMaster = DatabaseHelper.ExecuteQuery(
+                        "SELECT IDSach FROM ThongTinSach WHERE TenSach=@t AND TacGia=@tg AND NamXuatBan=@n",
+                        new[] { 
+                            new SqlParameter("@t", book.TenSach), 
+                            new SqlParameter("@tg", book.TacGia),
+                            new SqlParameter("@n", book.NamXuatBan)
+                        });
 
-                    var parameters = new SqlParameter[]
+                    DatabaseHelper.ExecuteWithTransaction(cmd =>
                     {
-                        new SqlParameter("@IDSach", newId),
-                        new SqlParameter("@TenSach", book.TenSach),
-                        new SqlParameter("@TacGia", book.TacGia),
-                        new SqlParameter("@NhaXuatBan", book.NhaXuatBan),
-                        new SqlParameter("@NamXuatBan", (object)book.NamXuatBan),
-                        new SqlParameter("@NgayNhap", (object)book.NgayNhap.Date),
-                        new SqlParameter("@GiaBan", (object)book.GiaBan),
-                        new SqlParameter("@GiaThue", giaThue),
-                        new SqlParameter("@IDDauSach", (object)book.IDDauSach ?? DBNull.Value)
-                    };
+                        if (dtMaster.Rows.Count > 0)
+                        {
+                            // Sách ĐÃ CÓ -> Lấy ID cũ
+                            masterId = dtMaster.Rows[0]["IDSach"].ToString().Trim();
+                            
+                            // Cập nhật số lượng tổng trong ThongTinSach
+                            cmd.CommandText = "UPDATE ThongTinSach SET SoLuong = SoLuong + @q WHERE IDSach = @mid";
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@q", quantity);
+                            cmd.Parameters.AddWithValue("@mid", masterId);
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            // Sách MỚI HOÀN TOÀN -> Tạo ID gốc mới (S001)
+                            masterId = GenerateNewMasterId();
+                            
+                            cmd.CommandText = "INSERT INTO ThongTinSach (IDSach, TenSach, TacGia, NhaXuatBan, NamXuatBan, GiaBan, GiaThue, IDDauSach, SoLuong) " +
+                                             "VALUES (@mid, @TenSach, @TacGia, @NhaXuatBan, @NamXuatBan, @GiaBan, @GiaThue, @IDDauSach, @q);";
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@mid", masterId);
+                            cmd.Parameters.AddWithValue("@TenSach", book.TenSach);
+                            cmd.Parameters.AddWithValue("@TacGia", book.TacGia);
+                            cmd.Parameters.AddWithValue("@NhaXuatBan", book.NhaXuatBan);
+                            cmd.Parameters.AddWithValue("@NamXuatBan", book.NamXuatBan);
+                            cmd.Parameters.AddWithValue("@GiaBan", book.GiaBan);
+                            cmd.Parameters.AddWithValue("@GiaThue", giaThue);
+                            cmd.Parameters.AddWithValue("@IDDauSach", (object)book.IDDauSach ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@q", quantity);
+                            cmd.ExecuteNonQuery();
+                        }
 
-                    DatabaseHelper.ExecuteNonQuery(sql, parameters);
-                    MessageBox.Show($"Thêm sách thành công. Mã sách: {newId}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    RefreshAllForms();
-                    BookSaved?.Invoke(this, EventArgs.Empty);
+                        // Lấy STT lớn nhất hiện tại của các cuốn con
+                        int maxSeq = GetMaxSequence(masterId);
 
-                    var result = MessageBox.Show("Bạn có muốn tiếp tục nhập thêm sách mới?", "Tiếp tục?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        btnDong_Click(null, null);
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
+                        // Vòng lặp tạo các cuốn con (CaTheSach)
+                        for (int i = 1; i <= quantity; i++)
+                        {
+                            string childId = $"{masterId}_{ (maxSeq + i).ToString("D4") }";
+                            
+                            cmd.CommandText = "INSERT INTO CaTheSach (IDCaTheSach, TenCaTheSach, IDSach, NgayNhap, TinhTrang) " +
+                                             "VALUES (@cid, @TenSach, @mid, @NgayNhap, N'Sẵn sàng');";
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@cid", childId);
+                            cmd.Parameters.AddWithValue("@TenSach", book.TenSach);
+                            cmd.Parameters.AddWithValue("@mid", masterId);
+                            cmd.Parameters.AddWithValue("@NgayNhap", book.NgayNhap.Date);
+                            cmd.ExecuteNonQuery();
+                        }
+                    });
+
+                    MessageBox.Show($"Đã nhập thêm {quantity} cuốn sách thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
+                RefreshAllForms();
+                BookSaved?.Invoke(this, EventArgs.Empty);
+                
+                if (string.IsNullOrEmpty(_editingId))
+                {
+                    var result = MessageBox.Show("Bạn có muốn tiếp tục nhập thêm sách khác?", "Tiếp tục?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes) btnDong_Click(null, null);
+                    else this.Close();
+                }
+                else this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi lưu dữ liệu: " + ex.Message, "Lỗi DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Nếu lỗi do duplicate key S001, ta thử gợi ý người dùng hoặc tự động thử lại với ID khác
+                if (ex.Message.Contains("duplicate key") || ex.Message.Contains("PRIMARY KEY"))
+                {
+                    MessageBox.Show("Lỗi trùng mã ID. Hệ thống sẽ thử cập nhật lại mã ID mới nhất. Vui lòng thử Lưu lại lần nữa.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+        }
+
+        private string GenerateNewMasterId()
+        {
+            // Lấy tất cả ID gốc (dạng Sxxx)
+            var dt = DatabaseHelper.ExecuteQuery("SELECT IDSach FROM ThongTinSach");
+            int max = 0;
+            foreach (DataRow r in dt.Rows)
+            {
+                string id = r["IDSach"].ToString().Trim();
+                // Nếu có ID con (S001_0001) thì lấy phần đầu
+                if (id.Contains("_")) id = id.Split('_')[0];
+                
+                if (id.StartsWith("S") && int.TryParse(id.Substring(1), out int val))
+                {
+                    if (val > max) max = val;
+                }
+            }
+            return "S" + (max + 1).ToString("D3");
+        }
+
+        private int GetMaxSequence(string masterId)
+        {
+            string prefix = masterId + "_";
+            var dt = DatabaseHelper.ExecuteQuery("SELECT IDCaTheSach FROM CaTheSach WHERE IDCaTheSach LIKE @p", 
+                new[] { new SqlParameter("@p", prefix + "%") });
+            
+            int max = 0;
+            foreach (DataRow r in dt.Rows)
+            {
+                string id = r["IDCaTheSach"].ToString().Trim();
+                string seqStr = id.Substring(prefix.Length);
+                if (int.TryParse(seqStr, out int val))
+                {
+                    if (val > max) max = val;
+                }
+            }
+            return max;
         }
 
         private void SetupGridColumns()
         {
             dgvBooks.Columns.Clear();
             dgvBooks.AutoGenerateColumns = false;
-            dgvBooks.Columns.Add("IDSach", "Mã sách");
-            dgvBooks.Columns.Add("TenSach", "Tên sách");
-            dgvBooks.Columns.Add("TacGia", "Tác giả");
-            dgvBooks.Columns.Add("NhaXuatBan", "Nhà xuất bản");
-            dgvBooks.Columns.Add("NamXuatBan", "Năm XB");
-            dgvBooks.Columns.Add("GiaBan", "Trị giá");
-            dgvBooks.Columns.Add("GiaThue", "Giá thuê");
-            dgvBooks.Columns.Add("TheLoai", "Thể loại");
-            dgvBooks.Columns.Add("TinhTrang", "Tình trạng");
-            
-            dgvBooks.Columns["IDSach"].DataPropertyName = "IDSach";
-            dgvBooks.Columns["TenSach"].DataPropertyName = "TenSach";
-            dgvBooks.Columns["TacGia"].DataPropertyName = "TacGia";
-            dgvBooks.Columns["NhaXuatBan"].DataPropertyName = "NhaXuatBan";
-            dgvBooks.Columns["NamXuatBan"].DataPropertyName = "NamXuatBan";
-            dgvBooks.Columns["GiaBan"].DataPropertyName = "GiaBan";
-            dgvBooks.Columns["GiaThue"].DataPropertyName = "GiaThue";
-            dgvBooks.Columns["TheLoai"].DataPropertyName = "TheLoai";
-            dgvBooks.Columns["TinhTrang"].DataPropertyName = "TinhTrang";
+
+            if (_viewingMasterId == null)
+            {
+                // CHẾ ĐỘ MASTER: Hiển thị ThongTinSach
+                dgvBooks.Columns.Add("IDSach", "Mã Sách");
+                dgvBooks.Columns.Add("TenSach", "Tên Sách");
+                dgvBooks.Columns.Add("TacGia", "Tác Giả");
+                dgvBooks.Columns.Add("NhaXuatBan", "Nhà XB");
+                dgvBooks.Columns.Add("NamXuatBan", "Năm XB");
+                dgvBooks.Columns.Add("SoLuong", "SL");
+                dgvBooks.Columns.Add("TheLoai", "Đầu Sách");
+
+                dgvBooks.Columns["IDSach"].DataPropertyName = "IDSach";
+                dgvBooks.Columns["TenSach"].DataPropertyName = "TenSach";
+                dgvBooks.Columns["TacGia"].DataPropertyName = "TacGia";
+                dgvBooks.Columns["NhaXuatBan"].DataPropertyName = "NhaXuatBan";
+                dgvBooks.Columns["NamXuatBan"].DataPropertyName = "NamXuatBan";
+                dgvBooks.Columns["SoLuong"].DataPropertyName = "SoLuong";
+                dgvBooks.Columns["TheLoai"].DataPropertyName = "TheLoai";
+                
+                btnBack.Visible = false;
+            }
+            else
+            {
+                // CHẾ ĐỘ DETAIL: Hiển thị CaTheSach của 1 cuốn
+                dgvBooks.Columns.Add("IDCaTheSach", "Mã Cá Thể");
+                dgvBooks.Columns.Add("TenCaTheSach", "Tên Sách");
+                dgvBooks.Columns.Add("NgayNhap", "Ngày Nhập");
+                dgvBooks.Columns.Add("TinhTrang", "Tình Trạng");
+
+                dgvBooks.Columns["IDCaTheSach"].DataPropertyName = "IDCaTheSach";
+                dgvBooks.Columns["TenCaTheSach"].DataPropertyName = "TenCaTheSach";
+                dgvBooks.Columns["NgayNhap"].DataPropertyName = "NgayNhap";
+                dgvBooks.Columns["TinhTrang"].DataPropertyName = "TinhTrang";
+
+                btnBack.Visible = true;
+                btnBack.Text = "← Quay lại: " + _viewingMasterId;
+            }
 
             dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBooks.MultiSelect = false;
             dgvBooks.ReadOnly = true;
-            dgvBooks.DoubleClick += (s, ev) => {
-                if (dgvBooks.SelectedRows.Count > 0) {
-                    var id = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString();
+            dgvBooks.DoubleClick -= dgvBooks_DoubleClick;
+            dgvBooks.DoubleClick += dgvBooks_DoubleClick;
+        }
+
+        private void dgvBooks_DoubleClick(object sender, EventArgs e)
+        {
+            if (dgvBooks.SelectedRows.Count > 0)
+            {
+                if (_viewingMasterId == null)
+                {
+                    // TỪ MASTER -> DETAIL
+                    _viewingMasterId = dgvBooks.SelectedRows[0].Cells["IDSach"].Value?.ToString();
+                    
+                    // Nạp thông tin sách lên panel nhập liệu để người dùng có thể thêm số lượng (nhận sách)
+                    LoadMasterInfoIntoFields(_viewingMasterId);
+                    
+                    SetupGridColumns();
+                    LoadData();
+                }
+                else
+                {
+                    // TỪ DETAIL -> MỞ FORM SỬA CÁ THỂ
+                    var id = dgvBooks.SelectedRows[0].Cells["IDCaTheSach"].Value?.ToString();
                     OpenForEdit(id);
                 }
-            };
+            }
+        }
+
+        private void LoadMasterInfoIntoFields(string masterId)
+        {
+            try
+            {
+                var dt = DatabaseHelper.ExecuteQuery("SELECT * FROM ThongTinSach WHERE IDSach = @id", 
+                    new[] { new SqlParameter("@id", masterId) });
+                
+                if (dt.Rows.Count > 0)
+                {
+                    var r = dt.Rows[0];
+                    txtTenSach.Text = r["TenSach"]?.ToString().Trim();
+                    txtTacGia.Text = r["TacGia"]?.ToString().Trim();
+                    txtNhaXuatBan.Text = r["NhaXuatBan"]?.ToString().Trim();
+                    txtNamXuatBan.Text = r["NamXuatBan"]?.ToString().Trim();
+                    txtGiaBan.Text = r["GiaBan"]?.ToString().Trim();
+                    txtGiaThue.Text = r.Table.Columns.Contains("GiaThue") ? r["GiaThue"]?.ToString().Trim() : "0";
+                    
+                    // Chọn thể loại (đầu sách) tương ứng
+                    var catId = r.Table.Columns.Contains("IDDauSach") ? r["IDDauSach"]?.ToString().Trim() : null;
+                    if (!string.IsNullOrWhiteSpace(catId))
+                    {
+                        for (int i = 0; i < cboTheLoai.Items.Count; i++)
+                        {
+                            if (cboTheLoai.Items[i] is CategoryItem item && item.Id == catId)
+                            {
+                                cboTheLoai.SelectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+
+                    txtSoLuong.Value = 1;
+                    txtSoLuong.Enabled = true;
+                    _editingId = null; // Để chế độ thêm mới (nhưng sẽ tự khớp với ID gốc cũ)
+                    btnLuu.Text = "Thêm bản sao";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi nạp master info: " + ex.Message);
+            }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            _viewingMasterId = null;
+            SetupGridColumns();
+            LoadData();
         }
 
         private void LoadData()
         {
             try
             {
-                string sql = @"SELECT TOP 20 s.IDSach, s.TenSach, s.TacGia, s.NhaXuatBan, s.NamXuatBan, s.GiaBan, s.GiaThue, 
-                             d.TenDauSach AS TheLoai, s.NgayNhap, s.TinhTrang 
-                             FROM ThongTinSach s 
-                             LEFT JOIN DauSach d ON s.IDDauSach = d.IDDauSach 
-                             ORDER BY s.NgayNhap DESC, s.IDSach DESC";
-                var dt = DatabaseHelper.ExecuteQuery(sql);
+                DataTable dt;
+                if (_viewingMasterId == null)
+                {
+                    // LOAD MASTER
+                    string sql = @"SELECT s.IDSach, s.TenSach, s.TacGia, s.NhaXuatBan, s.NamXuatBan, s.SoLuong, 
+                                 d.TenDauSach AS TheLoai
+                                 FROM ThongTinSach s 
+                                 LEFT JOIN DauSach d ON s.IDDauSach = d.IDDauSach 
+                                 ORDER BY s.IDSach DESC";
+                    dt = DatabaseHelper.ExecuteQuery(sql);
+                }
+                else
+                {
+                    // LOAD DETAIL
+                    string sql = @"SELECT IDCaTheSach, TenCaTheSach, NgayNhap, TinhTrang 
+                                 FROM CaTheSach 
+                                 WHERE IDSach = @mid 
+                                 ORDER BY IDCaTheSach ASC";
+                    dt = DatabaseHelper.ExecuteQuery(sql, new[] { new SqlParameter("@mid", _viewingMasterId) });
+                }
                 
-                // Cập nhật tổng số lượng sách
-                var dtCount = DatabaseHelper.ExecuteQuery("SELECT COUNT(*) FROM ThongTinSach", null);
+                var dtCount = DatabaseHelper.ExecuteQuery("SELECT COUNT(*) FROM CaTheSach", null);
                 if (dtCount.Rows.Count > 0)
                 {
                     lblTotalBooksValue.Text = dtCount.Rows[0][0].ToString();
@@ -341,17 +564,26 @@ namespace QuanLyThuVien
                 dgvBooks.Rows.Clear();
                 foreach (DataRow r in dt.Rows)
                 {
-                    string status = GetStatusText(r["TinhTrang"]?.ToString());
-                    dgvBooks.Rows.Add(
-                        r["IDSach"]?.ToString()?.Trim(),
-                        r["TenSach"]?.ToString()?.Trim(),
-                        r["TacGia"]?.ToString()?.Trim(),
-                        r["NhaXuatBan"]?.ToString()?.Trim(),
-                        r["NamXuatBan"],
-                        r["GiaBan"],
-                        r["GiaThue"],
-                        r["TheLoai"]?.ToString()?.Trim(),
-                        status);
+                    if (_viewingMasterId == null)
+                    {
+                        dgvBooks.Rows.Add(
+                            r["IDSach"]?.ToString()?.Trim(),
+                            r["TenSach"]?.ToString()?.Trim(),
+                            r["TacGia"]?.ToString()?.Trim(),
+                            r["NhaXuatBan"]?.ToString()?.Trim(),
+                            r["NamXuatBan"],
+                            r["SoLuong"],
+                            r["TheLoai"]?.ToString()?.Trim());
+                    }
+                    else
+                    {
+                        string status = GetStatusText(r["TinhTrang"]?.ToString());
+                        dgvBooks.Rows.Add(
+                            r["IDCaTheSach"]?.ToString()?.Trim(),
+                            r["TenCaTheSach"]?.ToString()?.Trim(),
+                            Convert.ToDateTime(r["NgayNhap"]).ToString("dd/MM/yyyy"),
+                            status);
+                    }
                 }
             }
             catch (Exception ex)
@@ -395,49 +627,12 @@ namespace QuanLyThuVien
 
         private void RefreshAllForms()
         {
-            LoadData(); // Refresh current grid
+            LoadData(); 
             foreach (Form frm in Application.OpenForms)
             {
-                if (frm is FrmSearchBook searchForm)
-                {
-                    searchForm.RefreshData();
-                }
-                if (frm is FrmLiquidation liqForm)
-                {
-                    liqForm.RefreshData();
-                }
+                if (frm is FrmSearchBook searchForm) searchForm.RefreshData();
+                if (frm is FrmLiquidation liqForm) liqForm.RefreshData();
             }
-        }
-
-        private string GenerateNewBookId(string dauSachId)
-        {
-            if (string.IsNullOrWhiteSpace(dauSachId)) return "S" + DateTime.Now.Ticks.ToString().Substring(10);
-
-            try
-            {
-                // Format: DS01_01, DS01_02...
-                string prefix = dauSachId + "_";
-                var dt = DatabaseHelper.ExecuteQuery("SELECT IDSach FROM ThongTinSach WHERE IDSach LIKE @prefix", 
-                    new[] { new SqlParameter("@prefix", prefix + "%") });
-                
-                int maxSeq = 0;
-                foreach (DataRow row in dt.Rows)
-                {
-                    string idStr = row["IDSach"]?.ToString().Trim();
-                    if (!string.IsNullOrWhiteSpace(idStr) && idStr.StartsWith(prefix))
-                    {
-                        string seqPart = idStr.Substring(prefix.Length);
-                        if (int.TryParse(seqPart, out int seq))
-                        {
-                            if (seq > maxSeq) maxSeq = seq;
-                        }
-                    }
-                }
-
-                return prefix + (maxSeq + 1).ToString("D2");
-            }
-            catch { }
-            return dauSachId + "_01";
         }
 
         public void OpenForEdit(string id)
@@ -446,10 +641,12 @@ namespace QuanLyThuVien
             try
             {
                 var p = new SqlParameter[] { new SqlParameter("@id", id) };
-                var dt = DatabaseHelper.ExecuteQuery("SELECT TOP 1 * FROM ThongTinSach WHERE IDSach = @id", p);
+                string sql = "SELECT s.*, c.NgayNhap, c.IDCaTheSach FROM ThongTinSach s JOIN CaTheSach c ON s.IDSach = c.IDSach WHERE c.IDCaTheSach = @id";
+                var dt = DatabaseHelper.ExecuteQuery(sql, p);
                 if (dt.Rows.Count == 0) return;
                 var r = dt.Rows[0];
-                _editingId = r["IDSach"]?.ToString().Trim();
+                
+                _editingId = r["IDCaTheSach"]?.ToString().Trim();
                 txtTenSach.Text = r["TenSach"]?.ToString().Trim();
                 txtTacGia.Text = r["TacGia"]?.ToString().Trim();
                 txtNhaXuatBan.Text = r["NhaXuatBan"]?.ToString().Trim();
@@ -457,6 +654,10 @@ namespace QuanLyThuVien
                 if (DateTime.TryParse(r["NgayNhap"]?.ToString(), out var dn)) dtpNgayNhap.Value = dn;
                 txtGiaBan.Text = r["GiaBan"]?.ToString().Trim();
                 txtGiaThue.Text = r.Table.Columns.Contains("GiaThue") ? r["GiaThue"]?.ToString().Trim() : "0";
+                
+                txtSoLuong.Value = 1;
+                txtSoLuong.Enabled = false;
+
                 var cat = r.Table.Columns.Contains("IDDauSach") ? r["IDDauSach"]?.ToString().Trim() : null;
                 if (!string.IsNullOrWhiteSpace(cat))
                 {
