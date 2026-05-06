@@ -15,6 +15,8 @@ namespace QuanLyThuVien
 {
     public partial class FrmLiquidation : Form
     {
+        private bool isShowingThongTinSach = true;
+
         public FrmLiquidation()
         {
             InitializeComponent();
@@ -24,6 +26,7 @@ namespace QuanLyThuVien
             btnXacNhan.Click += XacNhan_Click;
             btnDong.Click += Dong_Click;
             dgvBooks.SelectionChanged += DgvBooks_SelectionChanged;
+            btnBack.Click += BtnBack_Click;
         }
 
         private void InitializeCustomComponents()
@@ -61,7 +64,107 @@ namespace QuanLyThuVien
 
         private void FrmLiquidation_Load(object sender, EventArgs e)
         {
-            LoadData();
+            LoadThongTinSach();
+            btnBack.Visible = false; // Ensure the button is hidden initially
+        }
+
+        private void LoadThongTinSach(string keyword = "", SqlParameter[] parameters = null)
+        {
+            try
+            {
+                string sql = @"
+                    SELECT IDSach, TenSach, TacGia, GiaBan, GiaThue
+                    FROM ThongTinSach";
+
+                if (!string.IsNullOrWhiteSpace(keyword))
+                {
+                    sql += " WHERE " + keyword;
+                }
+
+                var dt = DatabaseHelper.ExecuteQuery(sql, parameters);
+                dgvBooks.Rows.Clear();
+                dgvBooks.Columns.Clear();
+
+                dgvBooks.Columns.Add("IDSach", "Mã sách");
+                dgvBooks.Columns.Add("TenSach", "Tên sách");
+                dgvBooks.Columns.Add("TacGia", "Tác giả");
+                dgvBooks.Columns.Add("GiaBan", "Trị giá");
+                dgvBooks.Columns.Add("GiaThue", "Giá thuê");
+
+                foreach (DataRow r in dt.Rows)
+                {
+                    dgvBooks.Rows.Add(
+                        r["IDSach"]?.ToString()?.Trim(),
+                        r["TenSach"]?.ToString()?.Trim(),
+                        r["TacGia"]?.ToString()?.Trim(),
+                        r["GiaBan"],
+                        r["GiaThue"]
+                    );
+                }
+
+                isShowingThongTinSach = true;
+                btnBack.Visible = false; // Hide the button when showing ThongTinSach
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể truy vấn dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void LoadCaTheSach(string idSach)
+        {
+            try
+            {
+                string sql = @"
+                    SELECT c.IDCaTheSach, c.IDSach, s.TenSach, c.TinhTrang, t.LyDoThanhLy, t.NgayThanhLy
+                    FROM CaTheSach c
+                    LEFT JOIN ThanhLySach t ON c.IDCaTheSach = t.IDCaTheSach
+                    JOIN ThongTinSach s ON c.IDSach = s.IDSach
+                    WHERE c.IDSach = @idSach";
+
+                var parameters = new SqlParameter[] { new SqlParameter("@idSach", idSach) };
+                var dt = DatabaseHelper.ExecuteQuery(sql, parameters);
+                dgvBooks.Rows.Clear();
+                dgvBooks.Columns.Clear();
+
+                dgvBooks.Columns.Add("IDCaTheSach", "Mã cá thể sách");
+                dgvBooks.Columns.Add("IDSach", "Mã sách");
+                dgvBooks.Columns.Add("TenSach", "Tên sách");
+                dgvBooks.Columns.Add("TinhTrang", "Tình trạng");
+                dgvBooks.Columns.Add("LyDoThanhLy", "Lý do thanh lý");
+                dgvBooks.Columns.Add("NgayThanhLy", "Ngày thanh lý");
+
+                foreach (DataRow r in dt.Rows)
+                {
+                    dgvBooks.Rows.Add(
+                        r["IDCaTheSach"]?.ToString()?.Trim(),
+                        r["IDSach"]?.ToString()?.Trim(),
+                        r["TenSach"]?.ToString()?.Trim(),
+                        r["TinhTrang"]?.ToString()?.Trim(),
+                        r["LyDoThanhLy"]?.ToString()?.Trim(),
+                        r["NgayThanhLy"]?.ToString()?.Trim()
+                    );
+                }
+
+                isShowingThongTinSach = false;
+                btnBack.Visible = true; // Show the button when showing CaTheSach
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể truy vấn dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void DataGridView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (isShowingThongTinSach && dgvBooks.SelectedRows.Count > 0)
+            {
+                var idSach = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim();
+                if (!string.IsNullOrWhiteSpace(idSach))
+                {
+                    LoadCaTheSach(idSach);
+                }
+            }
         }
 
         public void LoadData(string whereClause = null, SqlParameter[] parameters = null)
@@ -160,29 +263,16 @@ namespace QuanLyThuVien
             }
         }
 
-        private void DataGridView1_DoubleClick(object sender, EventArgs e)
-        {
-            if (dgvBooks.SelectedRows.Count > 0)
-            {
-                var id = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim();
-                if (!string.IsNullOrWhiteSpace(id)) 
-                {
-                    txtMaSach.Text = id;
-                    Timkiem_Click(null, null);
-                }
-            }
-        }
-
         private void Timkiem_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txtMaSach.Text))
             {
                 var p = new SqlParameter[] { new SqlParameter("@searchValue", txtMaSach.Text.Trim()) };
-                LoadData("s.TenSach LIKE '%' + @searchValue + '%'", p);
+                LoadThongTinSach("TenSach LIKE '%' + @searchValue + '%'", p);
             }
             else
             {
-                LoadData();
+                LoadThongTinSach();
             }
         }
 
@@ -207,35 +297,37 @@ namespace QuanLyThuVien
 
         private void XacNhan_Click(object sender, EventArgs e)
         {
-            if (dgvBooks.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Vui lòng chọn sách từ danh sách để thanh lý.", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var idCaTheSach = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim();
-            if (string.IsNullOrWhiteSpace(idCaTheSach)) return;
-
-            // Kiểm tra trạng thái sách trước khi thanh lý
-            string currentStatus = dgvBooks.SelectedRows[0].Cells[6].Value?.ToString()?.Trim();
-            if (currentStatus == "Đang mượn")
-            {
-                MessageBox.Show("Không thể thanh lý sách đang được mượn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var result = MessageBox.Show($"Bạn có chắc chắn muốn thanh lý sách mã cá thể {idCaTheSach}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result != DialogResult.Yes) return;
-
             try
             {
-                string lydo = null;
-                if (cboLyDo.SelectedItem is ReasonItem ri) 
-                    lydo = ri.Value.GetDisplayName();
+                if (dgvBooks.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Vui lòng chọn sách từ danh sách để thanh lý.", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var idCaTheSach = dgvBooks.SelectedRows[0].Cells["IDCaTheSach"].Value?.ToString()?.Trim();
+                if (string.IsNullOrWhiteSpace(idCaTheSach)) return;
+
+                // Kiểm tra trạng thái sách trước khi thanh lý
+                string currentStatus = dgvBooks.SelectedRows[0].Cells["TinhTrang"].Value?.ToString()?.Trim();
+                if (currentStatus == "Đang mượn")
+                {
+                    MessageBox.Show("Không thể thanh lý sách đang được mượn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var result = MessageBox.Show($"Bạn có chắc chắn muốn thanh lý sách mã cá thể {idCaTheSach}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result != DialogResult.Yes) return;
 
                 try
                 {
-                    string insertSql = @"
+                    string lydo = null;
+                    if (cboLyDo.SelectedItem is ReasonItem ri)
+                        lydo = ri.Value.GetDisplayName();
+
+                    try
+                    {
+                        string insertSql = @"
                         IF EXISTS (SELECT 1 FROM ThanhLySach WHERE IDCaTheSach = @id)
                         BEGIN
                             UPDATE ThanhLySach SET NgayThanhLy = @ngay, LyDoThanhLy = @lydo WHERE IDCaTheSach = @id
@@ -244,54 +336,61 @@ namespace QuanLyThuVien
                         BEGIN
                             INSERT INTO ThanhLySach (IDCaTheSach, NgayThanhLy, LyDoThanhLy) VALUES (@id, @ngay, @lydo)
                         END";
-                    var insParams = new SqlParameter[] {
+                        var insParams = new SqlParameter[] {
                         new SqlParameter("@id", idCaTheSach),
                         new SqlParameter("@ngay", DateTime.Now.Date),
                         new SqlParameter("@lydo", lydo ?? (object)DBNull.Value)
                     };
-                    DatabaseHelper.ExecuteNonQuery(insertSql, insParams);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi khi lưu phiếu thanh lý: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                        DatabaseHelper.ExecuteNonQuery(insertSql, insParams);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi lưu phiếu thanh lý: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
-                string newStatus;
-                if (cboLyDo.SelectedItem is ReasonItem reasonItem)
-                {
-                    newStatus = reasonItem.Value == LiquidationReason.Damaged ? "Hỏng" : "Mất";
-                }
-                else
-                {
-                    newStatus = "Hỏng";
-                }
+                    string newStatus;
+                    if (cboLyDo.SelectedItem is ReasonItem reasonItem)
+                    {
+                        newStatus = reasonItem.Value == LiquidationReason.Damaged ? "Hỏng" : "Mất";
+                    }
+                    else
+                    {
+                        newStatus = "Hỏng";
+                    }
 
-                string updateSql = "UPDATE CaTheSach SET TinhTrang = @t WHERE IDCaTheSach = @id";
-                var p = new SqlParameter[] {
+                    string updateSql = "UPDATE CaTheSach SET TinhTrang = @t WHERE IDCaTheSach = @id";
+                    var p = new SqlParameter[] {
                     new SqlParameter("@t", newStatus),
                     new SqlParameter("@id", idCaTheSach)
                 };
-                DatabaseHelper.ExecuteNonQuery(updateSql, p);
+                    DatabaseHelper.ExecuteNonQuery(updateSql, p);
 
-                UpdateBookCount();
+                    UpdateBookCount();
 
-                MessageBox.Show("Đã thanh lý sách thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã thanh lý sách thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                Timkiem_Click(null, null);
-                dgvBooks.ClearSelection();
+                    Timkiem_Click(null, null);
+                    dgvBooks.ClearSelection();
 
-                foreach (Form frm in Application.OpenForms)
-                {
-                    if (frm is FrmSearchBook searchForm)
+                    foreach (Form frm in Application.OpenForms)
                     {
-                        searchForm.RefreshData();
+                        if (frm is FrmSearchBook searchForm)
+                        {
+                            searchForm.RefreshData();
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi thanh lý sách: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                LoadThongTinSach();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thanh lý sách: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Hãy chọn một cá thể sách để thanh lý.");
             }
         }
 
@@ -325,7 +424,12 @@ namespace QuanLyThuVien
         {
             txtMaSach.Text = string.Empty;
             if (cboLyDo.Items.Count > 0) cboLyDo.SelectedIndex = 0;
-            LoadData();
+            LoadThongTinSach();
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            LoadThongTinSach();
         }
     }
 }

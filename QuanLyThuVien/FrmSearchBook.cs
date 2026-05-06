@@ -15,6 +15,8 @@ namespace QuanLyThuVien
     public partial class FrmSearchBook : Form
     {
         string borrowStatusClause;
+        private string _currentMasterId = null; // Tracks the current master ID for detail view
+
         public FrmSearchBook()
         {
             InitializeComponent();
@@ -34,8 +36,9 @@ namespace QuanLyThuVien
         private void FrmSearchBook_Load(object sender, EventArgs e)
         {
             LoadCategories();
-            SetupGridColumns();
-            LoadData();
+            SetupGridColumnsThongTinSach(); // Set up columns for master view
+            LoadDataThongTinSach(); // Load master data initially
+            btnBack.Visible = false; // Hide btnBack in master view
         }
 
         private void LoadCategories()
@@ -72,11 +75,10 @@ namespace QuanLyThuVien
             public override string ToString() => Name ?? "";
         }
 
-        private void SetupGridColumns()
+        private void SetupGridColumnsThongTinSach()
         {
             dgvBooks.Columns.Clear();
             dgvBooks.AutoGenerateColumns = false;
-            dgvBooks.Columns.Add("IDCaTheSach", "Mã cá thể sách");
             dgvBooks.Columns.Add("IDSach", "Mã sách");
             dgvBooks.Columns.Add("TenSach", "Tên sách");
             dgvBooks.Columns.Add("TacGia", "Tác giả");
@@ -84,11 +86,78 @@ namespace QuanLyThuVien
             dgvBooks.Columns.Add("NamXuatBan", "Năm XB");
             dgvBooks.Columns.Add("GiaBan", "Trị giá");
             dgvBooks.Columns.Add("GiaThue", "Giá thuê");
-            dgvBooks.Columns.Add("TheLoai", "Thể loại");
-            dgvBooks.Columns.Add("TinhTrang", "Tình trạng");
+            dgvBooks.Columns.Add("DauSach", "Đầu Sách");
             dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBooks.MultiSelect = false;
             dgvBooks.DoubleClick += DataGridView1_DoubleClick;
+        }
+
+        private void SetupGridColumnsCaTheSach()
+        {
+            dgvBooks.Columns.Clear();
+            dgvBooks.AutoGenerateColumns = false;
+            dgvBooks.Columns.Add("IDCaTheSach", "Mã cá thể sách");
+            dgvBooks.Columns.Add("IDSach", "Mã sách");
+            dgvBooks.Columns.Add("TenSach", "Tên sách"); // Add TenSach explicitly
+            dgvBooks.Columns.Add("TinhTrang", "Tình trạng");
+            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvBooks.MultiSelect = false;
+        }
+
+        private void LoadDataThongTinSach()
+        {
+            try
+            {
+                string sql = "SELECT s.IDSach, s.TenSach, s.TacGia, s.NhaXuatBan, s.NamXuatBan, s.GiaBan, s.GiaThue, ISNULL(d.TenDauSach, s.IDDauSach) AS DauSach " +
+                             "FROM ThongTinSach s " +
+                             "LEFT JOIN DauSach d ON s.IDDauSach = d.IDDauSach";
+                var dt = DatabaseHelper.ExecuteQuery(sql, null);
+                dgvBooks.Rows.Clear();
+                foreach (DataRow r in dt.Rows)
+                {
+                    dgvBooks.Rows.Add(
+                        r["IDSach"]?.ToString()?.Trim(),
+                        r["TenSach"]?.ToString()?.Trim(),
+                        r["TacGia"]?.ToString()?.Trim(),
+                        r["NhaXuatBan"]?.ToString()?.Trim(),
+                        r["NamXuatBan"],
+                        r["GiaBan"],
+                        r["GiaThue"],
+                        r["DauSach"]?.ToString()?.Trim()
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể truy vấn dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void LoadDataCaTheSach(string idSach)
+        {
+            try
+            {
+                string sql = "SELECT c.IDCaTheSach, c.IDSach, s.TenSach, c.TinhTrang " +
+                             "FROM CaTheSach c " +
+                             "INNER JOIN ThongTinSach s ON c.IDSach = s.IDSach " +
+                             "WHERE c.IDSach = @idSach";
+                var parameters = new SqlParameter[] { new SqlParameter("@idSach", idSach) };
+                var dt = DatabaseHelper.ExecuteQuery(sql, parameters);
+                dgvBooks.Rows.Clear();
+                foreach (DataRow r in dt.Rows)
+                {
+                    dgvBooks.Rows.Add(
+                        r["IDCaTheSach"]?.ToString()?.Trim(),
+                        r["IDSach"]?.ToString()?.Trim(),
+                        r["TenSach"]?.ToString()?.Trim(),
+                        r["TinhTrang"]?.ToString()?.Trim()
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể truy vấn dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         public void LoadData(string whereClause = null, SqlParameter[] parameters = null)
@@ -213,11 +282,16 @@ namespace QuanLyThuVien
 
         private void DataGridView1_DoubleClick(object sender, EventArgs e)
         {
-            if (dgvBooks.SelectedRows.Count == 0) return;
-            var name = dgvBooks.SelectedRows[0].Cells[2].Value?.ToString()?.Trim();
-            if (string.IsNullOrWhiteSpace(name)) return;
-            txtMaSach.Text = name;
-            Button1_Click(null, null);
+            if (dgvBooks.SelectedRows.Count == 0 || _currentMasterId != null) return; // Disable double-click if already in detail view
+
+            var selectedMasterId = dgvBooks.SelectedRows[0].Cells[0].Value?.ToString()?.Trim(); // Get IDSach from the first column
+            if (string.IsNullOrWhiteSpace(selectedMasterId)) return;
+
+            _currentMasterId = selectedMasterId; // Track the selected master ID
+
+            SetupGridColumnsCaTheSach(); // Switch to detail view columns
+            LoadDataCaTheSach(_currentMasterId); // Load detail data for the selected master ID
+            btnBack.Visible = true; // Show btnBack in detail view
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -251,7 +325,10 @@ namespace QuanLyThuVien
         private void Button2_Click(object sender, EventArgs e)
         {
             borrowStatusClause = null;
-            LoadData(borrowStatusClause);
+            _currentMasterId = null; // Reset to master view
+            SetupGridColumnsThongTinSach(); // Reset columns to master view
+            LoadDataThongTinSach(); // Reload master data
+            btnBack.Visible = false; // Hide btnBack in master view
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -264,6 +341,16 @@ namespace QuanLyThuVien
         {
             borrowStatusClause = "c.TinhTrang = N'Đang mượn'";
             LoadData(borrowStatusClause);
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            if (_currentMasterId == null) return; // Already in master view
+
+            _currentMasterId = null; // Reset to master view
+            SetupGridColumnsThongTinSach(); // Reset columns to master view
+            LoadDataThongTinSach(); // Reload master data
+            btnBack.Visible = false; // Hide btnBack in master view
         }
     }
 }

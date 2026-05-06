@@ -38,12 +38,13 @@ namespace QuanLyThuVien
             this.btnSanSang = new System.Windows.Forms.Button();
             this.btnTatCa = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dgvBooks = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dgvBooks = new System.Windows.Forms.DataGridView();
+            this.btnBack = new System.Windows.Forms.Button();
             this.grpBoLoc.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
             this.SuspendLayout();
             // 
             // btnTimKiem
@@ -78,7 +79,7 @@ namespace QuanLyThuVien
             this.grpBoLoc.Margin = new System.Windows.Forms.Padding(4);
             this.grpBoLoc.Name = "grpBoLoc";
             this.grpBoLoc.Padding = new System.Windows.Forms.Padding(4);
-            this.grpBoLoc.Size = new System.Drawing.Size(344, 322);
+            this.grpBoLoc.Size = new System.Drawing.Size(344, 291);
             this.grpBoLoc.TabIndex = 2;
             this.grpBoLoc.TabStop = false;
             this.grpBoLoc.Text = "Bộ Lọc";
@@ -87,7 +88,7 @@ namespace QuanLyThuVien
             // 
             this.cboTheLoaiFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTheLoaiFilter.FormattingEnabled = true;
-            this.cboTheLoaiFilter.Location = new System.Drawing.Point(8, 89);
+            this.cboTheLoaiFilter.Location = new System.Drawing.Point(8, 68);
             this.cboTheLoaiFilter.Margin = new System.Windows.Forms.Padding(4);
             this.cboTheLoaiFilter.Name = "cboTheLoaiFilter";
             this.cboTheLoaiFilter.Size = new System.Drawing.Size(328, 32);
@@ -96,7 +97,7 @@ namespace QuanLyThuVien
             // lblTheLoaiFilterLabel
             // 
             this.lblTheLoaiFilterLabel.AutoSize = true;
-            this.lblTheLoaiFilterLabel.Location = new System.Drawing.Point(8, 52);
+            this.lblTheLoaiFilterLabel.Location = new System.Drawing.Point(8, 31);
             this.lblTheLoaiFilterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTheLoaiFilterLabel.Name = "lblTheLoaiFilterLabel";
             this.lblTheLoaiFilterLabel.Size = new System.Drawing.Size(92, 24);
@@ -106,7 +107,7 @@ namespace QuanLyThuVien
             // lblTinhTrangLabel
             // 
             this.lblTinhTrangLabel.AutoSize = true;
-            this.lblTinhTrangLabel.Location = new System.Drawing.Point(8, 137);
+            this.lblTinhTrangLabel.Location = new System.Drawing.Point(8, 116);
             this.lblTinhTrangLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTinhTrangLabel.Name = "lblTinhTrangLabel";
             this.lblTinhTrangLabel.Size = new System.Drawing.Size(102, 24);
@@ -115,7 +116,7 @@ namespace QuanLyThuVien
             // 
             // btnDangMuon
             // 
-            this.btnDangMuon.Location = new System.Drawing.Point(8, 266);
+            this.btnDangMuon.Location = new System.Drawing.Point(8, 245);
             this.btnDangMuon.Margin = new System.Windows.Forms.Padding(4);
             this.btnDangMuon.Name = "btnDangMuon";
             this.btnDangMuon.Size = new System.Drawing.Size(328, 32);
@@ -125,7 +126,7 @@ namespace QuanLyThuVien
             // 
             // btnSanSang
             // 
-            this.btnSanSang.Location = new System.Drawing.Point(8, 222);
+            this.btnSanSang.Location = new System.Drawing.Point(8, 201);
             this.btnSanSang.Margin = new System.Windows.Forms.Padding(4);
             this.btnSanSang.Name = "btnSanSang";
             this.btnSanSang.Size = new System.Drawing.Size(328, 32);
@@ -135,7 +136,7 @@ namespace QuanLyThuVien
             // 
             // btnTatCa
             // 
-            this.btnTatCa.Location = new System.Drawing.Point(8, 177);
+            this.btnTatCa.Location = new System.Drawing.Point(8, 156);
             this.btnTatCa.Margin = new System.Windows.Forms.Padding(4);
             this.btnTatCa.Name = "btnTatCa";
             this.btnTatCa.Size = new System.Drawing.Size(328, 32);
@@ -146,6 +147,7 @@ namespace QuanLyThuVien
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.grpBoLoc);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -153,18 +155,6 @@ namespace QuanLyThuVien
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(358, 567);
             this.panel1.TabIndex = 5;
-            // 
-            // dgvBooks
-            // 
-            this.dgvBooks.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBooks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvBooks.Location = new System.Drawing.Point(358, 0);
-            this.dgvBooks.Name = "dgvBooks";
-            this.dgvBooks.RowHeadersWidth = 51;
-            this.dgvBooks.RowTemplate.Height = 24;
-            this.dgvBooks.Size = new System.Drawing.Size(754, 567);
-            this.dgvBooks.TabIndex = 6;
             // 
             // groupBox1
             // 
@@ -180,6 +170,30 @@ namespace QuanLyThuVien
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tìm sách bằng tên";
             // 
+            // dgvBooks
+            // 
+            this.dgvBooks.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBooks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvBooks.Location = new System.Drawing.Point(358, 0);
+            this.dgvBooks.Name = "dgvBooks";
+            this.dgvBooks.RowHeadersWidth = 51;
+            this.dgvBooks.RowTemplate.Height = 24;
+            this.dgvBooks.Size = new System.Drawing.Size(754, 567);
+            this.dgvBooks.TabIndex = 6;
+            // 
+            // btnBack
+            // 
+            this.btnBack.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBack.Location = new System.Drawing.Point(12, 504);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(231, 35);
+            this.btnBack.TabIndex = 25;
+            this.btnBack.Text = "← Quay lại danh sách";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Visible = false;
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
+            // 
             // FrmSearchBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -193,9 +207,9 @@ namespace QuanLyThuVien
             this.grpBoLoc.ResumeLayout(false);
             this.grpBoLoc.PerformLayout();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -214,5 +228,6 @@ namespace QuanLyThuVien
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dgvBooks;
         public System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnBack;
     }
 }

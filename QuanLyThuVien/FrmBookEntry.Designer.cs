@@ -48,14 +48,14 @@ namespace QuanLyThuVien
             this.btnDong = new System.Windows.Forms.Button();
             this.dgvBooks = new System.Windows.Forms.DataGridView();
             this.panelLeft = new System.Windows.Forms.Panel();
+            this.txtSoLuong = new System.Windows.Forms.NumericUpDown();
+            this.lblSoLuong = new System.Windows.Forms.Label();
             this.lblTotalBooksValue = new System.Windows.Forms.Label();
             this.lblTotalBooks = new System.Windows.Forms.Label();
-            this.lblSoLuong = new System.Windows.Forms.Label();
-            this.txtSoLuong = new System.Windows.Forms.NumericUpDown();
             this.btnBack = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSoLuong)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
             this.panelLeft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSoLuong)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTenSach
@@ -172,13 +172,13 @@ namespace QuanLyThuVien
             // 
             // dtpNgayNhap
             // 
+            this.dtpNgayNhap.CustomFormat = "dd/MM/yyyy";
+            this.dtpNgayNhap.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpNgayNhap.Location = new System.Drawing.Point(208, 213);
             this.dtpNgayNhap.Margin = new System.Windows.Forms.Padding(4);
             this.dtpNgayNhap.Name = "dtpNgayNhap";
             this.dtpNgayNhap.Size = new System.Drawing.Size(265, 22);
             this.dtpNgayNhap.TabIndex = 11;
-            this.dtpNgayNhap.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpNgayNhap.CustomFormat = "dd/MM/yyyy";
             // 
             // txtNamXuatBan
             // 
@@ -235,37 +235,6 @@ namespace QuanLyThuVien
             this.btnDong.Text = "Đóng";
             this.btnDong.UseVisualStyleBackColor = true;
             // 
-            // btnBack
-            // 
-            this.btnBack.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
-            this.btnBack.Location = new System.Drawing.Point(16, 450);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(200, 35);
-            this.btnBack.TabIndex = 24;
-            this.btnBack.Text = "← Quay lại danh sách";
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Visible = false;
-            // 
-            // lblSoLuong
-            // 
-            this.lblSoLuong.AutoSize = true;
-            this.lblSoLuong.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSoLuong.Location = new System.Drawing.Point(16, 325);
-            this.lblSoLuong.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblSoLuong.Name = "lblSoLuong";
-            this.lblSoLuong.Size = new System.Drawing.Size(91, 24);
-            this.lblSoLuong.TabIndex = 22;
-            this.lblSoLuong.Text = "Số lượng";
-            // 
-            // txtSoLuong
-            // 
-            this.txtSoLuong.Location = new System.Drawing.Point(208, 325);
-            this.txtSoLuong.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            this.txtSoLuong.Name = "txtSoLuong";
-            this.txtSoLuong.Size = new System.Drawing.Size(100, 22);
-            this.txtSoLuong.TabIndex = 23;
-            this.txtSoLuong.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            // 
             // dgvBooks
             // 
             this.dgvBooks.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
@@ -308,7 +277,34 @@ namespace QuanLyThuVien
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(500, 670);
             this.panelLeft.TabIndex = 19;
-            ((System.ComponentModel.ISupportInitialize)(this.txtSoLuong)).EndInit();
+            // 
+            // txtSoLuong
+            // 
+            this.txtSoLuong.Location = new System.Drawing.Point(208, 325);
+            this.txtSoLuong.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.txtSoLuong.Name = "txtSoLuong";
+            this.txtSoLuong.Size = new System.Drawing.Size(100, 22);
+            this.txtSoLuong.TabIndex = 23;
+            this.txtSoLuong.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // lblSoLuong
+            // 
+            this.lblSoLuong.AutoSize = true;
+            this.lblSoLuong.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSoLuong.Location = new System.Drawing.Point(16, 325);
+            this.lblSoLuong.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSoLuong.Name = "lblSoLuong";
+            this.lblSoLuong.Size = new System.Drawing.Size(88, 24);
+            this.lblSoLuong.TabIndex = 22;
+            this.lblSoLuong.Text = "Số lượng";
             // 
             // lblTotalBooksValue
             // 
@@ -331,6 +327,17 @@ namespace QuanLyThuVien
             this.lblTotalBooks.TabIndex = 20;
             this.lblTotalBooks.Text = "Tổng số sách:";
             // 
+            // btnBack
+            // 
+            this.btnBack.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBack.Location = new System.Drawing.Point(16, 450);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(212, 35);
+            this.btnBack.TabIndex = 24;
+            this.btnBack.Text = "← Quay lại danh sách";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Visible = false;
+            // 
             // FrmBookEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -345,6 +352,7 @@ namespace QuanLyThuVien
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
             this.panelLeft.ResumeLayout(false);
             this.panelLeft.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSoLuong)).EndInit();
             this.ResumeLayout(false);
 
         }

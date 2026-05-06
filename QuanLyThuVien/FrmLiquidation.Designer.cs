@@ -35,15 +35,16 @@
             this.btnXacNhan = new System.Windows.Forms.Button();
             this.dgvBooks = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtMaSach = new System.Windows.Forms.TextBox();
             this.btnTimKiem = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnBack = new System.Windows.Forms.Button();
             this.grpThanhLy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpThanhLy
@@ -118,6 +119,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.grpThanhLy);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -125,15 +127,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(258, 567);
             this.panel1.TabIndex = 10;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.dgvBooks);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(258, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(854, 567);
-            this.panel2.TabIndex = 11;
             // 
             // groupBox1
             // 
@@ -168,6 +161,26 @@
             this.btnTimKiem.Text = "Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = true;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.dgvBooks);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(258, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(854, 567);
+            this.panel2.TabIndex = 11;
+            // 
+            // btnBack
+            // 
+            this.btnBack.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBack.Location = new System.Drawing.Point(21, 430);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(212, 35);
+            this.btnBack.TabIndex = 25;
+            this.btnBack.Text = "← Quay lại danh sách";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Visible = false;
+            // 
             // FrmLiquidation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -182,9 +195,9 @@
             this.grpThanhLy.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -202,5 +215,6 @@
         public System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.TextBox txtMaSach;
         public System.Windows.Forms.Button btnTimKiem;
+        private System.Windows.Forms.Button btnBack;
     }
 }
