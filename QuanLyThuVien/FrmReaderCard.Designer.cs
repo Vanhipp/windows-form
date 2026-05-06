@@ -94,6 +94,8 @@ namespace QuanLyThuVien
             // 
             // dtpBirthDate
             // 
+            this.dtpBirthDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpBirthDate.CustomFormat = "dd/MM/yyyy";
             this.dtpBirthDate.Location = new System.Drawing.Point(208, 92);
             this.dtpBirthDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpBirthDate.Name = "dtpBirthDate";

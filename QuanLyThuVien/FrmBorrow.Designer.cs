@@ -126,6 +126,8 @@ namespace QuanLyThuVien
             // 
             // dtpBorrowDate
             // 
+            this.dtpBorrowDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpBorrowDate.CustomFormat = "dd/MM/yyyy";
             this.dtpBorrowDate.Location = new System.Drawing.Point(13, 124);
             this.dtpBorrowDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpBorrowDate.Name = "dtpBorrowDate";
