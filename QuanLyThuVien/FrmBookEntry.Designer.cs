@@ -1,4 +1,4 @@
-        namespace QuanLyThuVien
+namespace QuanLyThuVien
 {
     partial class FrmBookEntry
     {
@@ -177,6 +177,8 @@
             this.dtpNgayNhap.Name = "dtpNgayNhap";
             this.dtpNgayNhap.Size = new System.Drawing.Size(265, 22);
             this.dtpNgayNhap.TabIndex = 11;
+            this.dtpNgayNhap.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpNgayNhap.CustomFormat = "dd/MM/yyyy";
             // 
             // txtNamXuatBan
             // 

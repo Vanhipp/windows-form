@@ -187,6 +187,8 @@ namespace QuanLyThuVien
             // dtpReturnDate
             // 
             this.dtpReturnDate.CalendarFont = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpReturnDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpReturnDate.CustomFormat = "dd/MM/yyyy";
             this.dtpReturnDate.Location = new System.Drawing.Point(15, 60);
             this.dtpReturnDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpReturnDate.Name = "dtpReturnDate";

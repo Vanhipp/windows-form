@@ -197,7 +197,7 @@ namespace QuanLyThuVien
             // cboDiaChi
             // 
             this.cboDiaChi.Location = new System.Drawing.Point(138, 131);
-            this.cboDiaChi.Margin = new System.Windows.Forms.Padding(4);
+this.cboDiaChi.Margin = new System.Windows.Forms.Padding(4);
             this.cboDiaChi.Name = "cboDiaChi";
             this.cboDiaChi.Size = new System.Drawing.Size(308, 32);
             this.cboDiaChi.TabIndex = 10;
@@ -256,6 +256,8 @@ namespace QuanLyThuVien
             // 
             // date_NS
             // 
+            this.date_NS.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.date_NS.CustomFormat = "dd/MM/yyyy";
             this.date_NS.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.date_NS.Location = new System.Drawing.Point(137, 91);
             this.date_NS.Margin = new System.Windows.Forms.Padding(4);
