@@ -28,7 +28,10 @@ namespace QuanLyThuVien
 
         private void LoadBooksFromDB()
         {
-            string query = "SELECT IDSach, TenSach, TacGia, TinhTrang FROM ThongTinSach WHERE TinhTrang = N'Sẵn sàng'";
+            string query = @"SELECT CT.IDCaTheSach, S.IDSach, S.TenSach, S.TacGia, CT.TinhTrang 
+                           FROM CaTheSach CT 
+                           JOIN ThongTinSach S ON CT.IDSach = S.IDSach 
+                           WHERE CT.TinhTrang = N'Sẵn sàng'";
             try
             {
                 dgvBooks.DataSource = DatabaseHelper.ExecuteQuery(query);
@@ -161,34 +164,34 @@ namespace QuanLyThuVien
                     // 2. Insert into ChiTietMuon for each selected book
                     foreach (DataGridViewRow row in dgvBooks.SelectedRows)
                     {
-                        string sachID = row.Cells["IDSach"].Value.ToString();
+                        string caTheSachID = row.Cells["IDCaTheSach"].Value.ToString();
                         
                         // Kiểm tra sách có sẵn không trong transaction
-                        cmd.CommandText = "SELECT TinhTrang FROM ThongTinSach WITH (UPDLOCK) WHERE IDSach = @SachID";
+                        cmd.CommandText = "SELECT TinhTrang FROM CaTheSach WITH (UPDLOCK) WHERE IDCaTheSach = @CaTheSachID";
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@SachID", sachID);
+                        cmd.Parameters.AddWithValue("@CaTheSachID", caTheSachID);
                         object tinhTrangObj = cmd.ExecuteScalar();
                         
                         if (tinhTrangObj == null || tinhTrangObj.ToString().Trim() != "Sẵn sàng")
                         {
-                            throw new Exception($"Sách {sachID} không còn sẵn sàng!");
+                            throw new Exception($"Sách {caTheSachID} không còn sẵn sàng!");
                         }
 
                         string ctID = DatabaseHelper.GenerateUniqueID("CT");
-                        cmd.CommandText = @"INSERT INTO ChiTietMuon (IDChiTietMuon, IDPhieuMuon, IDSach, NgayMuon, HanTra, TinhTrangTra) 
-                                          VALUES (@CTID, @PMID, @SachID, @NgayMuon, @HanTra, N'Đang mượn')";
+                        cmd.CommandText = @"INSERT INTO ChiTietMuon (IDChiTietMuon, IDPhieuMuon, IDCaTheSach, NgayMuon, HanTra, TinhTrangTra) 
+                                          VALUES (@CTID, @PMID, @CaTheSachID, @NgayMuon, @HanTra, N'Đang mượn')";
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@CTID", ctID);
                         cmd.Parameters.AddWithValue("@PMID", phieuMuonID);
-                        cmd.Parameters.AddWithValue("@SachID", sachID);
+                        cmd.Parameters.AddWithValue("@CaTheSachID", caTheSachID);
                         cmd.Parameters.AddWithValue("@NgayMuon", dtpBorrowDate.Value);
                         cmd.Parameters.AddWithValue("@HanTra", dtpBorrowDate.Value.AddDays(4));
                         cmd.ExecuteNonQuery();
 
-                        // Update Book status
-                        cmd.CommandText = "UPDATE ThongTinSach SET TinhTrang = N'Đang mượn' WHERE IDSach = @SachID";
+                        // Update CaTheSach status
+                        cmd.CommandText = "UPDATE CaTheSach SET TinhTrang = N'Đang mượn' WHERE IDCaTheSach = @CaTheSachID";
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@SachID", sachID);
+                        cmd.Parameters.AddWithValue("@CaTheSachID", caTheSachID);
                         cmd.ExecuteNonQuery();
                     }
                 });

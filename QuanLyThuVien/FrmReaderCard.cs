@@ -50,8 +50,8 @@ namespace QuanLyThuVien
 
             string readerID = "DG" + DateTime.Now.ToString("yyyyMMddHHmmss");
             
-            string query = "INSERT INTO TheDocGia (IDDocGia, HoTen, NgaySinh, DiaChi, Email, SoDienThoai, NgayLap, LoaiDocGia, TienNo) " +
-                           "VALUES (@ID, @Name, @DOB, @Address, @Email, @Phone, @RegDate, @Type, @Debt)";
+            string query = "INSERT INTO TheDocGia (IDDocGia, HoTen, NgaySinh, DiaChi, Email, NgayLap, LoaiDocGia, TienNo) " +
+                           "VALUES (@ID, @Name, @DOB, @Address, @Email, @RegDate, @Type, @Debt)";
             
             SqlParameter[] parameters = {
                 new SqlParameter("@ID", readerID),
@@ -59,7 +59,6 @@ namespace QuanLyThuVien
                 new SqlParameter("@DOB", dtpBirthDate.Value),
                 new SqlParameter("@Address", txtAddress.Text),
                 new SqlParameter("@Email", txtEmail.Text),
-                new SqlParameter("@Phone", txtPhone.Text),
                 new SqlParameter("@RegDate", DateTime.Now),
                 new SqlParameter("@Type", cboReaderType.SelectedItem.ToString()),
                 new SqlParameter("@Debt", 0m)

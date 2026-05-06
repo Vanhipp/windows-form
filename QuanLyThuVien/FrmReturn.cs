@@ -41,11 +41,12 @@ namespace QuanLyThuVien
                 return;
             }
 
-            string query = "SELECT CT.IDChiTietMuon, CT.IDPhieuMuon, CT.IDSach, S.TenSach, CT.NgayMuon, CT.HanTra " +
-                           "FROM ChiTietMuon CT " +
-                           "JOIN PhieuMuon PM ON CT.IDPhieuMuon = PM.IDPhieuMuon " +
-                           "JOIN ThongTinSach S ON CT.IDSach = S.IDSach " +
-                           "WHERE PM.IDNguoiMuon = @ReaderID AND CT.NgayTra IS NULL";
+            string query = @"SELECT CT.IDChiTietMuon, CT.IDPhieuMuon, CT.IDCaTheSach, S.TenSach, CT.NgayMuon, CT.HanTra 
+                           FROM ChiTietMuon CT 
+                           JOIN PhieuMuon PM ON CT.IDPhieuMuon = PM.IDPhieuMuon 
+                           JOIN CaTheSach CS ON CT.IDCaTheSach = CS.IDCaTheSach
+                           JOIN ThongTinSach S ON CS.IDSach = S.IDSach 
+                           WHERE PM.IDNguoiMuon = @ReaderID AND CT.NgayTra IS NULL";
             
             string queryReader = "SELECT HoTen, Email FROM TheDocGia WHERE IDDocGia = @ID";
             SqlParameter[] parameters = { new SqlParameter("@ReaderID", txtReaderID.Text) };
@@ -103,9 +104,11 @@ namespace QuanLyThuVien
                 if (chkIsLost.Checked)
                 {
                     // QĐ8: Tiền phạt không nhỏ hơn trị giá quyển sách
-                    string sachID = row.Cells["IDSach"].Value.ToString();
-                    string queryGia = "SELECT GiaBan FROM ThongTinSach WHERE IDSach = @SachID";
-                    object resultGia = DatabaseHelper.ExecuteScalar(queryGia, new SqlParameter[] { new SqlParameter("@SachID", sachID) });
+                    string caTheSachID = row.Cells["IDCaTheSach"].Value.ToString();
+                    string queryGia = @"SELECT S.GiaBan FROM CaTheSach CTS 
+                                      JOIN ThongTinSach S ON CTS.IDSach = S.IDSach 
+                                      WHERE CTS.IDCaTheSach = @CaTheSachID";
+                    object resultGia = DatabaseHelper.ExecuteScalar(queryGia, new SqlParameter[] { new SqlParameter("@CaTheSachID", caTheSachID) });
                     decimal giaBan = resultGia != null ? Convert.ToDecimal(resultGia) : 0;
                     
                     rowFine = Math.Max(rowFine, giaBan);
@@ -138,7 +141,7 @@ namespace QuanLyThuVien
                 foreach (DataGridViewRow row in dgvBorrowingList.SelectedRows)
                 {
                     string ctID = row.Cells["IDChiTietMuon"].Value.ToString();
-                    string sachID = row.Cells["IDSach"].Value.ToString();
+                    string caTheSachID = row.Cells["IDCaTheSach"].Value.ToString();
                     DateTime dueDate = Convert.ToDateTime(row.Cells["HanTra"].Value).Date;
                     
                     decimal rowFine = 0;
@@ -149,10 +152,16 @@ namespace QuanLyThuVien
 
                     if (chkIsLost.Checked)
                     {
-                        string queryGia = "SELECT GiaBan FROM ThongTinSach WHERE IDSach = @SachID";
-                        object resultGia = DatabaseHelper.ExecuteScalar(queryGia, new SqlParameter[] { new SqlParameter("@SachID", sachID) });
+                        string queryGia = @"SELECT S.GiaBan FROM CaTheSach CTS 
+                                          JOIN ThongTinSach S ON CTS.IDSach = S.IDSach 
+                                          WHERE CTS.IDCaTheSach = @CaTheSachID";
+                        object resultGia = DatabaseHelper.ExecuteScalar(queryGia, new SqlParameter[] { new SqlParameter("@CaTheSachID", caTheSachID) });
                         decimal giaBan = resultGia != null ? Convert.ToDecimal(resultGia) : 0;
                         rowFine = Math.Max(rowFine, giaBan);
+
+                        // Lấy IDSach từ CaTheSach
+                        string queryGetSachID = "SELECT IDSach FROM CaTheSach WHERE IDCaTheSach = @CaTheSachID";
+                        string sachID = DatabaseHelper.ExecuteScalar(queryGetSachID, new SqlParameter[] { new SqlParameter("@CaTheSachID", caTheSachID) }).ToString();
 
                         // 1. Ghi nhận mất sách
                         string matSachID = "MS" + DateTime.Now.Ticks.ToString().Substring(10);
@@ -166,9 +175,9 @@ namespace QuanLyThuVien
                             new SqlParameter("@Fine", rowFine)
                         });
 
-                        // 2. Cập nhật trạng thái sách
-                        DatabaseHelper.ExecuteNonQuery("UPDATE ThongTinSach SET TinhTrang = N'Mất' WHERE IDSach = @SachID", 
-                            new SqlParameter[] { new SqlParameter("@SachID", sachID) });
+                        // 2. Cập nhật trạng thái CaTheSach
+                        DatabaseHelper.ExecuteNonQuery("UPDATE CaTheSach SET TinhTrang = N'Mất' WHERE IDCaTheSach = @CaTheSachID", 
+                            new SqlParameter[] { new SqlParameter("@CaTheSachID", caTheSachID) });
                     }
                     else
                     {
@@ -182,8 +191,8 @@ namespace QuanLyThuVien
                         });
 
                         // 2. Trả sách về trạng thái Sẵn sàng
-                        DatabaseHelper.ExecuteNonQuery("UPDATE ThongTinSach SET TinhTrang = N'Sẵn sàng' WHERE IDSach = @SachID", 
-                            new SqlParameter[] { new SqlParameter("@SachID", sachID) });
+                        DatabaseHelper.ExecuteNonQuery("UPDATE CaTheSach SET TinhTrang = N'Sẵn sàng' WHERE IDCaTheSach = @CaTheSachID", 
+                            new SqlParameter[] { new SqlParameter("@CaTheSachID", caTheSachID) });
                     }
                     totalFineIssued += rowFine;
                 }
